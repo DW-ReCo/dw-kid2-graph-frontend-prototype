@@ -20,8 +20,7 @@
     ],
     "forceConsistentCasingInFileNames": true,
     "incremental": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true
+    "resolveJsonModule": true
   },
   "include": [
     "./lib/**/*"
