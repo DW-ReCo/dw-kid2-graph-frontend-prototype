@@ -1,0 +1,32 @@
+{
+  "name": "dw-kid2-graph-frontend-prototype",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DW-ReCo/dw-kid2-graph-frontend-prototype.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DW-ReCo/dw-kid2-graph-frontend-prototype/issues"
+  },
+  "homepage": "https://github.com/DW-ReCo/dw-kid2-graph-frontend-prototype#readme",
+  "dependencies": {
+    "next": "^12.1.6",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.34",
+    "@types/react": "^18.0.9",
+    "typescript": "^4.6.4"
+  }
+}
