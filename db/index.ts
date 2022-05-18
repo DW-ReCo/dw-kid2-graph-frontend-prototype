@@ -1,8 +1,9 @@
-import { createRxDatabase, addRxPlugin } from 'rxdb';
+import * as rxdb from 'rxdb'
 
 // because we use the PouchDB RxStorage, we have to add the indexeddb adapter first.
-import { getRxStoragePouch, addPouchPlugin } from 'rxdb/plugins/pouchdb';
-import { RxDBDevModePlugin } from 'rxdb/plugins/dev-mode';
+//import { getRxStoragePouch, addPouchPlugin } from 'rxdb/plugins/pouchdb';
+import * as pouchdb from 'rxdb/plugins/pouchdb';
+
 import * as MemoryAdapter from 'pouchdb-adapter-memory';
 import * as IdbAdapter from 'pouchdb-adapter-idb';
 
@@ -10,17 +11,16 @@ import * as IdbAdapter from 'pouchdb-adapter-idb';
 
 // addRxPlugin(RxDBDevModePlugin);
 
-addPouchPlugin(MemoryAdapter);
-addPouchPlugin(IdbAdapter);
 
-export const db = () => createRxDatabase({
-  name: 'ourdb',                   // <- name
-  storage: getRxStoragePouch('memory'),  // <- RxStorage
-  //  password: 'myPassword',             // <- password (optional)
-  // multiInstance: true,                // <- multiInstance (optional, default: true)
+export const createDb = async () => {
 
-  // eventReduce: true,                   // <- eventReduce (optional, default: true)
-  cleanupPolicy: {}                   // <- custom cleanup policy (optional)
-});
+  pouchdb.addPouchPlugin(MemoryAdapter);
+  pouchdb.addPouchPlugin(IdbAdapter);
 
-db().then(console.log)
+  return rxdb.createRxDatabase({
+    name: 'ourdb',                   // <- name
+    storage: pouchdb.getRxStoragePouch('idb'),  // <- RxStorage
+    cleanupPolicy: {}                   // <- custom cleanup policy (optional)
+  });
+}
+

@@ -1,10 +1,14 @@
 import React from "react"
 
-import { db } from "../../db"
+import * as db from "../../db"
 
 const IndexPage = () => {
-    console.log(db);
-    
+
+    if (typeof window !== 'undefined') {
+        // client-side-only code
+        db.createDb().then(console.log)
+    }
+
     return(
     <div>Hello from IndexPage</div>
 )}
