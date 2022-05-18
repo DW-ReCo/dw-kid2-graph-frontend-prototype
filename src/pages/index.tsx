@@ -1,7 +1,12 @@
 import React from "react"
 
-const IndexPage = () => (
+import { db } from "../../db"
+
+const IndexPage = () => {
+    console.log(db);
+    
+    return(
     <div>Hello from IndexPage</div>
-)
+)}
 
 export default IndexPage
