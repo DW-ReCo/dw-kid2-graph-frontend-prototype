@@ -1,14 +1,22 @@
 import React from "react";
-
-import * as db from "../../db";
+import { useRxData } from "rxdb-hooks";
 
 const IndexPage = () => {
-  if (typeof window !== "undefined") {
-    // client-side-only code
-    db.createDb().then(console.log);
+  const queryConstructor = (collection) => collection.find().where("affiliation").equals("jedi");
+
+  const { result: characters, isFetching } = useRxData("characters", queryConstructor);
+
+  if (isFetching) {
+    return "loading characters...";
   }
 
-  return <div>Hello from IndexPage</div>;
+  return (
+    <ul>
+      {characters.map((character, idx) => (
+        <li key={idx}>{character.name}</li>
+      ))}
+    </ul>
+  );
 };
 
 export default IndexPage;
