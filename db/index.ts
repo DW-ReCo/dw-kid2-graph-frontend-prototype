@@ -13,7 +13,7 @@ import * as IdbAdapter from "pouchdb-adapter-idb";
 import { RxDBQueryBuilderPlugin } from 'rxdb/plugins/query-builder'
 
 export const initialize = async () => {
-  pouchdb.addPouchPlugin(RxDBQueryBuilderPlugin);
+  rxdb.addRxPlugin(RxDBQueryBuilderPlugin)
   pouchdb.addPouchPlugin(MemoryAdapter);
   pouchdb.addPouchPlugin(IdbAdapter);
   
