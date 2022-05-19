@@ -10,10 +10,9 @@ import * as PouchHttp from 'pouchdb-adapter-http'
 import { RxDBReplicationCouchDBPlugin } from 'rxdb/plugins/replication-couchdb';
 import { RxDBLeaderElectionPlugin } from 'rxdb/plugins/leader-election';
 
-const syncURL = 'http://localhost:3000/192.168.1.86:10102/';
+const syncURL = 'http://192.168.1.86:10102/';
 
 console.log(syncURL)
-
 
 // addRxPlugin(RxDBDevModePlugin);
 import { RxDBQueryBuilderPlugin } from "rxdb/plugins/query-builder";
