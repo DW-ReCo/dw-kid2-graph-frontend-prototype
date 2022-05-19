@@ -11,13 +11,34 @@ import * as IdbAdapter from "pouchdb-adapter-idb";
 
 // addRxPlugin(RxDBDevModePlugin);
 
-export const createDb = async () => {
+export const initialize = async () => {
   pouchdb.addPouchPlugin(MemoryAdapter);
   pouchdb.addPouchPlugin(IdbAdapter);
-
-  return rxdb.createRxDatabase({
+  
+  const db =  await rxdb.createRxDatabase({
     name: "ourdb", // <- name
     storage: pouchdb.getRxStoragePouch("idb"), // <- RxStorage
     cleanupPolicy: {}, // <- custom cleanup policy (optional)
   });
-};
+
+  const collection = await db.addCollections({
+    characters: {
+      schema: {
+        title: 'characters',
+        version: 0,
+        type: 'object',
+        primaryKey: 'id',
+        properties: {
+          id: {
+            type: 'string',
+          },
+          name: {
+            type: 'string',
+          },
+        },
+      },
+    },
+  });
+  
+  return db;
+}
