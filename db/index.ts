@@ -1,26 +1,25 @@
 import * as rxdb from "rxdb";
 
 // because we use the PouchDB RxStorage, we have to add the indexeddb adapter first.
-//import { getRxStoragePouch, addPouchPlugin } from 'rxdb/plugins/pouchdb';
 import * as pouchdb from "rxdb/plugins/pouchdb";
 
 import * as MemoryAdapter from "pouchdb-adapter-memory";
 import * as IdbAdapter from "pouchdb-adapter-idb";
-import * as PouchHttp from 'pouchdb-adapter-http'
-import { RxDBReplicationCouchDBPlugin } from 'rxdb/plugins/replication-couchdb';
-import { RxDBLeaderElectionPlugin } from 'rxdb/plugins/leader-election';
+import * as PouchHttp from "pouchdb-adapter-http";
+import { RxDBReplicationCouchDBPlugin } from "rxdb/plugins/replication-couchdb";
+import { RxDBLeaderElectionPlugin } from "rxdb/plugins/leader-election";
 
-const syncURL = 'http://192.168.1.86:10102/';
+const syncURL = "http://192.168.1.86:10102/";
 
-console.log(syncURL)
+console.log(syncURL);
 
 // addRxPlugin(RxDBDevModePlugin);
 import { RxDBQueryBuilderPlugin } from "rxdb/plugins/query-builder";
 
 export const initialize = async () => {
   rxdb.addRxPlugin(RxDBQueryBuilderPlugin);
-  rxdb.addRxPlugin(RxDBReplicationCouchDBPlugin)
-rxdb.addRxPlugin(RxDBLeaderElectionPlugin);
+  rxdb.addRxPlugin(RxDBReplicationCouchDBPlugin);
+  rxdb.addRxPlugin(RxDBLeaderElectionPlugin);
 
   pouchdb.addPouchPlugin(MemoryAdapter);
   pouchdb.addPouchPlugin(PouchHttp);
@@ -30,7 +29,7 @@ rxdb.addRxPlugin(RxDBLeaderElectionPlugin);
     name: "ourdb", // <- name
     storage: pouchdb.getRxStoragePouch("idb"), // <- RxStorage
     cleanupPolicy: {}, // <- custom cleanup policy (optional)
-    eventReduce: true // <- enable event-reduce to detect changes
+    eventReduce: true, // <- enable event-reduce to detect changes
   });
 
   const collection = await db.addCollections({
@@ -52,9 +51,13 @@ rxdb.addRxPlugin(RxDBLeaderElectionPlugin);
     },
   });
 
-    Object.values(db.collections).map(col => col.name).map(colName => db[colName].syncCouchDB({
-        remote: syncURL + colName + '/'
-    }));
+  Object.values(db.collections)
+    .map((col) => col.name)
+    .map((colName) =>
+      db[colName].syncCouchDB({
+        remote: syncURL + colName + "/",
+      }),
+    );
 
   return db;
 };

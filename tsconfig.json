@@ -13,20 +13,12 @@
     "strict": true,
     "moduleResolution": "node",
     "esModuleInterop": true,
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "forceConsistentCasingInFileNames": true,
     "incremental": true,
     "resolveJsonModule": true,
     "isolatedModules": true
   },
-  "include": [
-    "./lib/**/*"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["./lib/**/*"],
+  "exclude": ["node_modules"]
 }
