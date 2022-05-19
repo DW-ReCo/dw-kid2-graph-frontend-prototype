@@ -6,10 +6,13 @@ import * as pouchdb from "rxdb/plugins/pouchdb";
 
 import * as MemoryAdapter from "pouchdb-adapter-memory";
 import * as IdbAdapter from "pouchdb-adapter-idb";
+import * as PouchHttp from 'pouchdb-adapter-http'
 import { RxDBReplicationCouchDBPlugin } from 'rxdb/plugins/replication-couchdb';
 import { RxDBLeaderElectionPlugin } from 'rxdb/plugins/leader-election';
 
-const syncURL = '0.0.0.0:10102/';
+const syncURL = 'http://localhost:3000/192.168.1.86:10102/';
+
+console.log(syncURL)
 
 
 // addRxPlugin(RxDBDevModePlugin);
@@ -21,6 +24,7 @@ export const initialize = async () => {
 rxdb.addRxPlugin(RxDBLeaderElectionPlugin);
 
   pouchdb.addPouchPlugin(MemoryAdapter);
+  pouchdb.addPouchPlugin(PouchHttp);
   pouchdb.addPouchPlugin(IdbAdapter);
 
   const db = await rxdb.createRxDatabase({
