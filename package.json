@@ -28,7 +28,8 @@
     "react-dom": "^18.1.0",
     "rxdb": "^12.4.1",
     "rxdb-hooks": "^4.0.2",
-    "rxjs": "^7.5.5"
+    "rxjs": "^7.5.5",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@types/node": "^17.0.34",
