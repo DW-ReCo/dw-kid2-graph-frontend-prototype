@@ -6,14 +6,20 @@ import * as pouchdb from "rxdb/plugins/pouchdb";
 
 import * as MemoryAdapter from "pouchdb-adapter-memory";
 import * as IdbAdapter from "pouchdb-adapter-idb";
+import { RxDBReplicationCouchDBPlugin } from 'rxdb/plugins/replication-couchdb';
+import { RxDBLeaderElectionPlugin } from 'rxdb/plugins/leader-election';
 
-// import * as aa from 'pouchdb-adapter-idb'
+const syncURL = '0.0.0.0:10102/';
+
 
 // addRxPlugin(RxDBDevModePlugin);
 import { RxDBQueryBuilderPlugin } from "rxdb/plugins/query-builder";
 
 export const initialize = async () => {
   rxdb.addRxPlugin(RxDBQueryBuilderPlugin);
+  rxdb.addRxPlugin(RxDBReplicationCouchDBPlugin)
+rxdb.addRxPlugin(RxDBLeaderElectionPlugin);
+
   pouchdb.addPouchPlugin(MemoryAdapter);
   pouchdb.addPouchPlugin(IdbAdapter);
 
@@ -42,6 +48,10 @@ export const initialize = async () => {
       },
     },
   });
+
+    Object.values(db.collections).map(col => col.name).map(colName => db[colName].syncCouchDB({
+        remote: syncURL + colName + '/'
+    }));
 
   return db;
 };
