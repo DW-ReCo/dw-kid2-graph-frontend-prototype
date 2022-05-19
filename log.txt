@@ -1,0 +1,4 @@
+[Thu, 19 May 2022 15:37:24 GMT] [info] [<0.000.0>] pouchdb-server has started on http://0.0.0.0:10102/
+[Thu, 19 May 2022 15:37:24 GMT] [info] [<0.000.0>] database is in-memory; no changes will be saved.
+[Thu, 19 May 2022 15:37:24 GMT] [info] [<0.000.0>] database files will be saved to /tmp/pouchdb-server/
+[Thu, 19 May 2022 15:37:24 GMT] [info] [<0.000.0>] navigate to http://0.0.0.0:10102/_utils for the Fauxton UI.
