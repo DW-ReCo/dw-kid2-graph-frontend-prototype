@@ -21,6 +21,7 @@ export const initialize = async () => {
     name: "ourdb", // <- name
     storage: pouchdb.getRxStoragePouch("idb"), // <- RxStorage
     cleanupPolicy: {}, // <- custom cleanup policy (optional)
+    eventReduce: true // <- enable event-reduce to detect changes
   });
 
   const collection = await db.addCollections({
