@@ -13,7 +13,6 @@ const syncURL = "http://192.168.1.86:10102/";
 
 console.log(syncURL);
 
-// addRxPlugin(RxDBDevModePlugin);
 import { RxDBQueryBuilderPlugin } from "rxdb/plugins/query-builder";
 
 export const initialize = async () => {
@@ -26,12 +25,13 @@ export const initialize = async () => {
   pouchdb.addPouchPlugin(IdbAdapter);
 
   const db = await rxdb.createRxDatabase({
-    name: "ourdb", // <- name
-    storage: pouchdb.getRxStoragePouch("idb"), // <- RxStorage
+    name: "ourdb", // database name
+    storage: pouchdb.getRxStoragePouch("idb"), // RxStorage, idb = IndexedDB
     cleanupPolicy: {}, // <- custom cleanup policy (optional)
     eventReduce: true, // <- enable event-reduce to detect changes
   });
 
+  // create a sample collection
   const collection = await db.addCollections({
     characters: {
       schema: {
@@ -51,6 +51,7 @@ export const initialize = async () => {
     },
   });
 
+  // add synchronization to all collections
   Object.values(db.collections)
     .map((col) => col.name)
     .map((colName) =>

@@ -10,6 +10,8 @@ const App = ({ Component, pageProps }) => {
     const initDB = async () => {
       const _db = await initialize();
       setDb(_db);
+
+      // subscribe to a query and log Niko if name is Niko
       subscribeQuery(_db.characters.find().where({ name: { $eq: "Niko" } }), (res) => {
         res.length > 0 && console.log("Name ist Niko");
       });
