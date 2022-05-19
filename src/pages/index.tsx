@@ -1,7 +1,8 @@
 import React from "react";
-import { useRxData } from "rxdb-hooks";
+import { useRxData, useRxCollection } from "rxdb-hooks";
 
 const IndexPage = () => {
+  const dbcollection = useRxCollection("characters");
   const queryConstructor = (collection) => collection.find().where("affiliation").equals("jedi");
 
   const { result: characters, isFetching } = useRxData("characters", queryConstructor);
@@ -10,8 +11,9 @@ const IndexPage = () => {
     return "loading characters...";
   }
 
-  const handleSubmit = () => {
-    return null
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    return await dbcollection.insert({ name: event.target[1].value, id: event.target[0].value });
   };
 
   return (
