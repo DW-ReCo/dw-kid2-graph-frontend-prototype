@@ -27,6 +27,11 @@ const IndexPage = () => {
     return await resultToDelete.remove();
   };
 
+  const handleDeleteAll = async () => {
+    const resultToDelete = dbcollection.find();
+    return await resultToDelete.remove();
+  };
+
   return (
     <>
       <form onSubmit={handleSubmit}>
@@ -36,6 +41,7 @@ const IndexPage = () => {
         </label>
         <input type="submit" value="Submit" />
       </form>
+      <button onClick={() => handleDeleteAll()}>Delete all</button>
       <ul>
         {characters.map(({ name, id }, idx) => (
           <li key={idx}>
