@@ -1,9 +1,10 @@
 import React from "react";
 import { useRxData, useRxCollection } from "rxdb-hooks";
+import { v4 as uuidv4 } from 'uuid';
 
 const IndexPage = () => {
   const dbcollection = useRxCollection("characters");
-  const queryConstructor = (collection) => collection.find().where("affiliation").equals("jedi");
+  const queryConstructor = (collection) => collection.find();
 
   const { result: characters, isFetching } = useRxData("characters", queryConstructor);
 
@@ -13,16 +14,15 @@ const IndexPage = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    return await dbcollection.insert({ name: event.target[1].value, id: event.target[0].value });
+    
+    return await dbcollection.insert({ name: event.target[0].value, id: uuidv4() });
   };
+
+  const handleDelete = async () => { }
 
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <label>
-          ID:
-          <input type="text" name="id" />
-        </label>
         <label>
           Name:
           <input type="text" name="name" />
