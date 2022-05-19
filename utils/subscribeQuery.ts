@@ -1,12 +1,13 @@
 import { RxDatabase, RxQuery } from 'rxdb';
 import { Subscription } from 'rxjs';
 
-export const subscribeQuery = (q: RxQuery, f: (results: any): void) => {
-  q.$.subscribe(f);
+export const subscribeQuery = (q: RxQuery, f: (results: any) => void): Subscription => {
+  return q.$.subscribe(f);
 }
 
-export const alsoSubscribeQuery: (q: RxQuery, f: (results:any): void) => Subscription =
-  (q, f) => q.$.subscribe(f);
+export const alsoSubscribeQuery
+: (q: RxQuery, f: (results:any) => void) => Subscription
+= (q, f) => q.$.subscribe(f);
 
 export const listenToCharacters = (db: RxDatabase) => {
   const collection = db.characters;
