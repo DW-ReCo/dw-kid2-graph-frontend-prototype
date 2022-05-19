@@ -10,14 +10,14 @@ import * as IdbAdapter from "pouchdb-adapter-idb";
 // import * as aa from 'pouchdb-adapter-idb'
 
 // addRxPlugin(RxDBDevModePlugin);
-import { RxDBQueryBuilderPlugin } from 'rxdb/plugins/query-builder'
+import { RxDBQueryBuilderPlugin } from "rxdb/plugins/query-builder";
 
 export const initialize = async () => {
-  rxdb.addRxPlugin(RxDBQueryBuilderPlugin)
+  rxdb.addRxPlugin(RxDBQueryBuilderPlugin);
   pouchdb.addPouchPlugin(MemoryAdapter);
   pouchdb.addPouchPlugin(IdbAdapter);
-  
-  const db =  await rxdb.createRxDatabase({
+
+  const db = await rxdb.createRxDatabase({
     name: "ourdb", // <- name
     storage: pouchdb.getRxStoragePouch("idb"), // <- RxStorage
     cleanupPolicy: {}, // <- custom cleanup policy (optional)
@@ -26,21 +26,21 @@ export const initialize = async () => {
   const collection = await db.addCollections({
     characters: {
       schema: {
-        title: 'characters',
+        title: "characters",
         version: 0,
-        type: 'object',
-        primaryKey: 'id',
+        type: "object",
+        primaryKey: "id",
         properties: {
           id: {
-            type: 'string',
+            type: "string",
           },
           name: {
-            type: 'string',
+            type: "string",
           },
         },
       },
     },
   });
-  
+
   return db;
-}
+};
