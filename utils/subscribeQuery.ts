@@ -4,6 +4,9 @@ export const subscribeQuery = (q: RxQuery, f: (results: any): void) => {
   q.$.subscribe(f);
 }
 
+export const alsoSubscribeQuery: (q: RxQuery, f: (results:any): void) =
+  (q, f) => q.$.subscribe(f);
+
 export const listenToCharacters = (db: RxDatabase) => {
   const collection = db.characters;
   const q = collection.find()
