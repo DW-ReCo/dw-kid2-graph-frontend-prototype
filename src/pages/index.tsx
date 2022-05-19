@@ -1,16 +1,15 @@
 import React from "react";
-import { useRxData, useRxCollection } from "rxdb-hooks";
+import { useRxData, useRxCollection, RxQueryResultDoc } from "rxdb-hooks";
 import { v4 as uuidv4 } from 'uuid';
 
 const IndexPage = () => {
   const dbcollection = useRxCollection("characters");
   const queryConstructor = (collection) => collection.find();
 
-  const { result: characters, isFetching } = useRxData("characters", queryConstructor);
+  type Character = { name: string, id: string };
 
-  if (isFetching) {
-    return "loading characters...";
-  }
+  const { result: characters }: RxQueryResultDoc<Character> = useRxData("characters", queryConstructor);
+
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -18,7 +17,17 @@ const IndexPage = () => {
     return await dbcollection.insert({ name: event.target[0].value, id: uuidv4() });
   };
 
-  const handleDelete = async () => { }
+  const handleDelete = async (id) => { 
+    const resultToDelete = dbcollection.find({
+      selector: {
+        id: {
+          $eq: id
+        }
+      }
+    });
+    return await resultToDelete.remove();
+    
+  }
 
   return (
     <>
@@ -30,8 +39,8 @@ const IndexPage = () => {
         <input type="submit" value="Submit" />
       </form>
       <ul>
-        {characters.map((character, idx) => (
-          <li key={idx}>{character.name}</li>
+        {characters.map(({name, id}, idx) => (
+          <li key={idx}>{name} <button onClick={()=>handleDelete(id)}>delete</button></li>
         ))}
       </ul>
     </>
