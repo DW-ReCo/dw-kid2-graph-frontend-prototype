@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Provider } from "rxdb-hooks";
 import { initialize } from "../../db";
+import { listenToCharacters } from "../../utils/subscribeQuery"
 
 const App = ({ Component, pageProps }) => {
   const [db, setDb] = useState();
@@ -9,6 +10,8 @@ const App = ({ Component, pageProps }) => {
     const initDB = async () => {
       const _db = await initialize();
       setDb(_db);
+      listenToCharacters(_db);
+
     };
     if (window !== undefined) {
       initDB();
