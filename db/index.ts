@@ -8,11 +8,6 @@ import * as IdbAdapter from "pouchdb-adapter-idb";
 import * as PouchHttp from "pouchdb-adapter-http";
 import { RxDBReplicationCouchDBPlugin } from "rxdb/plugins/replication-couchdb";
 import { RxDBLeaderElectionPlugin } from "rxdb/plugins/leader-election";
-
-const syncURL = "http://192.168.1.86:10102/";
-
-console.log(syncURL);
-
 import { RxDBQueryBuilderPlugin } from "rxdb/plugins/query-builder";
 
 export const initialize = async () => {
@@ -50,15 +45,16 @@ export const initialize = async () => {
       },
     },
   });
-
-  // add synchronization to all collections
-  Object.values(db.collections)
-    .map((col) => col.name)
-    .map((colName) =>
-      db[colName].syncCouchDB({
-        remote: syncURL + colName + "/",
-      }),
-    );
-
+  if (window !== undefined) {
+    // add synchronization to all collections
+    const syncURL = "http://" + window.location.hostname + ":10102/";
+    Object.values(db.collections)
+      .map((col) => col.name)
+      .map((colName) =>
+        db[colName].syncCouchDB({
+          remote: syncURL + colName + "/",
+        }),
+      );
+  }
   return db;
 };
