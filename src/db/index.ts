@@ -10,22 +10,9 @@ import { RxDBReplicationCouchDBPlugin } from "rxdb/plugins/replication-couchdb";
 import { RxDBLeaderElectionPlugin } from "rxdb/plugins/leader-election";
 import { RxDBQueryBuilderPlugin } from "rxdb/plugins/query-builder";
 
-export const initialize = async () => {
-  rxdb.addRxPlugin(RxDBQueryBuilderPlugin);
-  rxdb.addRxPlugin(RxDBReplicationCouchDBPlugin);
-  rxdb.addRxPlugin(RxDBLeaderElectionPlugin);
+import * as cfg from "../cfg";
 
-  pouchdb.addPouchPlugin(MemoryAdapter);
-  pouchdb.addPouchPlugin(PouchHttp);
-  pouchdb.addPouchPlugin(IdbAdapter);
-
-  const db = await rxdb.createRxDatabase({
-    name: "ourdb", // database name
-    storage: pouchdb.getRxStoragePouch("idb"), // RxStorage, idb = IndexedDB
-    cleanupPolicy: {}, // <- custom cleanup policy (optional)
-    eventReduce: true, // <- enable event-reduce to detect changes
-  });
-
+const addCollections = async (db: rxdb.RxDatabase) => {
   // create a sample collection
   const collection = await db.addCollections({
     characters: {
@@ -45,9 +32,44 @@ export const initialize = async () => {
       },
     },
   });
+  return db
+}
+
+// TODO!
+const initializeLocal = async ({ name }: cfg.LocalDbConfig) => {
+  rxdb.addRxPlugin(RxDBQueryBuilderPlugin);
+
+  pouchdb.addPouchPlugin(MemoryAdapter);
+  pouchdb.addPouchPlugin(IdbAdapter);
+
+  const db = await rxdb.createRxDatabase({
+    name, // database name
+    storage: pouchdb.getRxStoragePouch("idb"), // RxStorage, idb = IndexedDB
+    cleanupPolicy: {}, // <- custom cleanup policy (optional)
+    eventReduce: true, // <- enable event-reduce to detect changes
+  });
+  return addCollections(db);
+}
+
+const initializeServer = async ({ name, location}: cfg.ServerDbConfig) => {
+  rxdb.addRxPlugin(RxDBQueryBuilderPlugin);
+  rxdb.addRxPlugin(RxDBReplicationCouchDBPlugin);
+  rxdb.addRxPlugin(RxDBLeaderElectionPlugin);
+
+  pouchdb.addPouchPlugin(MemoryAdapter);
+  pouchdb.addPouchPlugin(PouchHttp);
+  pouchdb.addPouchPlugin(IdbAdapter);
+
+  const db = await rxdb.createRxDatabase({
+    name, // database name
+    storage: pouchdb.getRxStoragePouch("idb"), // RxStorage, idb = IndexedDB
+    cleanupPolicy: {}, // <- custom cleanup policy (optional)
+    eventReduce: true, // <- enable event-reduce to detect changes
+  });
+
   if (window !== undefined) {
     // add synchronization to all collections
-    const syncURL = "http://" + window.location.hostname + ":10102/";
+    const syncURL = location;
     Object.values(db.collections)
       .map((col) => col.name)
       .map((colName) =>
@@ -56,5 +78,14 @@ export const initialize = async () => {
         }),
       );
   }
-  return db;
+  return addCollections(db);
+}
+
+export const initialize = async (dbLoader: cfg.DbConfig) => {
+  switch (dbLoader._type) {
+      case "local_db_config":
+        return initializeLocal(dbLoader);
+      case "server_db_config":
+        return initializeServer(dbLoader);
+  }
 };
