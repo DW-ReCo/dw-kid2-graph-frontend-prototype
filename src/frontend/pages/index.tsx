@@ -1,22 +1,23 @@
 import React from "react";
+import { RxCollection } from "rxdb";
 import { useRxData, useRxCollection, RxQueryResultDoc } from "rxdb-hooks";
 import { v4 as uuidv4 } from "uuid";
 
 const IndexPage = () => {
-  const dbcollection = useRxCollection("characters");
-  const queryConstructor = (collection) => collection.find();
+  const dbcollection = useRxCollection<RxCollection>("characters");
+  const queryConstructor = (collection: RxCollection) => collection.find();
 
   type Character = { name: string; id: string };
 
   const { result: characters }: RxQueryResultDoc<Character> = useRxData("characters", queryConstructor);
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: React.SyntheticEvent) => {
     event.preventDefault();
 
     return await dbcollection.insert({ name: event.target[0].value, id: uuidv4() });
   };
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (id: string) => {
     const resultToDelete = dbcollection.find({
       selector: {
         id: {
