@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "next dev ./src/frontend",
+    "dev": "concurrently \"npm run server\" \"npm run dev:next\"",
+    "dev:next": "next dev ./src/frontend",
     "build": "next build ./src/frontend",
-    "start": "concurrently \"npm run server\" \"npm run dev\"",
-    "t": "node db/test.js",
+    "t": "node src/db/test.js",
     "lint": "next lint ./src/frontend",
     "server": "pouchdb-server --host 0.0.0.0 -p 10102 -m -d /tmp/pouchdb-server/ -n true"
   },
