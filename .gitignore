@@ -5,8 +5,10 @@ config.json
 *.cfg.json
 *.cfg.json5
 *.cfg.js
+*.cfg.ts
 !sample.cfg.js
 !build.cfg.js
+!build.cfg.ts
 
 
 # Logs
