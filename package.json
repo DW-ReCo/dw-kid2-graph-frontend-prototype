@@ -32,6 +32,7 @@
     "rxdb": "^12.4.1",
     "rxdb-hooks": "^4.0.2",
     "rxjs": "^7.5.5",
+    "ts-loader": "^9.3.0",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
