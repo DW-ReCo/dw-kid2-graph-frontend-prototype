@@ -7,7 +7,7 @@
     "jsx": "preserve",
     "outDir": "./next",
     "removeComments": true,
-    "noEmit": true,
+    "noEmit": false,
     "pretty": true,
     "skipLibCheck": true,
     "strict": true,
@@ -19,6 +19,6 @@
     "resolveJsonModule": true,
     "isolatedModules": true
   },
-  "include": ["./lib/**/*"],
+  "include": ["./src/**/*"],
   "exclude": ["node_modules"]
 }

@@ -2,9 +2,11 @@ import React, { useState, useEffect } from "react";
 import { Provider } from "rxdb-hooks";
 import { initialize } from "../../db";
 import { subscribeQuery } from "../../utils/subscribeQuery";
+import { RxDatabase } from "rxdb";
+import { AppProps } from "next/app";
 
-const App = ({ Component, pageProps }) => {
-  const [db, setDb] = useState();
+const App = ({ Component, pageProps }: AppProps) => {
+  const [db, setDb] = useState<RxDatabase>();
 
   useEffect(() => {
     const initDB = async () => {
