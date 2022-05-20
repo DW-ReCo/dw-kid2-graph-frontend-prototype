@@ -32,8 +32,8 @@ const addCollections = async (db: rxdb.RxDatabase) => {
       },
     },
   });
-  return db
-}
+  return db;
+};
 
 // TODO!
 const initializeLocal = async ({ name }: cfg.LocalDbConfig) => {
@@ -49,9 +49,9 @@ const initializeLocal = async ({ name }: cfg.LocalDbConfig) => {
     eventReduce: true, // <- enable event-reduce to detect changes
   });
   return addCollections(db);
-}
+};
 
-const initializeServer = async ({ name, location}: cfg.ServerDbConfig) => {
+const initializeServer = async ({ name, location }: cfg.ServerDbConfig) => {
   rxdb.addRxPlugin(RxDBQueryBuilderPlugin);
   rxdb.addRxPlugin(RxDBReplicationCouchDBPlugin);
   rxdb.addRxPlugin(RxDBLeaderElectionPlugin);
@@ -79,13 +79,13 @@ const initializeServer = async ({ name, location}: cfg.ServerDbConfig) => {
       );
   }
   return addCollections(db);
-}
+};
 
 export const initialize = async (dbLoader: cfg.DbConfig) => {
   switch (dbLoader._type) {
-      case "local_db_config":
-        return initializeLocal(dbLoader);
-      case "server_db_config":
-        return initializeServer(dbLoader);
+    case "local_db_config":
+      return initializeLocal(dbLoader);
+    case "server_db_config":
+      return initializeServer(dbLoader);
   }
 };

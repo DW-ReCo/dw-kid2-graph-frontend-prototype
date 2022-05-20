@@ -14,6 +14,10 @@ const App = ({ Component, pageProps }: AppProps) => {
     console.log(`[app] using config`, c);
     const { dbs: dbLoaders } = c;
     console.log(`[app] initializing dbs`, dbLoaders);
+    if (!dbLoaders[0]) {
+      console.log("No db defined");
+      return;
+    }
     console.log(`[app] for now, only using`, dbLoaders[0]);
     const dbLoader = dbLoaders[0];
     const _db = await initialize(dbLoader);
@@ -32,20 +36,21 @@ const App = ({ Component, pageProps }: AppProps) => {
       console.log(`[app] loaded config`, c);
       setConfig(c);
       return c;
-    }
+    };
 
     if (window !== undefined) {
-      initConfig().then(c => initDB(c))
+      initConfig().then((c) => initDB(c));
     }
   }, []);
 
-  // FIXME dirty hack
-  if (!db) return <></>;
-
   return (
-    <Provider db={db}>
-      <Component {...pageProps} />
-    </Provider>
+    <>
+      {db && (
+        <Provider db={db}>
+          <Component {...pageProps} />
+        </Provider>
+      )}
+    </>
   );
 };
 
