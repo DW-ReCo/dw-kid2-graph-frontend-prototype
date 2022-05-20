@@ -7,15 +7,15 @@ const IndexPage = () => {
   const dbcollection = useRxCollection<RxCollection>("characters");
 
   const queryConstructor = (collection: RxCollection) => collection.find();
-  
+
   type Character = { name: string; id: string };
-  
+
   const { result: characters }: RxQueryResultDoc<Character> = useRxData("characters", queryConstructor);
-  
+
   if (!dbcollection) {
     return;
   }
-  
+
   const handleSubmit = async (event: React.SyntheticEvent) => {
     event.preventDefault();
     // @ts-ignore
@@ -34,8 +34,12 @@ const IndexPage = () => {
   };
 
   const handleDeleteAll = async () => {
-    const resultToDelete = dbcollection.find();
-    return await resultToDelete.remove();
+    const resultToDelete = await dbcollection
+      .find()
+      .exec()
+      .then((docs) => docs.map((doc) => doc.get("id")));
+
+    return await dbcollection.bulkRemove(resultToDelete);
   };
 
   return (
