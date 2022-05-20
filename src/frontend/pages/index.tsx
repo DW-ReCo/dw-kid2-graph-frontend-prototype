@@ -5,20 +5,25 @@ import { v4 as uuidv4 } from "uuid";
 
 const IndexPage = () => {
   const dbcollection = useRxCollection<RxCollection>("characters");
+
   const queryConstructor = (collection: RxCollection) => collection.find();
-
+  
   type Character = { name: string; id: string };
-
+  
   const { result: characters }: RxQueryResultDoc<Character> = useRxData("characters", queryConstructor);
-
+  
+  if (!dbcollection) {
+    return;
+  }
+  
   const handleSubmit = async (event: React.SyntheticEvent) => {
     event.preventDefault();
-
-    return await dbcollection!.insert({ name: event.target[0].value, id: uuidv4() });
+    // @ts-ignore
+    return await dbcollection.insert({ name: event.target[0].value, id: uuidv4() });
   };
 
   const handleDelete = async (id: string) => {
-    const resultToDelete = dbcollection!.find({
+    const resultToDelete = dbcollection.find({
       selector: {
         id: {
           $eq: id,
@@ -29,7 +34,7 @@ const IndexPage = () => {
   };
 
   const handleDeleteAll = async () => {
-    const resultToDelete = dbcollection!.find();
+    const resultToDelete = dbcollection.find();
     return await resultToDelete.remove();
   };
 

@@ -3,7 +3,7 @@ import { Provider } from "rxdb-hooks";
 import { initialize } from "../../db";
 import { subscribeQuery } from "../../utils/subscribeQuery";
 import { RxDatabase } from "rxdb";
-import {AppProps} from "next/app"
+import { AppProps } from "next/app";
 
 const App = ({ Component, pageProps }: AppProps) => {
   const [db, setDb] = useState<RxDatabase>();
