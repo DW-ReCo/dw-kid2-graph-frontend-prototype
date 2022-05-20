@@ -14,11 +14,11 @@ const IndexPage = () => {
   const handleSubmit = async (event: React.SyntheticEvent) => {
     event.preventDefault();
 
-    return await dbcollection.insert({ name: event.target[0].value, id: uuidv4() });
+    return await dbcollection!.insert({ name: event.target[0].value, id: uuidv4() });
   };
 
   const handleDelete = async (id: string) => {
-    const resultToDelete = dbcollection.find({
+    const resultToDelete = dbcollection!.find({
       selector: {
         id: {
           $eq: id,
@@ -29,7 +29,7 @@ const IndexPage = () => {
   };
 
   const handleDeleteAll = async () => {
-    const resultToDelete = dbcollection.find();
+    const resultToDelete = dbcollection!.find();
     return await resultToDelete.remove();
   };
 
