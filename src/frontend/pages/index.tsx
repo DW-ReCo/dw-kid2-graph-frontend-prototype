@@ -42,6 +42,20 @@ const IndexPage = () => {
     return await dbcollection.bulkRemove(resultToDelete);
   };
 
+  const handleInputChange = async (event: React.ChangeEvent<HTMLInputElement>, id: string) => {
+
+    console.log(event.target.value);
+    const resultToUpdate = dbcollection.find({
+      selector: {
+        id: {
+          $eq: id,
+        },
+      },
+    });
+
+    return await resultToUpdate.update({ name: event.target.value, id: id });
+  };
+
   return (
     <>
       <form onSubmit={handleSubmit}>
@@ -51,11 +65,12 @@ const IndexPage = () => {
         </label>
         <input type="submit" value="Submit" />
       </form>
-      <button onClick={() => handleDeleteAll()}>Delete all</button>
+      <button onClick={handleDeleteAll}>Delete all</button>
       <ul>
         {characters.map(({ name, id }, idx) => (
           <li key={idx}>
-            {name} <button onClick={() => handleDelete(id)}>delete</button>
+            <input value={name} onChange={(event) => handleInputChange(event, id)} />{" "}
+            <button onClick={() => handleDelete(id)}>delete</button>
           </li>
         ))}
       </ul>
