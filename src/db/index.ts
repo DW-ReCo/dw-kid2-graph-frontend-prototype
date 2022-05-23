@@ -9,6 +9,7 @@ import * as PouchHttp from "pouchdb-adapter-http";
 import { RxDBReplicationCouchDBPlugin } from "rxdb/plugins/replication-couchdb";
 import { RxDBLeaderElectionPlugin } from "rxdb/plugins/leader-election";
 import { RxDBQueryBuilderPlugin } from "rxdb/plugins/query-builder";
+import { RxDBUpdatePlugin } from "rxdb/plugins/update";
 
 import * as cfg from "../cfg";
 
@@ -38,6 +39,7 @@ const addCollections = async (db: rxdb.RxDatabase) => {
 // TODO!
 const initializeLocal = async ({ name }: cfg.LocalDbConfig) => {
   rxdb.addRxPlugin(RxDBQueryBuilderPlugin);
+  rxdb.addRxPlugin(RxDBUpdatePlugin);
 
   pouchdb.addPouchPlugin(MemoryAdapter);
   pouchdb.addPouchPlugin(IdbAdapter);
@@ -55,6 +57,7 @@ const initializeServer = async ({ name, location }: cfg.ServerDbConfig) => {
   rxdb.addRxPlugin(RxDBQueryBuilderPlugin);
   rxdb.addRxPlugin(RxDBReplicationCouchDBPlugin);
   rxdb.addRxPlugin(RxDBLeaderElectionPlugin);
+  rxdb.addRxPlugin(RxDBUpdatePlugin);
 
   pouchdb.addPouchPlugin(MemoryAdapter);
   pouchdb.addPouchPlugin(PouchHttp);
