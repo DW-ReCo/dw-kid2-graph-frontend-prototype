@@ -44,7 +44,6 @@ const IndexPage = () => {
 
   const handleInputChange = async (event: React.ChangeEvent<HTMLInputElement>, id: string) => {
 
-    console.log(event.target.value);
     const resultToUpdate = dbcollection.find({
       selector: {
         id: {
