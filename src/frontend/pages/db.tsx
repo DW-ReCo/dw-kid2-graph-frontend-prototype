@@ -7,9 +7,9 @@ const DbPage = () => {
   const queryConstructor = (collection: RxCollection) => collection.find();
 
   const { result: allBlocks }: RxQueryResultDoc<dbTypes.Page> = useRxData("blocks", queryConstructor);
-  const { result: allResults }: RxQueryResultDoc<dbTypes.Page> = useRxData("results", queryConstructor);
-  const { result: allExecutions }: RxQueryResultDoc<dbTypes.Page> = useRxData("executions", queryConstructor);
-  const { result: allLinks }: RxQueryResultDoc<dbTypes.Page> = useRxData("links", queryConstructor);
+  const { result: allResults }: RxQueryResultDoc<dbTypes.Data> = useRxData("results", queryConstructor);
+  const { result: allExecutions }: RxQueryResultDoc<dbTypes.Execution> = useRxData("executions", queryConstructor);
+  const { result: allLinks }: RxQueryResultDoc<dbTypes.DataLink> = useRxData("links", queryConstructor);
   const { result: allPages }: RxQueryResultDoc<dbTypes.Page> = useRxData("pages", queryConstructor);
 
   const RenderData = ({ documents, title }) => (
