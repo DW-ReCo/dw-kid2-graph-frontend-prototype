@@ -7,7 +7,7 @@ import { AppProps } from "next/app";
 import * as cfg from "../../cfg";
 
 const App = ({ Component, pageProps }: AppProps) => {
-  const [config, setConfig] = useState<cfg.PartialConfig>();
+  const [, setConfig] = useState<cfg.PartialConfig>();
   const [db, setDb] = useState<RxDatabase>();
 
   const initDB = async (c: cfg.PartialConfig) => {
