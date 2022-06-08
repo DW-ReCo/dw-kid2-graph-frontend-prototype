@@ -1,7 +1,7 @@
 import * as types from "./src/cfg/types";
 import { merge } from "lodash/fp";
 
-const customConfig = process.env.CUSTOM_CFG !== undefined ? JSON.parse(process?.env?.CUSTOM_CFG) : {}
+const customConfig = process.env.CUSTOM_CFG !== undefined ? JSON.parse(process?.env?.CUSTOM_CFG) : {};
 
 // this is the config the app is built with, not the config which is loaded
 //  at runtime.
