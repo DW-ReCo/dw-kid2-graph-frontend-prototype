@@ -12,27 +12,60 @@ import { RxDBQueryBuilderPlugin } from "rxdb/plugins/query-builder";
 import { RxDBUpdatePlugin } from "rxdb/plugins/update";
 
 import * as cfg from "../cfg";
+import {
+  executions as testingExecutions,
+  pages as testingPages,
+  blocks as testingBlocks,
+  links as testingLinks,
+  data as testingData,
+} from "./testing_data";
+import { access } from "fs";
+
+const addCollectionByName = async (name: string, db: rxdb.RxDatabase) => {
+  return await db.addCollections({
+    [name]: { schema: { version: 0, type: "object", primaryKey: "id", properties: { id: { type: "string" } } } },
+  });
+};
+
+const clearCollection = async (name: string, db: rxdb.RxDatabase) => {
+  try {
+    return await db.removeCollection(name);
+  } catch (e) {
+    return Promise.resolve();
+  }
+};
+
+export const clearAllCollections = async (db: rxdb.RxDatabase) => {
+  console.log("clearAllCollections");
+  const collections = ["results", "executions", "links", "blocks", "pages"];
+  await Promise.all(collections.map((col) => clearCollection(col, db)));
+  return db;
+};
 
 const addCollections = async (db: rxdb.RxDatabase) => {
   // create a sample collection
-  const collection = await db.addCollections({
-    characters: {
-      schema: {
-        title: "characters",
-        version: 0,
-        type: "object",
-        primaryKey: "id",
-        properties: {
-          id: {
-            type: "string",
-          },
-          name: {
-            type: "string",
-          },
-        },
-      },
-    },
-  });
+  await clearAllCollections(db);
+  console.log("addCollections");
+  const collections = ["results", "executions", "links", "blocks", "pages"];
+  const cls = collections.reduce(
+    (acc, name) => ({
+      ...acc,
+      [name]: { schema: { version: 0, type: "object", primaryKey: "id", properties: { id: { type: "string" } } } },
+    }),
+    {},
+  );
+  await db.addCollections(cls);
+  return db;
+};
+
+export const addTestingData = async (db: rxdb.RxDatabase) => {
+  console.log("adding testing data");
+  await Promise.all(testingBlocks.map((b, index) => db.blocks.insert(b)));
+  await Promise.all(testingExecutions.map((e) => db.executions.insert(e)));
+  await Promise.all(testingLinks.map((l) => db.links.insert(l)));
+  await Promise.all(testingPages.map((p) => db.pages.insert(p)));
+  await Promise.all(testingData.map((d) => db.results.insert(d)));
+
   return db;
 };
 
@@ -50,7 +83,7 @@ const initializeLocal = async ({ name }: cfg.LocalDbConfig) => {
     cleanupPolicy: {}, // <- custom cleanup policy (optional)
     eventReduce: true, // <- enable event-reduce to detect changes
   });
-  return addCollections(db);
+  return await addCollections(db);
 };
 
 const initializeServer = async ({ name, location }: cfg.ServerDbConfig) => {
@@ -81,7 +114,7 @@ const initializeServer = async ({ name, location }: cfg.ServerDbConfig) => {
         }),
       );
   }
-  return addCollections(db);
+  return await addCollections(db);
 };
 
 export const initialize = async (dbLoader: cfg.DbConfig) => {
