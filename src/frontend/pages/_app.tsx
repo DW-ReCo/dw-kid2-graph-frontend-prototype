@@ -14,9 +14,9 @@ const App = ({ Component, pageProps }: AppProps) => {
     console.log(`[app] using config`, c);
     const { dbs: dbLoaders } = c;
     console.log(`[app] initializing dbs`, dbLoaders);
-    if (!dbLoaders[0]) {
+    if (!dbLoaders || !dbLoaders[0]) {
       console.log("No db defined");
-      return;
+      return <>No Db defined</>;
     }
     console.log(`[app] for now, only using`, dbLoaders[0]);
     const dbLoader = dbLoaders[0];
