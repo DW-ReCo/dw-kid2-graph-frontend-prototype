@@ -45,7 +45,16 @@ export const addCollections = async (db: rxdb.RxDatabase) => {
 };
 
 export const clearDocs = async (db: rxdb.RxDatabase) => {
-  await db.docs.find().exec().then((ds) => ds.map(d => d.remove() ));
+  await db.docs
+    .find()
+    .exec()
+    .then((ds) => Promise.all(ds.map(d => d.get())))
+    .then((ds) => ds.map(d => { console.log(d); return d.id; }))
+    .then((ids) => { log.info(`removing ${ids.length} docs`);
+                     log.info(ids)
+                     return db.docs.bulkRemove(ids);
+                     })
+    .then(success => console.log(success))
   console.log("cleared", db)
 }
 
