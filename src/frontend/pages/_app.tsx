@@ -13,6 +13,10 @@ const App = ({ Component, pageProps }: AppProps) => {
   const [db, setDb] = useState<RxDatabase>();
 
   const initDB = async (c: cfg.PartialConfig) => {
+    if (db) {
+      console.log(`already have db!`);
+      return
+    }
     console.log(`[app] using config`, c);
     const { dbs: dbLoaders } = c;
     console.log(`[app] initializing dbs`, dbLoaders);
@@ -22,6 +26,7 @@ const App = ({ Component, pageProps }: AppProps) => {
     }
     console.log(`[app] for now, only using`, dbLoaders[0]);
     const dbLoader = dbLoaders[0];
+    if (db) { await db.remove() } // remobe the the db if it already exisrs
     const _db = await initialize(dbLoader);
     console.log(`[app] got db`, _db);
     setDb(_db);
