@@ -10,6 +10,7 @@ import { RxDBReplicationCouchDBPlugin } from "rxdb/plugins/replication-couchdb";
 import { RxDBLeaderElectionPlugin } from "rxdb/plugins/leader-election";
 import { RxDBQueryBuilderPlugin } from "rxdb/plugins/query-builder";
 import { RxDBUpdatePlugin } from "rxdb/plugins/update";
+import { RxDBDevModePlugin } from 'rxdb/plugins/dev-mode';
 
 import * as cfg from "../cfg";
 import * as Logger from "../logger";
@@ -17,6 +18,8 @@ import * as Logger from "../logger";
 import * as schema from "./schema";
 
 const log = Logger.makeLogger("db/index");
+
+
 
 
 const removeCollection = (name: string, db: rxdb.RxDatabase) =>
@@ -49,11 +52,11 @@ export const clearDocs = async (db: rxdb.RxDatabase) => {
 
 // TODO!
 const initializeLocal = async ({ name }: cfg.LocalDbConfig) => {
+  log.debug(`initializing local db with`, name);
   rxdb.addRxPlugin(RxDBQueryBuilderPlugin);
   rxdb.addRxPlugin(RxDBUpdatePlugin);
 
   pouchdb.addPouchPlugin(MemoryAdapter);
-  pouchdb.addPouchPlugin(IdbAdapter);
 
   const db = await rxdb.createRxDatabase({
     name, // database name
@@ -65,6 +68,7 @@ const initializeLocal = async ({ name }: cfg.LocalDbConfig) => {
 };
 
 const initializeServer = async ({ name, location }: cfg.ServerDbConfig) => {
+  log.debug(`initializing server with`, name, location);
   rxdb.addRxPlugin(RxDBQueryBuilderPlugin);
   rxdb.addRxPlugin(RxDBReplicationCouchDBPlugin);
   rxdb.addRxPlugin(RxDBLeaderElectionPlugin);
@@ -96,6 +100,10 @@ const initializeServer = async ({ name, location }: cfg.ServerDbConfig) => {
 };
 
 export const initialize = async (dbLoader: cfg.DbConfig) => {
+  rxdb.addRxPlugin(RxDBDevModePlugin); // FIXME: only when dev enabled
+  pouchdb.addPouchPlugin(IdbAdapter);
+  rxdb.removeRxDatabase(dbLoader.name,  pouchdb.getRxStoragePouch("idb"));
+
   switch (dbLoader._type) {
     case "local_db_config":
       return initializeLocal(dbLoader);

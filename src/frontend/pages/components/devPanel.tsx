@@ -14,8 +14,8 @@ const DevPanel = () => {
 
   console.log(data);
 
-  const clearDb = _ => db.clearDocs(data);
-  const addTestingDataDb = _ => addTestingData(data);
+  const clearDb = () => db.clearDocs(data);
+  const addTestingDataDb = () => addTestingData(data);
 
   return <>
     <button onClick={clearDb}>clear the documents</button>
