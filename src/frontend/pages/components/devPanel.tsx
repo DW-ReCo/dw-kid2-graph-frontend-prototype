@@ -5,8 +5,10 @@ import * as db from "../../../db";
 import * as dbTypes from "../../../db/types";
 
 const DevPanel = () => {
+  // FIXME: for some reason, the type returned by useRxDb is incompatible with RxDatabase,
+  // but still works accordingly.  therefore, for now:
   // @ts-ignore
-  const data: RxDatabase = useRxDB() as RxDatabase;
+  const data: RxDatabase = useRxDB();
 
   console.log(data);
 
