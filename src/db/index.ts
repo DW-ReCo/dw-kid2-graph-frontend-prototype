@@ -12,6 +12,10 @@ import { RxDBQueryBuilderPlugin } from "rxdb/plugins/query-builder";
 import { RxDBUpdatePlugin } from "rxdb/plugins/update";
 
 import * as cfg from "../cfg";
+import * as Logger from "../logger";
+
+const log = Logger.makeLogger("db/index");
+
 import {
   executions as testingExecutions,
   pages as testingPages,
@@ -19,30 +23,21 @@ import {
   links as testingLinks,
   data as testingData,
 } from "./testing_data";
-import { access } from "fs";
 
-const addCollectionByName = async (name: string, db: rxdb.RxDatabase) => {
-  return await db.addCollections({
-    [name]: { schema: { version: 0, type: "object", primaryKey: "id", properties: { id: { type: "string" } } } },
-  });
-};
-
-const clearCollection = async (name: string, db: rxdb.RxDatabase) => {
-  try {
-    return await db.removeCollection(name);
-  } catch (e) {
-    return Promise.resolve();
-  }
-};
+const clearCollection = (name: string, db: rxdb.RxDatabase) =>
+  db
+    .removeCollection(name)
+    .then(_ => console.log(`removed collection ${name}`))
+    .catch(e => console.warn(`removing collection ${name} failed because`, e))
 
 export const clearAllCollections = async (db: rxdb.RxDatabase) => {
-  console.log("clearAllCollections");
-  const collections = ["data", "executions", "links", "blocks", "pages"];
+  log.debug(`clearing all collections`);
+  const collections = Object.keys(db.collections);
   await Promise.all(collections.map((col) => clearCollection(col, db)));
   return db;
 };
 
-const addCollections = async (db: rxdb.RxDatabase) => {
+export const addCollections = async (db: rxdb.RxDatabase) => {
   // create a sample collection
   await clearAllCollections(db);
   console.log("addCollections");

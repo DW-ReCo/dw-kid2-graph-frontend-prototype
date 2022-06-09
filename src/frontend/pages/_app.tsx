@@ -5,6 +5,8 @@ import { RxDatabase } from "rxdb";
 import { AppProps } from "next/app";
 import * as cfg from "../../cfg";
 
+import DevPanel from "./components/devPanel";
+
 const App = ({ Component, pageProps }: AppProps) => {
   const [ready, setReady] = useState(false);
   const [, setConfig] = useState<cfg.PartialConfig>();
@@ -38,7 +40,7 @@ const App = ({ Component, pageProps }: AppProps) => {
       initConfig()
         .then((c) => initDB(c))
         // .then((db) => clearAllCollections(db))
-        .then((d) => addTestingData(d))
+        .then((d: RxDatabase) => addTestingData(d))
         .then(() => setReady(true));
     }
   }, []);
@@ -47,6 +49,7 @@ const App = ({ Component, pageProps }: AppProps) => {
     <>
       {db && ready && (
         <Provider db={db}>
+          <DevPanel />
           <Component {...pageProps} />
         </Provider>
       )}
