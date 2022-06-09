@@ -37,7 +37,7 @@ const clearCollection = async (name: string, db: rxdb.RxDatabase) => {
 
 export const clearAllCollections = async (db: rxdb.RxDatabase) => {
   console.log("clearAllCollections");
-  const collections = ["results", "executions", "links", "blocks", "pages"];
+  const collections = ["data", "executions", "links", "blocks", "pages"];
   await Promise.all(collections.map((col) => clearCollection(col, db)));
   return db;
 };
@@ -46,7 +46,7 @@ const addCollections = async (db: rxdb.RxDatabase) => {
   // create a sample collection
   await clearAllCollections(db);
   console.log("addCollections");
-  const collections = ["results", "executions", "links", "blocks", "pages"];
+  const collections = ["data", "executions", "links", "blocks", "pages"];
   const cls = collections.reduce(
     (acc, name) => ({
       ...acc,
@@ -64,7 +64,7 @@ export const addTestingData = async (db: rxdb.RxDatabase) => {
   await Promise.all(testingExecutions.map((e) => db.executions.insert(e)));
   await Promise.all(testingLinks.map((l) => db.links.insert(l)));
   await Promise.all(testingPages.map((p) => db.pages.insert(p)));
-  await Promise.all(testingData.map((d) => db.results.insert(d)));
+  await Promise.all(testingData.map((d) => db.data.insert(d)));
 
   return db;
 };
