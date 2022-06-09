@@ -12,7 +12,7 @@ import { RxDBQueryBuilderPlugin } from "rxdb/plugins/query-builder";
 import { RxDBUpdatePlugin } from "rxdb/plugins/update";
 
 import * as cfg from "../cfg";
-import * as Logger from "../log";
+import * as Logger from "../logger";
 
 const log = Logger.makeLogger("db/index");
 
