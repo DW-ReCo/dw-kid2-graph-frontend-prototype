@@ -99,19 +99,16 @@ export const pages: t.Page[] = [
 
 export const addTestingData = async (db: rxdb.RxDatabase) => {
 
-  console.log("aaaaaaaaaaa")
-  console.log(db)
+  console.log("adding testing data");
+  await Promise.all(blocks.map((b) => db.docs.upsert(b)));
 
   console.log("adding testing data");
-  await Promise.all(blocks.map((b) => db.docs.insert(b)));
+  await Promise.all(pages.map((e) => db.docs.upsert(e)));
 
   console.log("adding testing data");
-  await Promise.all(pages.map((e) => db.docs.insert(e)));
+  await Promise.all(executions.map((p) => db.docs.upsert(p)));
 
   console.log("adding testing data");
-  await Promise.all(executions.map((p) => db.docs.insert(p)));
-
-  console.log("adding testing data");
-  await Promise.all(data.map((d) => db.docs.insert(d)));
+  await Promise.all(data.map((d) => db.docs.upsert(d)));
   return db;
 };
