@@ -5,7 +5,7 @@ export const debug = console.log // TODO only when dev or debug flag on
 export const error = console.error
 
 export const makeLogger = (ns: string) =>
-  ({ info: (a: any) => info(`[${ns}]`, a),
-     warn: (a: any) => warn(`[${ns}]`, a),
-     debug: (a: any) => debug(`[${ns}]`, a),
-     error: (a: any) => error(`[${ns}]`, a), })
+  ({ info: (...a: any[]) => info(`[${ns}]`, ...a),
+     warn: (...a: any[]) => warn(`[${ns}]`, ...a),
+     debug: (...a: any[]) => debug(`[${ns}]`, ...a),
+     error: (...a: any[]) => error(`[${ns}]`, ...a), })

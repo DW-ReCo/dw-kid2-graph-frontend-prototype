@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Provider } from "rxdb-hooks";
-import { initialize, addTestingData, clearAllCollections } from "../../db";
+import { initialize } from "../../db";
 import { RxDatabase } from "rxdb";
 import { AppProps } from "next/app";
 import * as cfg from "../../cfg";
@@ -40,7 +40,7 @@ const App = ({ Component, pageProps }: AppProps) => {
       initConfig()
         .then((c) => initDB(c))
         // .then((db) => clearAllCollections(db))
-        .then((d: RxDatabase) => addTestingData(d))
+        // .then((d: RxDatabase) => addTestingData(d))
         .then(() => setReady(true));
     }
   }, []);

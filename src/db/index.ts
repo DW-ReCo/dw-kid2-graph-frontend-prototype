@@ -14,55 +14,38 @@ import { RxDBUpdatePlugin } from "rxdb/plugins/update";
 import * as cfg from "../cfg";
 import * as Logger from "../logger";
 
+import * as schema from "./schema";
+
 const log = Logger.makeLogger("db/index");
 
-import {
-  executions as testingExecutions,
-  pages as testingPages,
-  blocks as testingBlocks,
-  links as testingLinks,
-  data as testingData,
-} from "./testing_data";
 
-const clearCollection = (name: string, db: rxdb.RxDatabase) =>
+const removeCollection = (name: string, db: rxdb.RxDatabase) =>
   db
     .removeCollection(name)
     .then(_ => console.log(`removed collection ${name}`))
     .catch(e => console.warn(`removing collection ${name} failed because`, e))
 
-export const clearAllCollections = async (db: rxdb.RxDatabase) => {
+export const removeAllCollections = async (db: rxdb.RxDatabase) => {
   log.debug(`clearing all collections`);
   const collections = Object.keys(db.collections);
-  await Promise.all(collections.map((col) => clearCollection(col, db)));
+  await Promise.all(collections.map((col) => removeCollection(col, db)));
+  console.log(db)
   return db;
 };
 
 export const addCollections = async (db: rxdb.RxDatabase) => {
   // create a sample collection
-  await clearAllCollections(db);
-  console.log("addCollections");
-  const collections = ["data", "executions", "links", "blocks", "pages"];
-  const cls = collections.reduce(
-    (acc, name) => ({
-      ...acc,
-      [name]: { schema: { version: 0, type: "object", primaryKey: "id", properties: { id: { type: "string" } } } },
-    }),
-    {},
-  );
-  await db.addCollections(cls);
+  await removeAllCollections(db);
+  log.info("addCollections", schema.collectionSchema);
+  await db.addCollections(schema.collectionSchema);
   return db;
 };
 
-export const addTestingData = async (db: rxdb.RxDatabase) => {
-  console.log("adding testing data");
-  await Promise.all(testingBlocks.map((b, index) => db.blocks.insert(b)));
-  await Promise.all(testingExecutions.map((e) => db.executions.insert(e)));
-  await Promise.all(testingLinks.map((l) => db.links.insert(l)));
-  await Promise.all(testingPages.map((p) => db.pages.insert(p)));
-  await Promise.all(testingData.map((d) => db.data.insert(d)));
+export const clearDocs = async (db: rxdb.RxDatabase) => {
+  await db.docs.find().exec().then((ds) => ds.map(d => d.remove() ));
+  console.log("cleared", db)
+}
 
-  return db;
-};
 
 // TODO!
 const initializeLocal = async ({ name }: cfg.LocalDbConfig) => {

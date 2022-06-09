@@ -1,17 +1,27 @@
-// data types
+// We store all of our different types into the same database
+//   So here are the document types
+export type DbDocumentType = "data" | "execution" | "block" | "page";
+
+export type DbDocumentPrototype = { document_type: DocumentType };
+
+// aptly named "data" types, for different datas we operate on
+
 export type DataId = string; // todo, maybe uuid
 export type DataType = "url" | "youtube_url" | "youtube_api_result" | "video_file_url";
 
-export type Data = { id: DataId; type: DataType; body: object };
+export type DataPrototype = DbDocumentPrototype & {
+  id: DataId;
+  type: DataType;
+  document_type: "data";
+  body: object };
+export type DataURL = DataPrototype & { body: URL; type: "url" };
 
-export type DataURL = Data & { body: URL; type: "url" };
-
-export type DataYoutubeUrl = Data & {
+export type DataYoutubeUrl = DataPrototype & {
   type: "youtube_url";
   body: string /* & { host: "youtube.com" | "www.youtube.com" } */;
 };
 
-export type DataVideoFileUrl = Data & {
+export type DataVideoFileUrl = DataPrototype & {
   type: "video_file_url";
   body: {
     // possibly add format and other data, imported_on, etc
@@ -19,37 +29,54 @@ export type DataVideoFileUrl = Data & {
   };
 };
 
+export type Data = DataVideoFileUrl | DataYoutubeUrl | DataURL;
+
 // Excecution... Operation? Completion? Enactment? Realizarion?
+//
+//   these are records of actions our system has taken
+//
 
 export type ExecutionID = string; // todo uuid or something
 export type ExecutionType = "download_youtube_v1" | "user_added";
 
-export type Execution = {
+type DataLink = { key?: string; data_id: DataId; }
+
+export type ExecutionPrototype = DbDocumentPrototype & {
   id: ExecutionID; // maybe cpmputed or uuid
   type: ExecutionType;
+  document_type: "execution";
   done_at: Date;
+  of_data: Array<DataLink>;
+  to_data: Array<DataLink>;
 };
-export type ExecutionYoutubeDL = Execution & { type: "download_youtube_v1" };
-export type ExecutionUserAdded = Execution & { type: "user_added" };
+export type ExecutionYoutubeDL = ExecutionPrototype & { type: "download_youtube_v1" };
+export type ExecutionUserAdded = ExecutionPrototype & { type: "user_added" };
 
-// DataLink
-// how data is linked together with excecutions, forming a graph.
-//   optional key property in case we want to pipe inputs
-//   to specific arguments in the future
+export type Execution = ExecutionUserAdded | ExecutionYoutubeDL;
 
-export type DataLinkType = "result" | "input";
+// Blocks
+//
+//  our systems lingua franca of frontend elements
 
-export type DataLink = {
-  of: ExecutionID | DataId | "user";
-  to: DataId | ExecutionID;
-  type: DataLinkType;
-  key?: string;
-};
 export type BlockID = string; // todo uuid or something
 export type BlockType = "note" | "youtube_url_input" | "downloaded_video";
-export type Block = { id: BlockID; state: "open" | "closed"; type: BlockType };
+export type BlockPrototype = DbDocumentPrototype & {
+  id: BlockID;
+  state: "open" | "closed";
+  type: BlockType,
+  document_type: "block",
+};
 
-export type BlockNote = Block & { type: "note"; body: string };
-export type BlockYoutubeInput = Block & { type: "youtube_url_input"; dataId: DataId };
-export type BlockDownloadedVideo = Block & { type: "downloaded_video"; dataId: DataId };
-export type Page = { id: string; title: string; blocks: BlockID[] };
+export type BlockNote = BlockPrototype & { type: "note"; body: string };
+export type BlockYoutubeInput = BlockPrototype & { type: "youtube_url_input"; dataId: DataId };
+export type BlockDownloadedVideo = BlockPrototype & { type: "downloaded_video"; dataId: DataId };
+
+export type Block = BlockNote | BlockYoutubeInput | BlockDownloadedVideo;
+
+// Page
+//
+//   collections of blocks
+
+export type Page = DbDocumentPrototype & { id: string; document_type: "page", title: string; blocks: BlockID[] };
+
+export type DbDocument = Page | Block | Execution | Data;

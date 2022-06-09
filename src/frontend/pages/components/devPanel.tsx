@@ -4,6 +4,8 @@ import { useRxDB } from "rxdb-hooks";
 import * as db from "../../../db";
 import * as dbTypes from "../../../db/types";
 
+import { addTestingData } from "../../../db/testing_data";
+
 const DevPanel = () => {
   // FIXME: for some reason, the type returned by useRxDb is incompatible with RxDatabase,
   // but still works accordingly.  therefore, for now:
@@ -12,12 +14,13 @@ const DevPanel = () => {
 
   console.log(data);
 
-  const clearDb = _ => db.clearAllCollections(data);
-  const recreateDb = _ => db.addCollections(data);
+  const clearDb = _ => db.clearDocs(data);
+  const addTestingDataDb = _ => addTestingData(data);
 
   return <>
-    <button onClick={clearDb}>clear all collections</button>
-    <button onClick={recreateDb}>recreate db</button>
+    <button onClick={clearDb}>clear the documents</button>
+    <button onClick={addTestingDataDb}>add testing data</button>
+
     </>
 
 };
