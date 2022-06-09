@@ -12,11 +12,16 @@ const DbPage = () => {
   const { result: allLinks }: RxQueryResultDoc<dbTypes.DataLink> = useRxData("links", queryConstructor);
   const { result: allPages }: RxQueryResultDoc<dbTypes.Page> = useRxData("pages", queryConstructor);
 
-  const RenderData = ({ documents, title }) => (
+  interface RenderDataPropTypes {
+    documents: Array<object>;
+    title: string
+  }
+  
+  const RenderData = ({ documents, title }: RenderDataPropTypes) => (
     <>
       <h2>{title}</h2>
       <ul>
-        {documents.map((document, index) => (
+        {documents.map((document: object, index: number) => (
           <li key={index}>
             <pre>{JSON.stringify(document, null, 2)}</pre>
           </li>
