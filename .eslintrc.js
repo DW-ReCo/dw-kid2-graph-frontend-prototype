@@ -7,7 +7,7 @@ module.exports = {
       jsx: true,
     },
   },
-  setting: {
+  settings: {
     react: {
       version: "detect",
     },

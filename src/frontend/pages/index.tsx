@@ -1,14 +1,15 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+
 import React from "react";
 import { RxCollection } from "rxdb";
 import { useRxData, useRxCollection, RxQueryResultDoc } from "rxdb-hooks";
 import { v4 as uuidv4 } from "uuid";
 
 const IndexPage = () => {
-  const dbcollection = useRxCollection<RxCollection>("characters");
+  type Character = { name: string; id: string };
+  const dbcollection = useRxCollection<RxCollection<Character>>("characters");
 
   const queryConstructor = (collection: RxCollection) => collection.find();
-
-  type Character = { name: string; id: string };
 
   const { result: characters }: RxQueryResultDoc<Character> = useRxData("characters", queryConstructor);
 
@@ -18,8 +19,9 @@ const IndexPage = () => {
 
   const handleSubmit = async (event: React.SyntheticEvent) => {
     event.preventDefault();
+    const value = event.target[0].value !== undefined ? event.target[0].value : "";
     // @ts-ignore
-    return await dbcollection.insert({ name: event.target[0].value, id: uuidv4() });
+    return await dbcollection.insert({ name: value, id: uuidv4() });
   };
 
   const handleDelete = async (id: string) => {
@@ -43,7 +45,6 @@ const IndexPage = () => {
   };
 
   const handleInputChange = async (event: React.ChangeEvent<HTMLInputElement>, id: string) => {
-
     const resultToUpdate = dbcollection.find({
       selector: {
         id: {
