@@ -11,6 +11,9 @@ import { RxDBLeaderElectionPlugin } from "rxdb/plugins/leader-election";
 import { RxDBQueryBuilderPlugin } from "rxdb/plugins/query-builder";
 import { RxDBUpdatePlugin } from "rxdb/plugins/update";
 import { RxDBDevModePlugin } from 'rxdb/plugins/dev-mode';
+import {
+    getRxStorageMemory
+} from 'rxdb/plugins/memory';
 
 import * as cfg from "../cfg";
 import * as Logger from "../logger";
@@ -138,23 +141,44 @@ export const initialize = async (dbLoader: cfg.DbConfig) => {
       return initializeServer(dbLoader);
   }
 };
-console.log(`xxxxxxxxxxxssssstarting testing db`)
-
 
 export const testDb = async () => {
-  console.log(`ssssstarting testing db`)
+  const doc = { id: "hello", document_type: "goodbye" }
+
+  const addDoc = async () => db.docs.atomicUpsert(doc).then(d => {
+    console.log("hello YES succeeded in upserting:", d.get());
+  })
+
+  const removeDoc = () =>
+    db.docs
+      .findOne()
+      .where("id")
+      .equals("hello")
+      .remove()
+      .then(() => console.log("hello BYE removed success"))
+      .catch(e => console.error(`hello FAIL removing the doc failed`, e))
+
+  const printDocs = () =>
+    db.docs
+      .find()
+      .exec()
+      .then(ds => Promise.all(ds.map(d => d.get())))
+      .then(ds => console.log("hello GOT docs", ds))
+
   rxdb.addRxPlugin(RxDBQueryBuilderPlugin);
   rxdb.addRxPlugin(RxDBReplicationCouchDBPlugin);
-  rxdb.addRxPlugin(RxDBLeaderElectionPlugin);
-  rxdb.addRxPlugin(RxDBUpdatePlugin);
+  // rxdb.addRxPlugin(RxDBLeaderElectionPlugin);
+  // rxdb.addRxPlugin(RxDBUpdatePlugin);
 
   pouchdb.addPouchPlugin(MemoryAdapter);
   pouchdb.addPouchPlugin(PouchHttp);
   pouchdb.addPouchPlugin(IdbAdapter);
 
   const db = await rxdb.createRxDatabase({
-    name: "random-test", // database name
-    storage: pouchdb.getRxStoragePouch("idb"), // RxStorage, idb = IndexedDB
+    // name: "random-test" + Date.now(), // database name
+    name: "random-testt", // database name
+    // storage: getRxStorageMemory(),
+    storage: pouchdb.getRxStoragePouch("memory"), // RxStorage, idb = IndexedDB
     cleanupPolicy: {}, // <- custom cleanup policy (optional)
     eventReduce: true, // <- enable event-reduce to detect changes
   });
@@ -172,25 +196,32 @@ export const testDb = async () => {
       }
     }
   })
-  const doc = { id: "hello", document_type: "goodbye" }
 
-  await db.docs.atomicUpsert(doc).then(d => {
-    log.info("succeeded in upserting:", d.get());
-  })
+  await addDoc()
+  await printDocs()
+  await removeDoc()
+  await printDocs()
+  await addDoc()
+  await printDocs()
+  await removeDoc()
+  await printDocs()
+  await addDoc()
+  await printDocs()
+  await removeDoc()
+  await printDocs()
+  await addDoc()
+  await printDocs()
+  await removeDoc()
+  await printDocs()
+  await addDoc()
+  await removeDoc()
 
-  try {
-    await db.docs
-      .find()
-      .exec()
-      .then((ds) => Promise.all(ds.map(d => { console.log(`removing`, d.get().id); return d.remove() })))
-  } catch (e) {
-    console.error("removing the item failed", e)
-  }
-
-  await db.docs.find().exec().then(ds => Promise.all(ds.map(d => d.get()))).then(console.log)
-
-  await db.destroy()
+  await db.remove()
   console.log(`ended testing db`)
 };
 
-// testDb().then(testDb).then(testDb).then(testDb).then(testDb)
+console.log("trying testttt")
+if (typeof window !== "undefined") {
+  console.log("window found")
+  testDb()
+}

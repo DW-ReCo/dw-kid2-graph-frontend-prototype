@@ -11,45 +11,45 @@ const App = ({ Component, pageProps }: AppProps) => {
   const [ready, setReady] = useState(false);
   const [, setConfig] = useState<cfg.PartialConfig>();
   const [db, setDb] = useState<RxDatabase>();
-
-  const initDB = async (c: cfg.PartialConfig) => {
-    if (db) {
-      console.log(`already have db!`);
-      return
-    }
-    console.log(`[app] using config`, c);
-    const { dbs: dbLoaders } = c;
-    console.log(`[app] initializing dbs`, dbLoaders);
-    if (!dbLoaders || !dbLoaders[0]) {
-      console.log("No db defined");
-      return <>No Db defined</>;
-    }
-    console.log(`[app] for now, only using`, dbLoaders[0]);
-    const dbLoader = dbLoaders[0];
-    if (db) { await db.remove() } // remobe the the db if it already exisrs
-    const _db = await initialize(dbLoader);
-    console.log(`[app] got db`, _db);
-    setDb(_db);
-    return _db;
-  };
-
-  useEffect(() => {
-    const initConfig = async () => {
-      const c = await cfg.load();
-      console.log(`[app] loaded config`, c);
-      setConfig(c);
-      return c;
-    };
-
-    if (window !== undefined) {
-      initConfig()
-        .then((c) => initDB(c))
-        // .then((db) => clearAllCollections(db))
-        // .then((d: RxDatabase) => addTestingData(d))
-        .then(() => setReady(true));
-    }
-  }, []);
-
+  /*
+   *   const initDB = async (c: cfg.PartialConfig) => {
+   *     if (db) {
+   *       console.log(`already have db!`);
+   *       return
+   *     }
+   *     console.log(`[app] using config`, c);
+   *     const { dbs: dbLoaders } = c;
+   *     console.log(`[app] initializing dbs`, dbLoaders);
+   *     if (!dbLoaders || !dbLoaders[0]) {
+   *       console.log("No db defined");
+   *       return <>No Db defined</>;
+   *     }
+   *     console.log(`[app] for now, only using`, dbLoaders[0]);
+   *     const dbLoader = dbLoaders[0];
+   *     if (db) { await db.remove() } // remobe the the db if it already exisrs
+   *     const _db = await initialize(dbLoader);
+   *     console.log(`[app] got db`, _db);
+   *     setDb(_db);
+   *     return _db;
+   *   };
+   *
+   *   useEffect(() => {
+   *     const initConfig = async () => {
+   *       const c = await cfg.load();
+   *       console.log(`[app] loaded config`, c);
+   *       setConfig(c);
+   *       return c;
+   *     };
+   *
+   *     if (window !== undefined) {
+   *       initConfig()
+   *         .then((c) => initDB(c))
+   *       // .then((db) => clearAllCollections(db))
+   *       // .then((d: RxDatabase) => addTestingData(d))
+   *         .then(() => setReady(true));
+   *     }
+   *   }, []);
+   *  */
   return (
     <>
       {db && ready && (
