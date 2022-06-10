@@ -16,6 +16,7 @@ import * as cfg from "../cfg";
 import * as Logger from "../logger";
 
 import * as schema from "./schema";
+import * as types from "./types";
 
 const log = Logger.makeLogger("db/index");
 
@@ -44,20 +45,37 @@ export const addCollections = async (db: rxdb.RxDatabase) => {
   return db;
 };
 
-export const clearDocs = async (db: rxdb.RxDatabase) => {
+export const clearDocs = async (db: rxdb.RxDatabase): Promise<rxdb.RxDatabase> => {
   await db.docs
     .find()
     .exec()
-    .then((ds) => Promise.all(ds.map(d => d.get())))
-    .then((ds) => ds.map(d => { console.log(d); return d.id; }))
-    .then((ids) => { log.info(`removing ${ids.length} docs`);
-                     log.info(ids)
-                     return db.docs.bulkRemove(ids);
-                     })
-    .then(success => console.log(success))
-  console.log("cleared", db)
+    .then((ds) => Promise.all(ds.map(d => d.remove())))
+    // .then((ds) => Promise.all(ds.map(d => d.get())))
+    // .then(x => { console.log("hhhhhhhhhhhhhh"); console.log(x); return x; })
+    // .then((ds) => ds.map(d => d.id))
+    // .then((ids) => {
+    //   log.info(`removing ${ids.length} docs`, ids);
+    //   return db.docs.bulkRemove(ids);
+    // })
+    // .then((report) => {
+    //   report.success.length && log.info("succeeded in removing:", report.success);
+    //   report.error.length && log.warn("failed in removing:", report.error);
+    //   return db;
+    // })
+  return db
 }
 
+export const upsertDocs = async (db: rxdb.RxDatabase, docs: types.DbDocument[]): Promise<rxdb.RxDatabase> => {
+  return await Promise.all(docs.map(d => db.docs.atomicUpsert(d))).then(ds => {
+    log.info("succeeded in upserting:", ds.map(d => d.get()));
+    return db;
+  })
+
+  return await db.docs.bulkUpsert(docs).then(ds => {
+    log.info("succeeded in upserting:", ds.length);
+    return db;
+  })
+}
 
 // TODO!
 const initializeLocal = async ({ name }: cfg.LocalDbConfig) => {
@@ -120,3 +138,59 @@ export const initialize = async (dbLoader: cfg.DbConfig) => {
       return initializeServer(dbLoader);
   }
 };
+console.log(`xxxxxxxxxxxssssstarting testing db`)
+
+
+export const testDb = async () => {
+  console.log(`ssssstarting testing db`)
+  rxdb.addRxPlugin(RxDBQueryBuilderPlugin);
+  rxdb.addRxPlugin(RxDBReplicationCouchDBPlugin);
+  rxdb.addRxPlugin(RxDBLeaderElectionPlugin);
+  rxdb.addRxPlugin(RxDBUpdatePlugin);
+
+  pouchdb.addPouchPlugin(MemoryAdapter);
+  pouchdb.addPouchPlugin(PouchHttp);
+  pouchdb.addPouchPlugin(IdbAdapter);
+
+  const db = await rxdb.createRxDatabase({
+    name: "random-test", // database name
+    storage: pouchdb.getRxStoragePouch("idb"), // RxStorage, idb = IndexedDB
+    cleanupPolicy: {}, // <- custom cleanup policy (optional)
+    eventReduce: true, // <- enable event-reduce to detect changes
+  });
+
+  await db.addCollections({
+    docs: {
+      schema: {
+        version: 0,
+        type: "object",
+        primaryKey: "id",
+        properties: {
+          id: { type: "string", maxLength: 100 },
+          document_type: { type: "string", maxLength: 100 }
+        },
+      }
+    }
+  })
+  const doc = { id: "hello", document_type: "goodbye" }
+
+  await db.docs.atomicUpsert(doc).then(d => {
+    log.info("succeeded in upserting:", d.get());
+  })
+
+  try {
+    await db.docs
+      .find()
+      .exec()
+      .then((ds) => Promise.all(ds.map(d => { console.log(`removing`, d.get().id); return d.remove() })))
+  } catch (e) {
+    console.error("removing the item failed", e)
+  }
+
+  await db.docs.find().exec().then(ds => Promise.all(ds.map(d => d.get()))).then(console.log)
+
+  await db.destroy()
+  console.log(`ended testing db`)
+};
+
+// testDb().then(testDb).then(testDb).then(testDb).then(testDb)
