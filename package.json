@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "concurrently \"npm run server\" \"npm run dev:next\"",
-    "dev:next": "next dev ./src/frontend -p 1234",
+    "dev:next": "next dev ./src/frontend",
     "build": "next build ./src/frontend",
     "t": "node src/db/test.js",
     "lint": "next lint ./src/frontend",
