@@ -1,16 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { Provider } from "rxdb-hooks";
 import { initialize } from "../../db";
-import { subscribeQuery } from "../../utils/subscribeQuery";
 import { RxDatabase } from "rxdb";
 import { AppProps } from "next/app";
 import * as cfg from "../../cfg";
 
+import DevPanel from "./components/devPanel";
+
 const App = ({ Component, pageProps }: AppProps) => {
+  const [ready, setReady] = useState(false);
   const [, setConfig] = useState<cfg.PartialConfig>();
   const [db, setDb] = useState<RxDatabase>();
 
   const initDB = async (c: cfg.PartialConfig) => {
+    if (db) {
+      console.log(`already have db!`);
+      return;
+    }
     console.log(`[app] using config`, c);
     const { dbs: dbLoaders } = c;
     console.log(`[app] initializing dbs`, dbLoaders);
@@ -20,14 +26,13 @@ const App = ({ Component, pageProps }: AppProps) => {
     }
     console.log(`[app] for now, only using`, dbLoaders[0]);
     const dbLoader = dbLoaders[0];
+    if (db) {
+      await db.remove();
+    } // remobe the the db if it already exisrs
     const _db = await initialize(dbLoader);
     console.log(`[app] got db`, _db);
     setDb(_db);
-
-    // subscribe to a query and log Niko if name is Niko
-    subscribeQuery(_db.characters.find().where({ name: { $eq: "Niko" } }), (res) => {
-      res.length > 0 && console.log("Name ist Niko");
-    });
+    return _db;
   };
 
   useEffect(() => {
@@ -39,14 +44,19 @@ const App = ({ Component, pageProps }: AppProps) => {
     };
 
     if (window !== undefined) {
-      initConfig().then((c) => initDB(c));
+      initConfig()
+        .then((c) => initDB(c))
+        // .then((db) => clearAllCollections(db))
+        // .then((d: RxDatabase) => addTestingData(d))
+        .then(() => setReady(true));
     }
   }, []);
 
   return (
     <>
-      {db && (
+      {db && ready && (
         <Provider db={db}>
+          <DevPanel />
           <Component {...pageProps} />
         </Provider>
       )}
