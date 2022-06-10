@@ -10,71 +10,68 @@ import { RxDBReplicationCouchDBPlugin } from "rxdb/plugins/replication-couchdb";
 import { RxDBLeaderElectionPlugin } from "rxdb/plugins/leader-election";
 import { RxDBQueryBuilderPlugin } from "rxdb/plugins/query-builder";
 import { RxDBUpdatePlugin } from "rxdb/plugins/update";
+import { RxDBDevModePlugin } from "rxdb/plugins/dev-mode";
+import { getRxStorageMemory } from "rxdb/plugins/memory";
 
 import * as cfg from "../cfg";
 import * as Logger from "../logger";
 
+import * as schema from "./schema";
+import * as types from "./types";
+
 const log = Logger.makeLogger("db/index");
 
-import {
-  executions as testingExecutions,
-  pages as testingPages,
-  blocks as testingBlocks,
-  links as testingLinks,
-  data as testingData,
-} from "./testing_data";
-
-const clearCollection = (name: string, db: rxdb.RxDatabase) =>
+const removeCollection = (name: string, db: rxdb.RxDatabase) =>
   db
     .removeCollection(name)
-    .then(_ => console.log(`removed collection ${name}`))
-    .catch(e => console.warn(`removing collection ${name} failed because`, e))
+    .then((_) => console.log(`removed collection ${name}`))
+    .catch((e) => console.warn(`removing collection ${name} failed because`, e));
 
-export const clearAllCollections = async (db: rxdb.RxDatabase) => {
+export const removeAllCollections = async (db: rxdb.RxDatabase) => {
   log.debug(`clearing all collections`);
   const collections = Object.keys(db.collections);
-  await Promise.all(collections.map((col) => clearCollection(col, db)));
+  await Promise.all(collections.map((col) => removeCollection(col, db)));
+  console.log(db);
   return db;
 };
 
 export const addCollections = async (db: rxdb.RxDatabase) => {
   // create a sample collection
-  await clearAllCollections(db);
-  console.log("addCollections");
-  const collections = ["data", "executions", "links", "blocks", "pages"];
-  const cls = collections.reduce(
-    (acc, name) => ({
-      ...acc,
-      [name]: { schema: { version: 0, type: "object", primaryKey: "id", properties: { id: { type: "string" } } } },
-    }),
-    {},
-  );
-  await db.addCollections(cls);
+  await removeAllCollections(db);
+  log.info("addCollections", schema.collectionSchema);
+  await db.addCollections(schema.collectionSchema);
   return db;
 };
 
-export const addTestingData = async (db: rxdb.RxDatabase) => {
-  console.log("adding testing data");
-  await Promise.all(testingBlocks.map((b, index) => db.blocks.insert(b)));
-  await Promise.all(testingExecutions.map((e) => db.executions.insert(e)));
-  await Promise.all(testingLinks.map((l) => db.links.insert(l)));
-  await Promise.all(testingPages.map((p) => db.pages.insert(p)));
-  await Promise.all(testingData.map((d) => db.data.insert(d)));
-
+export const clearDocs = async (db: rxdb.RxDatabase): Promise<rxdb.RxDatabase> => {
+  await db.docs.find().remove();
   return db;
+};
+
+export const upsertDocs = async (db: rxdb.RxDatabase, docs: types.DbDocument[]): Promise<rxdb.RxDatabase> => {
+  return await Promise.all(docs.map((d) => db.docs.atomicUpsert(d))).then((ds) => {
+    log.info(
+      "succeeded in upserting:",
+      ds.map((d) => d.get()),
+    );
+    return db;
+  });
+  // return await db.docs.bulkUpsert(docs).then(ds => {
+  //  log.info("succeeded in upserting:", ds.length);
+  //  return db;
+  // })
 };
 
 // TODO!
 const initializeLocal = async ({ name }: cfg.LocalDbConfig) => {
-  rxdb.addRxPlugin(RxDBQueryBuilderPlugin);
-  rxdb.addRxPlugin(RxDBUpdatePlugin);
-
-  pouchdb.addPouchPlugin(MemoryAdapter);
-  pouchdb.addPouchPlugin(IdbAdapter);
+  log.debug(`initializing local db with`, name);
+  //  pouchdb.addPouchPlugin(MemoryAdapter);
 
   const db = await rxdb.createRxDatabase({
     name, // database name
-    storage: pouchdb.getRxStoragePouch("idb"), // RxStorage, idb = IndexedDB
+    // storage: pouchdb.getRxStoragePouch("idb"), // RxStorage, idb = IndexedDB
+    // storage: pouchdb.getRxStoragePouch("memory"), // RxStorage, idb = IndexedDB
+    storage: getRxStorageMemory(),
     cleanupPolicy: {}, // <- custom cleanup policy (optional)
     eventReduce: true, // <- enable event-reduce to detect changes
   });
@@ -82,18 +79,13 @@ const initializeLocal = async ({ name }: cfg.LocalDbConfig) => {
 };
 
 const initializeServer = async ({ name, location }: cfg.ServerDbConfig) => {
-  rxdb.addRxPlugin(RxDBQueryBuilderPlugin);
-  rxdb.addRxPlugin(RxDBReplicationCouchDBPlugin);
-  rxdb.addRxPlugin(RxDBLeaderElectionPlugin);
-  rxdb.addRxPlugin(RxDBUpdatePlugin);
-
-  pouchdb.addPouchPlugin(MemoryAdapter);
-  pouchdb.addPouchPlugin(PouchHttp);
-  pouchdb.addPouchPlugin(IdbAdapter);
+  log.debug(`initializing server with`, name, location);
 
   const db = await rxdb.createRxDatabase({
     name, // database name
-    storage: pouchdb.getRxStoragePouch("idb"), // RxStorage, idb = IndexedDB
+    // storage: pouchdb.getRxStoragePouch("idb"), // RxStorage, idb = IndexedDB
+    // storage: pouchdb.getRxStoragePouch("memory"), // RxStorage, idb = IndexedDB
+    storage: getRxStorageMemory(),
     cleanupPolicy: {}, // <- custom cleanup policy (optional)
     eventReduce: true, // <- enable event-reduce to detect changes
   });
@@ -113,6 +105,19 @@ const initializeServer = async ({ name, location }: cfg.ServerDbConfig) => {
 };
 
 export const initialize = async (dbLoader: cfg.DbConfig) => {
+  rxdb.addRxPlugin(RxDBDevModePlugin); // FIXME: only when dev enabled
+  rxdb.addRxPlugin(RxDBQueryBuilderPlugin);
+  rxdb.addRxPlugin(RxDBReplicationCouchDBPlugin);
+  rxdb.addRxPlugin(RxDBLeaderElectionPlugin);
+  rxdb.addRxPlugin(RxDBUpdatePlugin);
+  pouchdb.addPouchPlugin(PouchHttp);
+
+  //  pouchdb.addPouchPlugin(MemoryAdapter);
+  // pouchdb.addPouchPlugin(IdbAdapter);
+  pouchdb.addPouchPlugin(MemoryAdapter);
+
+  rxdb.removeRxDatabase(dbLoader.name, pouchdb.getRxStoragePouch("memory"));
+
   switch (dbLoader._type) {
     case "local_db_config":
       return initializeLocal(dbLoader);
