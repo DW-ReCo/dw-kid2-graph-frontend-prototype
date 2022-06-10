@@ -13,7 +13,8 @@ export type DataPrototype = DbDocumentPrototype & {
   id: DataId;
   type: DataType;
   document_type: "data";
-  body: object };
+  body: object;
+};
 export type DataURL = DataPrototype & { body: URL; type: "url" };
 
 export type DataYoutubeUrl = DataPrototype & {
@@ -39,7 +40,7 @@ export type Data = DataVideoFileUrl | DataYoutubeUrl | DataURL;
 export type ExecutionID = string; // todo uuid or something
 export type ExecutionType = "download_youtube_v1" | "user_added";
 
-type DataLink = { key?: string; data_id: DataId; }
+export type DataLink = { key?: string; data_id: DataId };
 
 export type ExecutionPrototype = DbDocumentPrototype & {
   id: ExecutionID; // maybe cpmputed or uuid
@@ -63,8 +64,8 @@ export type BlockType = "note" | "youtube_url_input" | "downloaded_video";
 export type BlockPrototype = DbDocumentPrototype & {
   id: BlockID;
   state: "open" | "closed";
-  type: BlockType,
-  document_type: "block",
+  type: BlockType;
+  document_type: "block";
 };
 
 export type BlockNote = BlockPrototype & { type: "note"; body: string };
@@ -77,6 +78,6 @@ export type Block = BlockNote | BlockYoutubeInput | BlockDownloadedVideo;
 //
 //   collections of blocks
 
-export type Page = DbDocumentPrototype & { id: string; document_type: "page", title: string; blocks: BlockID[] };
+export type Page = DbDocumentPrototype & { id: string; document_type: "page"; title: string; blocks: BlockID[] };
 
 export type DbDocument = Page | Block | Execution | Data;

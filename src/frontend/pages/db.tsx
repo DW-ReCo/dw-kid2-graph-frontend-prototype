@@ -1,6 +1,5 @@
 import React from "react";
-import { RxCollection } from "rxdb";
-import { useRxData, RxQueryResultDoc, useRxQuery, useRxDB } from "rxdb-hooks";
+import { RxQueryResultDoc, useRxQuery, useRxDB } from "rxdb-hooks";
 import * as dbTypes from "../../db/types";
 import * as queries from "../../db/queries";
 
@@ -15,7 +14,7 @@ const DbPage = () => {
 
   interface RenderDataPropTypes {
     documents: Array<object>;
-    title: string
+    title: string;
   }
 
   const RenderData = ({ documents, title }: RenderDataPropTypes) => (
