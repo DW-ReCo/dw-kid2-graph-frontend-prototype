@@ -16,13 +16,14 @@ const DevPanel = () => {
 
   if (!firstDb) return <>No Db</>;
 
-  const clearDb = () => db.clearDocs(firstDb.db);
-  const addTestingDataDb = () => addTestingData(firstDb.db);
+  const clearDbs = () => dbs.map(d => db.clearDocs(d.db));
+
+  const addTestingDataDbs = () => dbs.map(d => addTestingData(d.db));
 
   return (
     <>
-      <button onClick={clearDb}>clear the documents</button>
-      <button onClick={addTestingDataDb}>add testing data</button>
+      <button onClick={clearDbs}>clear the documents (all dbs)</button>
+      <button onClick={addTestingDataDbs}>add testing data (all dbs)</button>
       <>
         Databases:
         {dbs.map(d =>

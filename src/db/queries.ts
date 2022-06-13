@@ -1,6 +1,25 @@
-import { RxDatabase } from "rxdb";
+import { RxDatabase, RxQuery } from "rxdb";
+import * as types from "./types";
 
-export const allBlocks = (db: RxDatabase) => db.docs.find().where("document_type").equals("block");
-export const allPages = (db: RxDatabase) => db.docs.find().where("document_type").equals("page");
-export const allExecutions = (db: RxDatabase) => db.docs.find().where("document_type").equals("execution");
-export const allData = (db: RxDatabase) => db.docs.find().where("document_type").equals("data");
+export const allBlocks = (db: RxDatabase): RxQuery =>
+  db.docs.find().where("document_type").equals("block");
+
+export const allPages = (db: RxDatabase): RxQuery =>
+  db.docs.find().where("document_type").equals("page");
+
+export const allExecutions = (db: RxDatabase): RxQuery =>
+  db.docs.find().where("document_type").equals("execution");
+
+export const allData = (db: RxDatabase): RxQuery =>
+  db.docs.find().where("document_type").equals("data");
+
+export const blocks = (db: RxDatabase, ids: string[]): RxQuery =>
+  db.docs.find({
+    selector: {
+        id: {
+          $in: ids
+        }
+    }})
+
+export const pageBlocks = (db: RxDatabase, page: types.Page) =>
+  blocks(db, page.blocks)
