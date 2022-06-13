@@ -13,6 +13,9 @@ export const allExecutions = (db: RxDatabase): RxQuery =>
 export const allData = (db: RxDatabase): RxQuery =>
   db.docs.find().where("document_type").equals("data");
 
+export const page = (db: RxDatabase, id: string): RxQuery =>
+  db.docs.findOne().where("id").equals(id);
+
 export const blocks = (db: RxDatabase, ids: string[]): RxQuery =>
   db.docs.find({
     selector: {
