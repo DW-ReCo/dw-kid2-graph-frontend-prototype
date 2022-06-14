@@ -4,13 +4,18 @@ import { initialize } from "../../db";
 import { RxDatabase } from "rxdb";
 import { AppProps } from "next/app";
 import * as cfg from "../../cfg";
-
+import { useStore, setLocalStorage } from "../../store";
 import DevPanel from "./components/devPanel";
 
 const App = ({ Component, pageProps }: AppProps) => {
+  const { data } = useStore();
   const [ready, setReady] = useState(false);
   const [, setConfig] = useState<cfg.PartialConfig>();
   const [db, setDb] = useState<RxDatabase>();
+
+  useEffect(() => {
+    setLocalStorage("state", data);
+  }, [data]);
 
   const initDB = async (c: cfg.PartialConfig) => {
     if (db) {
