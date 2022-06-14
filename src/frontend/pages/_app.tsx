@@ -8,6 +8,8 @@ import * as cfg from "../../cfg";
 
 import { DbsContext } from "./_context";
 
+import { useStore, setLocalStorage } from "../../store";
+
 import DevPanel from "./components/devPanel";
 
 import * as Logger from "../../logger";
@@ -25,6 +27,11 @@ const App = ({ Component, pageProps }: AppProps) => {
     log.debug(`loaded config`, c);
     setConfig(c);
   }
+  const { data } = useStore();
+
+  useEffect(() => {
+    setLocalStorage("state", data);
+  }, [data]);
 
   const loadDbs = async () => {
     if (!config) { log.error(`no config found!`); return }
