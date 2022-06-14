@@ -14,6 +14,7 @@ export type PartialConfig = {
   runtime_loads?: ConfigLoader[];
   dbs?: DbConfig[];
   twitter?: { sample_api_key?: string };
+  from_loader?: ConfigLoader;
 };
 
 // BuildConfig requires the runtime loads set
