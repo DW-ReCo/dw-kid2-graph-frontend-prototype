@@ -17,7 +17,9 @@ const initialConfig: types.BuildConfig = {
     { _type: "local_storage_loader", key: "kid2_local_config" },
   ],
   dbs: [
-    { _type: "local_db_config", name: "local_db" },
+    // add in two database types to demonstrate that pages can come from multiple dbs
+    { _type: "local_db_config", name: "local_db_1", description: "Your first database" },
+    { _type: "local_db_config", name: "local_db_2", description: "Your second database" },
     // you can also 'bake in' a permanent server to connect to he
     // {"_type": "server_db_config", "name": "shared_db", "location": "http://0.0.0.0:10102/" }
   ],

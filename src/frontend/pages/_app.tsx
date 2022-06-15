@@ -1,69 +1,74 @@
 import React, { useState, useEffect } from "react";
 import { Provider } from "rxdb-hooks";
-import { initialize } from "../../db";
+import * as db from "../../db";
+import * as dbTypes from "../../db/types";
 import { RxDatabase } from "rxdb";
 import { AppProps } from "next/app";
 import * as cfg from "../../cfg";
+
+import { DbsContext } from "./_context";
+
 import { useStore, setLocalStorage } from "../../store";
+
 import DevPanel from "./components/devPanel";
 
+import * as Logger from "../../logger";
+
+const log = Logger.makeLogger("frontent/pages/_app");
+
 const App = ({ Component, pageProps }: AppProps) => {
+  const [config, setConfig] = useState<cfg.PartialConfig>();
+  const [dbs, setDbs] = useState<dbTypes.LoadedDb[]>([]);
+
+  const loadConfig = async () => {
+    const c = await cfg.load();
+    log.debug(`loaded config`, c);
+    setConfig(c);
+  };
   const { data } = useStore();
-  const [ready, setReady] = useState(false);
-  const [, setConfig] = useState<cfg.PartialConfig>();
-  const [db, setDb] = useState<RxDatabase>();
 
   useEffect(() => {
     setLocalStorage("state", data);
   }, [data]);
 
-  const initDB = async (c: cfg.PartialConfig) => {
-    if (db) {
-      console.log(`already have db!`);
+  const loadDbs = async () => {
+    if (!config) {
+      log.error(`no config found!`);
       return;
     }
-    console.log(`[app] using config`, c);
-    const { dbs: dbLoaders } = c;
-    console.log(`[app] initializing dbs`, dbLoaders);
-    if (!dbLoaders || !dbLoaders[0]) {
-      console.log("No db defined");
-      return <>No Db defined</>;
+    if (!config.dbs) {
+      log.error(`no databases configured`);
+      return;
     }
-    console.log(`[app] for now, only using`, dbLoaders[0]);
-    const dbLoader = dbLoaders[0];
-    if (db) {
-      await db.remove();
-    } // remobe the the db if it already exisrs
-    const _db = await initialize(dbLoader);
-    console.log(`[app] got db`, _db);
-    setDb(_db);
-    return _db;
+    const { dbs: loaders } = config;
+    log.debug(`initializing dbs`, loaders);
+    const dbs = await db.initializeAll(loaders);
+    setDbs(dbs);
   };
 
+  // onLoad - when the application loads, load the config
   useEffect(() => {
-    const initConfig = async () => {
-      const c = await cfg.load();
-      console.log(`[app] loaded config`, c);
-      setConfig(c);
-      return c;
-    };
-
+    // only do any of this in the browser:
     if (window !== undefined) {
-      initConfig()
-        .then((c) => initDB(c))
-        // .then((db) => clearAllCollections(db))
-        // .then((d: RxDatabase) => addTestingData(d))
-        .then(() => setReady(true));
+      loadConfig();
     }
   }, []);
 
+  // onConfig - when we get new config, load the dbs
+  useEffect(() => {
+    // only do any of this in the browser:
+    if (window !== undefined) {
+      loadDbs();
+    }
+  }, [config]);
+
   return (
     <>
-      {db && ready && (
-        <Provider db={db}>
+      {db && (
+        <DbsContext.Provider value={dbs}>
           <DevPanel />
           <Component {...pageProps} />
-        </Provider>
+        </DbsContext.Provider>
       )}
     </>
   );
