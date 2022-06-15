@@ -16,9 +16,9 @@ const DevPanel = () => {
 
   if (!firstDb) return <>No Db</>;
 
-  const clearDbs = () => dbs.map(d => db.clearDocs(d.db));
+  const clearDbs = () => dbs.map((d) => db.clearDocs(d.db));
 
-  const addTestingDataDbs = () => dbs.map(d => addTestingData(d.db));
+  const addTestingDataDbs = () => dbs.map((d) => addTestingData(d.db));
 
   return (
     <>
@@ -29,10 +29,10 @@ const DevPanel = () => {
       <button onClick={addTestingDataDbs}>add testing data (all dbs)</button>
       <>
         Databases:
-        {dbs.map(d =>
+        {dbs.map((d) => (
           <span>{d.name} |</span>
-        )}
-        </>
+        ))}
+      </>
     </>
   );
 };

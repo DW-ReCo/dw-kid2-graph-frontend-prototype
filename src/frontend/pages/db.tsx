@@ -4,10 +4,10 @@ import * as dbTypes from "../../db/types";
 import * as queries from "../../db/queries";
 import { DbsContext } from "./_context";
 
-  interface RenderDataPropTypes {
-    documents: Array<object>;
-    title: string;
-  }
+interface RenderDataPropTypes {
+  documents: Array<object>;
+  title: string;
+}
 
 const OneDb = (dbL: dbTypes.LoadedDb) => {
   const { db, name, description } = dbL;
@@ -40,17 +40,11 @@ const OneDb = (dbL: dbTypes.LoadedDb) => {
       <RenderData title="Pages" documents={allPages} />
     </div>
   );
-
-
-}
+};
 
 const DbPage = () => {
   const dbs = React.useContext(DbsContext);
-  return (
-    <div>
-     {dbs.map(OneDb)}
-    </div>
-  )
+  return <div>{dbs.map(OneDb)}</div>;
 };
 
 export default DbPage;

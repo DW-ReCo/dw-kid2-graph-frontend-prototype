@@ -16,8 +16,6 @@ import * as Logger from "../../logger";
 
 const log = Logger.makeLogger("frontent/pages/_app");
 
-
-
 const App = ({ Component, pageProps }: AppProps) => {
   const [config, setConfig] = useState<cfg.PartialConfig>();
   const [dbs, setDbs] = useState<dbTypes.LoadedDb[]>([]);
@@ -26,7 +24,7 @@ const App = ({ Component, pageProps }: AppProps) => {
     const c = await cfg.load();
     log.debug(`loaded config`, c);
     setConfig(c);
-  }
+  };
   const { data } = useStore();
 
   useEffect(() => {
@@ -34,13 +32,19 @@ const App = ({ Component, pageProps }: AppProps) => {
   }, [data]);
 
   const loadDbs = async () => {
-    if (!config) { log.error(`no config found!`); return }
-    if (!config.dbs) { log.error(`no databases configured`); return }
+    if (!config) {
+      log.error(`no config found!`);
+      return;
+    }
+    if (!config.dbs) {
+      log.error(`no databases configured`);
+      return;
+    }
     const { dbs: loaders } = config;
     log.debug(`initializing dbs`, loaders);
     const dbs = await db.initializeAll(loaders);
     setDbs(dbs);
-  }
+  };
 
   // onLoad - when the application loads, load the config
   useEffect(() => {
