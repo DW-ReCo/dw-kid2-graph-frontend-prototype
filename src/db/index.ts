@@ -23,20 +23,20 @@ const log = Logger.makeLogger("db/index");
 
 try {
   // cheap way to make sure we dont add the plugins twice...
-rxdb.addRxPlugin(RxDBDevModePlugin); // FIXME: only when dev enabled
+  rxdb.addRxPlugin(RxDBDevModePlugin); // FIXME: only when dev enabled
 
-rxdb.addRxPlugin(RxDBQueryBuilderPlugin);
-rxdb.addRxPlugin(RxDBReplicationCouchDBPlugin);
-rxdb.addRxPlugin(RxDBLeaderElectionPlugin);
-rxdb.addRxPlugin(RxDBUpdatePlugin);
-pouchdb.addPouchPlugin(PouchHttp);
+  rxdb.addRxPlugin(RxDBQueryBuilderPlugin);
+  rxdb.addRxPlugin(RxDBReplicationCouchDBPlugin);
+  rxdb.addRxPlugin(RxDBLeaderElectionPlugin);
+  rxdb.addRxPlugin(RxDBUpdatePlugin);
+  pouchdb.addPouchPlugin(PouchHttp);
 
-// pouchdb.addPouchPlugin(MemoryAdapter);
-// pouchdb.addPouchPlugin(IdbAdapter);
-pouchdb.addPouchPlugin(MemoryAdapter);
+  // pouchdb.addPouchPlugin(MemoryAdapter);
+  // pouchdb.addPouchPlugin(IdbAdapter);
+  pouchdb.addPouchPlugin(MemoryAdapter);
 } catch (e) {
   // TODO only do this if "plugin already added" error
-  log.error(e)
+  log.error(e);
 }
 
 const removeCollection = (name: string, db: rxdb.RxDatabase) =>
@@ -89,7 +89,7 @@ const makeDb = async (cfg: cfg.DbConfig) => {
     cleanupPolicy: {}, // <- custom cleanup policy (optional)
     eventReduce: true, // <- enable event-reduce to detect changes
   });
-}
+};
 
 // TODO!
 const initializeLocalDb = async (db: rxdb.RxDatabase, cfg: cfg.LocalDbConfig): Promise<rxdb.RxDatabase> => {
@@ -115,7 +115,6 @@ const initializeServerDb = async (db: rxdb.RxDatabase, cfg: cfg.ServerDbConfig) 
 };
 
 export const initializeOne = async (dbLoader: cfg.DbConfig): Promise<rxdb.RxDatabase> => {
-
   // remove any old version od the database
   await rxdb.removeRxDatabase(dbLoader.name, pouchdb.getRxStoragePouch("memory"));
 
@@ -127,9 +126,9 @@ export const initializeOne = async (dbLoader: cfg.DbConfig): Promise<rxdb.RxData
     ? initializeLocalDb(db, dbLoader)
     : t == "server_db_config"
     ? initializeServerDb(db, dbLoader)
-    : log.throw(`type ${t} is not a valid database type`)
+    : log.throw(`type ${t} is not a valid database type`);
 };
 
 export const initializeAll = async (loaders: cfg.DbConfig[]): Promise<Array<types.LoadedDb>> => {
-  return Promise.all(loaders.map(loader => initializeOne(loader).then(db => ({ ...loader, db }))));
-}
+  return Promise.all(loaders.map((loader) => initializeOne(loader).then((db) => ({ ...loader, db }))));
+};
