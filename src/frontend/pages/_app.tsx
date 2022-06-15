@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Provider } from "rxdb-hooks";
 import * as db from "../../db";
 import * as dbTypes from "../../db/types";
-import { RxDatabase } from "rxdb";
 import { AppProps } from "next/app";
 import * as cfg from "../../cfg";
 import { DbsContext } from "./_context";
