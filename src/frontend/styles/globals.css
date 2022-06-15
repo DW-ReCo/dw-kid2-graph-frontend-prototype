@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+button {
+  @apply bg-slate-200 p-2 m-2;
+}
+
+button:hover {
+  @apply bg-slate-300;
+}
+
+a {
+  @apply underline;
+}
+
+a:hover {
+  @apply no-underline;
+}
+
+h1 {
+    @apply text-2xl font-bold;
+}
+
+h2 {
+    @apply text-xl font-bold;
+}
+
+h3 {
+    @apply text-lg font-bold;
+}
+
+textarea {
+    @apply border-2 border-slate-400 p-2;
+}

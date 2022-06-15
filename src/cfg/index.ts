@@ -27,7 +27,7 @@ const fromLocalStorage: (l: types.LocalStorageConfigLoader) => Promise<types.Par
 export const toLocalStorage = (l: types.LocalStorageConfigLoader, c: types.PartialConfig) => {
   const { key } = l;
   typeof window !== "undefined" ? window.localStorage.setItem(key, JSON.stringify(c)) : false;
-}
+};
 
 const fromServer: (l: types.ServerConfigLoader) => Promise<types.PartialConfig> =
   // in the future, this will fetch config from a server.  for now, it returns nothing
@@ -46,16 +46,16 @@ const fromLoader: (l: types.ConfigLoader) => Promise<types.PartialConfig> = asyn
 // in the future, this function could work recursively, i.e the user has
 // configured places to load more config from
 export const all: () => Promise<types.PartialConfig[]> = async () => {
-   const { runtime_loads } = buildConfig;
+  const { runtime_loads } = buildConfig;
 
   const getLoader = (loader: types.ConfigLoader) =>
-    fromLoader(loader).then(config => ({ ...config, from_loader: loader }))
+    fromLoader(loader).then((config) => ({ ...config, from_loader: loader }));
 
   // turn the runtime loads into PartialConfigs
   const configs = await Promise.all(runtime_loads.map(getLoader));
 
   return [buildConfig, ...configs];
-}
+};
 
 export const load: () => Promise<types.PartialConfig> = async () => {
   // TODO: deep merge
