@@ -3,6 +3,9 @@ import * as db from "../../db";
 import * as dbTypes from "../../db/types";
 import { AppProps } from "next/app";
 import * as cfg from "../../cfg";
+
+import "../styles/globals.css";
+
 import { DbsContext } from "./_context";
 
 import { useStore, setLocalStorage } from "../../store";
