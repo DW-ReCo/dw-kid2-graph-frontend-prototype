@@ -1,0 +1,16 @@
+name: test
+on:
+  push:
+    branches:
+      - 'master'
+  pull_request:
+jobs:
+  test-basic-ubuntu-18-v10:
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Cypress tests
+        # normally you would write
+        uses: cypress-io/github-action@v4.1.0
