@@ -29,6 +29,5 @@ describe('Database Test', async () => {
 
     await d.destroy();
     expect(d.destroyed).to.equal(true);
-    expect(false).to.equal(true);
   })
 })
