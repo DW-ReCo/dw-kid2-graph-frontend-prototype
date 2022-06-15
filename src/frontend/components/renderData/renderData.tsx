@@ -1,11 +1,7 @@
 import React from "react";
+import * as types from "./types"
 
-interface RenderDataPropTypes {
-  documents: Array<object>;
-  title: string;
-}
-
-const RenderData = ({ documents, title }: RenderDataPropTypes) => (
+const RenderData = ({ documents, title }: types.RenderDataPropTypes) => (
   <>
     <h2>{title}</h2>
     <ul>
