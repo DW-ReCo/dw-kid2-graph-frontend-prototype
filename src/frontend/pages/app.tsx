@@ -15,22 +15,34 @@ const Block = (props: { db: dbTypes.LoadedDb, block: dbTypes.Block}) => {
   )
 }
 
+const PageBlocks = (props: {db: dbTypes.LoadedDb; page: dbTypes.Page; }) => {
+  const { page: p, db } = props;
+
+  const { result: docs } = useRxQuery(queries.pageBlocks(db.db, p));
+  const blocks: dbTypes.Block[] = docs.map(d => d.get())
+
+  return (
+    <>{blocks.map(b =>
+      <Block db={db} block={b} />
+    )}</>
+  );
+}
+
 
 const Page = (props: { db: dbTypes.LoadedDb, page: dbTypes.Page}) => {
   const { page: p, db } = props;
 
   const { result: doc } = useRxQuery(queries.page(db.db, p.id));
-  const page: dbTypes.Page = doc[0].get();
+  const page: dbTypes.Page = doc[0]?.get();
 
-  const { result: docs } = useRxQuery(queries.pageBlocks(db.db, page));
-  const blocks: dbTypes.Block[] = docs.map(d => d.get())
+  if (!page) {
+    return <h4>Page Not Found</h4>
+  }
 
   return (
     <>
       <h1>{page.title}</h1>
-      {blocks.map(b =>
-        <Block db={db} block={b} />
-      )}
+      <PageBlocks db={db} page={page} />
     </>
   ) }
 
