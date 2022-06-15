@@ -1,7 +1,7 @@
 import React from "react";
 import RenderData from "../../components/renderData";
 import * as dbTypes from "../../../db/types";
-import * as queries from "../../../db/queries"
+import * as queries from "../../../db/queries";
 import { RxQueryResultDoc, useRxQuery } from "rxdb-hooks";
 
 const DBRenderer = (dbL: dbTypes.LoadedDb) => {
