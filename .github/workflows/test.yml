@@ -13,4 +13,4 @@ jobs:
 
       - name: Cypress tests
         # normally you would write
-        uses: cypress-io/github-action@v2
+        uses: cypress-io/github-action@v4.1.0
