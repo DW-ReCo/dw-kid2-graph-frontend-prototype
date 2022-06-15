@@ -5,7 +5,6 @@ import * as dbTypes from "../../db/types";
 import { RxDatabase } from "rxdb";
 import { AppProps } from "next/app";
 import * as cfg from "../../cfg";
-
 import { DbsContext } from "./_context";
 
 import { useStore, setLocalStorage } from "../../store";
