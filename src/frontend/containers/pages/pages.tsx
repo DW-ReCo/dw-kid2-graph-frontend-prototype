@@ -12,7 +12,7 @@ const Pages = (props: { dbL: dbTypes.LoadedDb; open: (p: dbTypes.Page) => void }
   // this gets out the data, that can be passed to react.  you can also call remove, etc
   // on these RxDocumentConstructors, so it might be helpful to keep them that way for longer
   const allPages: dbTypes.Page[] = allDocs.map((d) => d.get());
-  const pages = (ps) => ps.map((p) => PageListItem(dbL, p, () => open(p)));
+  const pages = (ps) => ps.map((p) => <PageListItem page={p} open={() => open(p)} />);
 
   return (
     <div>
