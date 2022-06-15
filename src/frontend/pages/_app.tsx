@@ -5,6 +5,7 @@ import * as dbTypes from "../../db/types";
 import { RxDatabase } from "rxdb";
 import { AppProps } from "next/app";
 import * as cfg from "../../cfg";
+import "../styles/globals.css";
 
 import { DbsContext } from "./_context";
 
