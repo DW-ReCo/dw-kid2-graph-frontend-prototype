@@ -5,7 +5,7 @@ on:
       - 'master'
   pull_request:
 jobs:
-  basic-ubuntu-18-v10:
+  test-basic-ubuntu-18-v10:
     runs-on: ubuntu-18.04
     steps:
       - name: Checkout
