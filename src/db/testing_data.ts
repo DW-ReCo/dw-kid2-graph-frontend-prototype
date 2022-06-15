@@ -114,8 +114,8 @@ export const generateTestingDocs1 = (sym?: string) => {
   ];
 };
 
-export const addTestingData = async (db_i: rxdb.RxDatabase) => {
-  const data = generateTestingDocs1("same");
-  await db.upsertDocs(db_i, data);
-  return db_i;
+export const addTestingData = async (instance: rxdb.RxDatabase) => {
+  const docs = generateTestingDocs1("same");
+  await db.upsertDocs(instance, docs);
+  return docs;
 };
