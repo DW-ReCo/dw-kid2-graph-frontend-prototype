@@ -12,7 +12,7 @@ const PageBlocks = (props: { db: dbTypes.LoadedDb; page: dbTypes.Page }) => {
   return (
     <>
       {blocks.map((b) => (
-        <Block db={db} block={b} />
+        <Block block={b} />
       ))}
     </>
   );
