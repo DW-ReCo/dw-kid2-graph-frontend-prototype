@@ -16,9 +16,10 @@ const Block = (props: { db: dbTypes.LoadedDb; block: dbTypes.Block }) => {
 };
 
 const PageBlocks = (props: { db: dbTypes.LoadedDb; page: dbTypes.Page }) => {
-  const { page: p, db } = props;
+  const { page, db } = props;
 
-  const { result: docs } = useRxQuery(queries.pageBlocks(db.db, p));
+  const { result: docs } = useRxQuery(queries.pageBlocks(db.db, page));
+
   const blocks: dbTypes.Block[] = docs.map((d) => d.get());
 
   return (
@@ -30,10 +31,10 @@ const PageBlocks = (props: { db: dbTypes.LoadedDb; page: dbTypes.Page }) => {
   );
 };
 
-const Page = (props: { db: dbTypes.LoadedDb; page: dbTypes.Page }) => {
-  const { page: p, db } = props;
+const Page = (props: { db: dbTypes.LoadedDb; pageID: string }) => {
+  const { pageID, db } = props;
 
-  const { result: doc } = useRxQuery(queries.page(db.db, p.id));
+  const { result: doc } = useRxQuery(queries.page(db.db,pageID));
   const page: dbTypes.Page = doc[0]?.get();
 
   if (!page) {
@@ -80,10 +81,10 @@ const ApplicationContainer = () => {
   const dbs = React.useContext(DbsContext);
 
   const [activeDb, setDb] = React.useState<dbTypes.LoadedDb>();
-  const [activePage, setPage] = React.useState<dbTypes.Page>();
+  const [activePage, setActivePage] = React.useState<dbTypes.Page["id"]>();
 
   const openPage = (d: dbTypes.LoadedDb) => (p: dbTypes.Page) => {
-    setPage(p);
+    setActivePage(p.id);
     setDb(d);
     console.log(`opening page ${p.title}`);
   };
@@ -95,7 +96,7 @@ const ApplicationContainer = () => {
           <Pages dbL={d} open={openPage(d)} />
         ))}
       </div>
-      <div>{activePage && <Page db={activeDb} page={activePage} />}</div>
+      <div>{activePage && <Page db={activeDb} pageID={activePage} />}</div>
     </div>
   );
 };
