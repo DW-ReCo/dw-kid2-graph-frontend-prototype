@@ -1,3 +1,6 @@
+import * as rxdb from "rxdb";
+import { DbConfig } from "../cfg/types";
+
 // We store all of our different types into the same database
 //   So here are the document types
 export type DbDocumentType = "data" | "execution" | "block" | "page";
@@ -81,3 +84,5 @@ export type Block = BlockNote | BlockYoutubeInput | BlockDownloadedVideo;
 export type Page = DbDocumentPrototype & { id: string; document_type: "page"; title: string; blocks: BlockID[] };
 
 export type DbDocument = Page | Block | Execution | Data;
+
+export type LoadedDb = DbConfig & { db: rxdb.RxDatabase };

@@ -21,6 +21,24 @@ import * as types from "./types";
 
 const log = Logger.makeLogger("db/index");
 
+try {
+  // cheap way to make sure we dont add the plugins twice...
+  rxdb.addRxPlugin(RxDBDevModePlugin); // FIXME: only when dev enabled
+
+  rxdb.addRxPlugin(RxDBQueryBuilderPlugin);
+  rxdb.addRxPlugin(RxDBReplicationCouchDBPlugin);
+  rxdb.addRxPlugin(RxDBLeaderElectionPlugin);
+  rxdb.addRxPlugin(RxDBUpdatePlugin);
+  pouchdb.addPouchPlugin(PouchHttp);
+
+  // pouchdb.addPouchPlugin(MemoryAdapter);
+  // pouchdb.addPouchPlugin(IdbAdapter);
+  pouchdb.addPouchPlugin(MemoryAdapter);
+} catch (e) {
+  // TODO only do this if "plugin already added" error
+  log.error(e);
+}
+
 const removeCollection = (name: string, db: rxdb.RxDatabase) =>
   db
     .removeCollection(name)
@@ -31,7 +49,6 @@ export const removeAllCollections = async (db: rxdb.RxDatabase) => {
   log.debug(`clearing all collections`);
   const collections = Object.keys(db.collections);
   await Promise.all(collections.map((col) => removeCollection(col, db)));
-  console.log(db);
   return db;
 };
 
@@ -63,8 +80,6 @@ export const upsertDocs = async (db: rxdb.RxDatabase, docs: types.DbDocument[]):
 };
 
 const makeDb = async (cfg: cfg.DbConfig) => {
-  // init plugins
-
   //  pouchdb.addPouchPlugin(MemoryAdapter);
   return rxdb.createRxDatabase({
     name: cfg.name, // database name
@@ -74,7 +89,7 @@ const makeDb = async (cfg: cfg.DbConfig) => {
     cleanupPolicy: {}, // <- custom cleanup policy (optional)
     eventReduce: true, // <- enable event-reduce to detect changes
   });
-}
+};
 
 // TODO!
 const initializeLocalDb = async (db: rxdb.RxDatabase, cfg: cfg.LocalDbConfig): Promise<rxdb.RxDatabase> => {
@@ -99,27 +114,21 @@ const initializeServerDb = async (db: rxdb.RxDatabase, cfg: cfg.ServerDbConfig) 
   return await addCollections(db);
 };
 
-export const initialize = async (dbLoader: cfg.DbConfig): Promise<rxdb.RxDatabase> => {
-  rxdb.addRxPlugin(RxDBDevModePlugin); // FIXME: only when dev enabled
-
-  rxdb.addRxPlugin(RxDBQueryBuilderPlugin);
-  rxdb.addRxPlugin(RxDBReplicationCouchDBPlugin);
-  rxdb.addRxPlugin(RxDBLeaderElectionPlugin);
-  rxdb.addRxPlugin(RxDBUpdatePlugin);
-  pouchdb.addPouchPlugin(PouchHttp);
-
-  // pouchdb.addPouchPlugin(MemoryAdapter);
-  // pouchdb.addPouchPlugin(IdbAdapter);
-  pouchdb.addPouchPlugin(MemoryAdapter);
-
+export const initializeOne = async (dbLoader: cfg.DbConfig): Promise<rxdb.RxDatabase> => {
   // remove any old version od the database
-  rxdb.removeRxDatabase(dbLoader.name, pouchdb.getRxStoragePouch("memory"));
+  await rxdb.removeRxDatabase(dbLoader.name, pouchdb.getRxStoragePouch("memory"));
 
   const db = await makeDb(dbLoader);
+
   const t = dbLoader._type;
+
   return t == "local_db_config"
     ? initializeLocalDb(db, dbLoader)
     : t == "server_db_config"
     ? initializeServerDb(db, dbLoader)
-    : log.throw(`type ${t} is not a valid database type`)
+    : log.throw(`type ${t} is not a valid database type`);
+};
+
+export const initializeAll = async (loaders: cfg.DbConfig[]): Promise<Array<types.LoadedDb>> => {
+  return Promise.all(loaders.map((loader) => initializeOne(loader).then((db) => ({ ...loader, db }))));
 };

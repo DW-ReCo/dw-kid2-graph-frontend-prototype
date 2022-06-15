@@ -6,24 +6,33 @@ import * as dbTypes from "../../../db/types";
 
 import { addTestingData } from "../../../db/testing_data";
 
+import { DbsContext } from "../_context";
+import { first } from "lodash/fp";
+
 const DevPanel = () => {
-  // FIXME: for some reason, the type returned by useRxDb is incompatible with RxDatabase,
-  // but still works accordingly.  therefore, for now:
+  const dbs = React.useContext(DbsContext);
 
-  const dataa = useRxDB();
-  // @ts-ignore
-  const data: RxDatabase = dataa.asRxDatabase;
+  const firstDb = first(dbs);
 
-  console.log("hhhhhhhhhhhhhhh");
-  console.log(data);
+  if (!firstDb) return <>No Db</>;
 
-  const clearDb = () => db.clearDocs(data);
-  const addTestingDataDb = () => addTestingData(data);
+  const clearDbs = () => dbs.map((d) => db.clearDocs(d.db));
+
+  const addTestingDataDbs = () => dbs.map((d) => addTestingData(d.db));
 
   return (
     <>
-      <button onClick={clearDb}>clear the documents</button>
-      <button onClick={addTestingDataDb}>add testing data</button>
+      <a href="/db">databases view | </a>
+      <a href="/app">application prototype | </a>
+      <a href="/config">config editor</a>
+      <button onClick={clearDbs}>clear the documents (all dbs)</button>
+      <button onClick={addTestingDataDbs}>add testing data (all dbs)</button>
+      <>
+        Databases:
+        {dbs.map((d) => (
+          <span>{d.name} |</span>
+        ))}
+      </>
     </>
   );
 };
