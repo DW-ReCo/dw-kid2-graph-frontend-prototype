@@ -18,6 +18,7 @@ const Block = (props: { db: dbTypes.LoadedDb; block: dbTypes.Block }) => {
 const PageBlocks = (props: { db: dbTypes.LoadedDb; page: dbTypes.Page }) => {
   const { page, db } = props;
 
+
   const { result: docs } = useRxQuery(queries.pageBlocks(db.db, page));
 
   const blocks: dbTypes.Block[] = docs.map((d) => d.get());

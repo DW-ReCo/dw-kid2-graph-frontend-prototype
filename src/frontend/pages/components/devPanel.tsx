@@ -22,6 +22,9 @@ const DevPanel = () => {
 
   return (
     <>
+      <a href="/db">databases view | </a>
+      <a href="/app">application prototype | </a>
+      <a href="/config">config editor</a>
       <button onClick={clearDbs}>clear the documents (all dbs)</button>
       <button onClick={addTestingDataDbs}>add testing data (all dbs)</button>
       <>
