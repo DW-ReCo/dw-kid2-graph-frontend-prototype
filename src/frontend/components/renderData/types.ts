@@ -1,4 +1,4 @@
 export interface RenderDataPropTypes {
-    documents: Array<object>;
-    title: string;
-  }
+  documents: Array<object>;
+  title: string;
+}
