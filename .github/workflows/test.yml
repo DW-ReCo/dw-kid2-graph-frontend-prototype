@@ -1,4 +1,4 @@
-name: example-basic
+name: test
 on:
   push:
     branches:
@@ -13,13 +13,4 @@ jobs:
 
       - name: Cypress tests
         # normally you would write
-        # uses: cypress-io/github-action@v2
-        uses: ./
-        # the parameters below are only necessary
-        # because we are running these examples in a monorepo
-        with:
-          working-directory: examples/v10/basic
-          # just for full picture after installing Cypress
-          # print information about detected browsers, etc
-          # see https://on.cypress.io/command-line#cypress-info
-          build: npx cypress info
+        uses: cypress-io/github-action@v2
