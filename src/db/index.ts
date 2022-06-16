@@ -18,6 +18,7 @@ import * as Logger from "../logger";
 
 import * as schema from "./schema";
 import * as types from "./types";
+import { async } from "rxjs";
 
 const log = Logger.makeLogger("db/index");
 
@@ -66,6 +67,7 @@ export const clearDocs = async (db: rxdb.RxDatabase): Promise<rxdb.RxDatabase> =
 };
 
 export const upsertDocs = async (db: rxdb.RxDatabase, docs: types.DbDocument[]): Promise<rxdb.RxDatabase> => {
+  log.debug(`upserting docs`, docs);
   return await Promise.all(docs.map((d) => db.docs.atomicUpsert(d))).then((ds) => {
     log.info(
       "succeeded in upserting:",
@@ -78,6 +80,9 @@ export const upsertDocs = async (db: rxdb.RxDatabase, docs: types.DbDocument[]):
   //  return db;
   // })
 };
+
+export const upsertOne = async (db: rxdb.RxDatabase, doc: types.DbDocument): Promise<rxdb.RxDatabase> =>
+  upsertDocs(db, [doc]);
 
 const makeDb = async (cfg: cfg.DbConfig) => {
   //  pouchdb.addPouchPlugin(MemoryAdapter);

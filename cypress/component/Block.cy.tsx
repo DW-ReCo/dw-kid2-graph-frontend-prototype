@@ -1,0 +1,22 @@
+
+import Block from "../../src/frontend/containers/block/index";
+
+import { generateTestingDocs1 } from "../../src/db/testing_data"
+import * as dbTypes from "../../src/db/types";
+import * as cfgTypes from "../../src/cfg/types";
+import * as db from "../../src/db";
+import { RxDatabase } from "rxdb";
+
+const docs: dbTypes.DbDocument[] = generateTestingDocs1();
+
+const blocks = docs.filter((d: dbTypes.DbDocument ) => d.document_type === "block")
+
+describe('ComponentName.cy.ts', () => {
+  it('playground', async () => {
+
+    const loader: cfgTypes.LocalDbConfig = { name: "local_db", _type: "local_db_config" };
+    const d = await db.initializeOne(loader);
+
+    cy.mount(<Block db={d} block={blocks[0]} />)
+  })
+})
