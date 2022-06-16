@@ -1,6 +1,7 @@
 import React from "react";
 
 import Block from "../../../frontend/containers/block/index";
+import AddBlock from "../../../frontend/containers/block/addBlock";
 import { generateTestingDocs1 } from "../../../db/testing_data";
 import * as dbTypes from "../../../db/types";
 import * as cfgTypes from "../../../cfg/types";
@@ -40,9 +41,16 @@ const BlockDev = () => {
 
   return (
     <>
+      <div style={{width: "49%", float: "left"}}>
       {instance && <AllBlocks db={instance} />}
-      <hr />
+        <AddBlock db={instance} />
+
+      </div>
+
+      <div style={{width: "49%", float: "left", opacity: ".5"}}>
+        <p>Test reactivity:</p>
       {instance && <AllBlocks db={instance} />} {/* twice to test reactivity */}
+        </div>
     </>
   )
 }

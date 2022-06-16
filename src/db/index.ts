@@ -18,7 +18,6 @@ import * as Logger from "../logger";
 
 import * as schema from "./schema";
 import * as types from "./types";
-import { async } from "rxjs";
 
 const log = Logger.makeLogger("db/index");
 

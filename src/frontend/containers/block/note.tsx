@@ -1,9 +1,11 @@
 import React from "react";
 
+import { v4 as uuidv4 } from "uuid";
+
 import { upsertOne } from "../../../db";
 import * as dbTypes from "../../../db/types";
 
-const NoteBlock = (props: { db: dbTypes.LoadedDb; block: dbTypes.BlockNote }) => {
+export const Component = (props: { db: dbTypes.LoadedDb; block: dbTypes.BlockNote }) => {
   const { db, block } = props;
   const { id, body } = block;
 
@@ -34,4 +36,15 @@ const NoteBlock = (props: { db: dbTypes.LoadedDb; block: dbTypes.BlockNote }) =>
   )
   }
 
-export default NoteBlock;
+export const isAvailable = (db: dbTypes.LoadedDb): Promise<boolean> => Promise.resolve(true);
+
+export const add = async (db: dbTypes.LoadedDb) => {
+  console.log("adding note")
+  const newNote: dbTypes.BlockNote = {
+    id: uuidv4(),
+    //@ts-ignore
+    document_type: "block",
+    type: "note",
+  };
+  await upsertOne(db.db, newNote);
+};
