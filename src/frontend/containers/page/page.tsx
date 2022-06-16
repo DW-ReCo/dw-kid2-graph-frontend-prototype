@@ -7,7 +7,7 @@ import PageBlocks from "../pageBlocks";
 const Page = (props: { db: dbTypes.LoadedDb; pageID: string }) => {
   const { pageID, db } = props;
 
-  const { result: doc } = useRxQuery(queries.page(db.db, pageID));
+  const { result: doc } = useRxQuery(queries.page(db.instance, pageID));
   const page: dbTypes.Page = doc[0]?.get();
 
   if (!page) {

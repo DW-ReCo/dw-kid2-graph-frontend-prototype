@@ -16,9 +16,9 @@ const DevPanel = () => {
 
   if (!firstDb) return <>No Db</>;
 
-  const clearDbs = () => dbs.map((d) => db.clearDocs(d.db));
+  const clearDbs = () => dbs.map((d) => db.clearDocs(d.instance));
 
-  const addTestingDataDbs = () => dbs.map((d) => addTestingData(d.db));
+  const addTestingDataDbs = () => dbs.map((d) => addTestingData(d.instance));
 
   return (
     <>

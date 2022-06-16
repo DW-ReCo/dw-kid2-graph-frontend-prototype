@@ -22,7 +22,7 @@ export const Component = (props: { db: dbTypes.LoadedDb; block: dbTypes.BlockNot
       state: block.state,
       type: "note",
     };
-    upsertOne(db.db, newBlock);
+    upsertOne(db.instance, newBlock);
   };
 
   return (
@@ -46,5 +46,5 @@ export const add = async (db: dbTypes.LoadedDb) => {
     document_type: "block",
     type: "note",
   };
-  await upsertOne(db.db, newNote);
+  await upsertOne(db.instance, newNote);
 };
