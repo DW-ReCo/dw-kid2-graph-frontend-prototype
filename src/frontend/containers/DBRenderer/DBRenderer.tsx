@@ -5,12 +5,12 @@ import * as queries from "../../../db/queries";
 import { RxQueryResultDoc, useRxQuery } from "rxdb-hooks";
 
 const DBRenderer = (dbL: dbTypes.LoadedDb) => {
-  const { db, name, description } = dbL;
+  const { instance, name, description } = dbL;
 
-  const { result: allBlocks }: RxQueryResultDoc<dbTypes.Block> = useRxQuery(queries.allBlocks(db));
-  const { result: allData }: RxQueryResultDoc<dbTypes.Data> = useRxQuery(queries.allData(db));
-  const { result: allExecutions }: RxQueryResultDoc<dbTypes.Execution> = useRxQuery(queries.allExecutions(db));
-  const { result: allPages }: RxQueryResultDoc<dbTypes.Page> = useRxQuery(queries.allPages(db));
+  const { result: allBlocks }: RxQueryResultDoc<dbTypes.Block> = useRxQuery(queries.allBlocks(instance));
+  const { result: allData }: RxQueryResultDoc<dbTypes.Data> = useRxQuery(queries.allData(instance));
+  const { result: allExecutions }: RxQueryResultDoc<dbTypes.Execution> = useRxQuery(queries.allExecutions(instance));
+  const { result: allPages }: RxQueryResultDoc<dbTypes.Page> = useRxQuery(queries.allPages(instance));
 
   return (
     <div>

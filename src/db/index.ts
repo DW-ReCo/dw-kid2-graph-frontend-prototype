@@ -134,5 +134,5 @@ export const initializeOne = async (dbLoader: cfg.DbConfig): Promise<rxdb.RxData
 };
 
 export const initializeAll = async (loaders: cfg.DbConfig[]): Promise<Array<types.LoadedDb>> => {
-  return Promise.all(loaders.map((loader) => initializeOne(loader).then((db) => ({ ...loader, db }))));
+  return Promise.all(loaders.map((loader) => initializeOne(loader).then((db) => ({ ...loader, instance: db }))));
 };

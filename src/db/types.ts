@@ -87,4 +87,4 @@ export type Page = DbDocumentPrototype & { id: string; document_type: "page"; ti
 
 export type DbDocument = Page | Block | Execution | Data;
 
-export type LoadedDb = DbConfig & { db: rxdb.RxDatabase };
+export type LoadedDb = DbConfig & { instance: rxdb.RxDatabase };

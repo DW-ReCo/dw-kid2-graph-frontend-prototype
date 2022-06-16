@@ -14,7 +14,7 @@ const docs: dbTypes.DbDocument[] = generateTestingDocs1();
 
 const AllBlocks = (props: {db: LoadedDb}) => {
   const { db } = props;
-  const { result: docs } = useRxQuery(queries.allBlocks(db.db));
+  const { result: docs } = useRxQuery(queries.allBlocks(db.instance));
   const blocks: dbTypes.Block[] = docs.map((d) => d.get());
 
   return (
@@ -32,9 +32,9 @@ const BlockDev = () => {
     // load the database if it's already not in the state,
     // protects against hot reloading
     instance || db.initializeOne(loader)
-                  .then(d => ({ ...loader, db: d }))
+                  .then(d => ({ ...loader, instance: d }))
                   .then(d => {
-                    db.upsertDocs(d.db, docs);
+                    db.upsertDocs(d.instance, docs);
                     setDb(d);
                   });
   }, []);
@@ -43,7 +43,7 @@ const BlockDev = () => {
     <>
       <div style={{width: "49%", float: "left"}}>
       {instance && <AllBlocks db={instance} />}
-        <AddBlock db={instance} />
+        {instance && <AddBlock db={instance} />}
 
       </div>
 

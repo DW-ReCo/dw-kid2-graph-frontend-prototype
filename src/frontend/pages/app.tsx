@@ -22,10 +22,10 @@ const ApplicationContainer = () => {
     <div>
       <div style={{ width: "30%", backgroundColor: "beige", float: "left" }}>
         {dbs.map((d) => (
-          <Pages dbL={d} open={openPage(d)} />
+          <Pages db={d} open={openPage(d)} />
         ))}
       </div>
-      <div>{activePage && <Page db={activeDb} pageID={activePage} />}</div>
+      <div>{activePage && activeDb && <Page db={activeDb} pageID={activePage} />}</div>
     </div>
   );
 };
