@@ -3,6 +3,7 @@ import * as cfgTypes from "../../../cfg/types";
 import { omit, get } from "lodash/fp";
 import * as Logger from "../../../logger";
 import * as cfg from "../../../cfg";
+import JSONEditor from "react-json-editor-ajrm";
 
 const log = Logger.makeLogger("frontent/pages/config");
 
@@ -35,12 +36,13 @@ const ConfigEditor = (props: { config: cfgTypes.PartialConfig }) => {
       <h3>
         {(loader && loader._type) || "Build Config"} - {get("key", loader)}
       </h3>
-
-      <textarea
-        value={editableValue}
-        onChange={(e) => setValue(e.target.value)}
-        style={{ width: "100%", height: "400px" }}
-        disabled={!isEditable}
+      <JSONEditor
+        placeholder={editableConfig}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
+          isEditable && setValue(JSON.stringify(e.target.value))
+        }
+        viewOnly={!isEditable}
+        height="100%"
       />
       <button onClick={saveConfig}>Save</button>
       <hr />
