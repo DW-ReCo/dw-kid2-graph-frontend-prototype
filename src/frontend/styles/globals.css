@@ -33,3 +33,10 @@ h3 {
 textarea {
     @apply border-2 border-slate-400 p-2;
 }
+
+.block {
+  @apply border-2 p-6;
+}
+.meta-tag {
+  @apply bg-slate-300 border-2;
+}

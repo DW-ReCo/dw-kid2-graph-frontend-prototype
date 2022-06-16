@@ -77,6 +77,8 @@ export type BlockDownloadedVideo = BlockPrototype & { type: "downloaded_video"; 
 
 export type Block = BlockNote | BlockYoutubeInput | BlockDownloadedVideo;
 
+export const isBlock = (doc: DbDocument): doc is Block => doc.document_type === "block";
+
 // Page
 //
 //   collections of blocks

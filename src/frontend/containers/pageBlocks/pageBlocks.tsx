@@ -1,7 +1,7 @@
 import React from "react";
 import * as dbTypes from "../../../db/types";
 import * as queries from "../../../db/queries";
-import Block from "../../components/block";
+import Block from "../../containers/block";
 import { useRxQuery } from "rxdb-hooks";
 
 const PageBlocks = (props: { db: dbTypes.LoadedDb; page: dbTypes.Page }) => {
@@ -12,7 +12,7 @@ const PageBlocks = (props: { db: dbTypes.LoadedDb; page: dbTypes.Page }) => {
   return (
     <>
       {blocks.map((b) => (
-        <Block block={b} />
+        <Block key={b.id} db={db} block={b} />
       ))}
     </>
   );
