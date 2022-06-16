@@ -9,23 +9,22 @@ const NoteBlock = (props: { db: dbTypes.LoadedDb; block: dbTypes.BlockNote }) =>
 
   const updateText = (text: string) => {
     // This doesn't work because od all the _rev, _meta info
-    // const newBlock = { ...block, body: text }
-    // this does work for a traditional upsert:
-    const newBlock = {
+    //    const newBlock = { ...block, body: text }
+
+    // this does work for a traditional upsert: see issue #41
+    const newBlock:dbTypes.BlockNote = {
       body: text,
+      // @ts-ignore
       document_type: "block" as dbTypes.DbDocumentType,
       id: block.id,
       state: block.state,
       type: "note",
     };
-    // ignore because document_type error above
-    // @ts-ignore
-    upsertOne(db.db, newBlock)
+    upsertOne(db.db, newBlock);
   };
 
   return (
     <>
-      body
       <textarea
         value={body}
         onChange={(e) => updateText(e.target.value)}
