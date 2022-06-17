@@ -1,8 +1,5 @@
 import React from "react";
-import { RxCollection, RxDatabase } from "rxdb";
-import { useRxDB } from "rxdb-hooks";
-import * as db from "../../../db";
-import * as dbTypes from "../../../db/types";
+import * as db from "@db/index";
 
 import { addTestingData } from "../../../db/testing_data";
 
