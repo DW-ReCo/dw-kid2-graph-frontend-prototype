@@ -1,5 +1,5 @@
-import { RxDatabase, RxQuery } from "rxdb";
 import * as types from "./types";
+import { RxDatabase, RxQuery } from "rxdb";
 
 export const allBlocks = (db: RxDatabase): RxQuery => db.docs.find().where("document_type").equals("block");
 

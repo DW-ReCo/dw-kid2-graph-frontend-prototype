@@ -1,23 +1,19 @@
-import * as rxdb from "rxdb";
-
-// because we use the PouchDB RxStorage, we have to add the indexeddb adapter first.
-import * as pouchdb from "rxdb/plugins/pouchdb";
-
-import * as MemoryAdapter from "pouchdb-adapter-memory";
-import * as IdbAdapter from "pouchdb-adapter-idb";
-import * as PouchHttp from "pouchdb-adapter-http";
-import { RxDBReplicationCouchDBPlugin } from "rxdb/plugins/replication-couchdb";
-import { RxDBLeaderElectionPlugin } from "rxdb/plugins/leader-election";
-import { RxDBQueryBuilderPlugin } from "rxdb/plugins/query-builder";
-import { RxDBUpdatePlugin } from "rxdb/plugins/update";
-import { RxDBDevModePlugin } from "rxdb/plugins/dev-mode";
-import { getRxStorageMemory } from "rxdb/plugins/memory";
-
 import * as cfg from "../cfg";
 import * as Logger from "../logger";
-
 import * as schema from "./schema";
 import * as types from "./types";
+import * as PouchHttp from "pouchdb-adapter-http";
+// import * as IdbAdapter from "pouchdb-adapter-idb";
+import * as MemoryAdapter from "pouchdb-adapter-memory";
+import * as rxdb from "rxdb";
+import { RxDBDevModePlugin } from "rxdb/plugins/dev-mode";
+import { RxDBLeaderElectionPlugin } from "rxdb/plugins/leader-election";
+import { getRxStorageMemory } from "rxdb/plugins/memory";
+// because we use the PouchDB RxStorage, we have to add the indexeddb adapter first.
+import * as pouchdb from "rxdb/plugins/pouchdb";
+import { RxDBQueryBuilderPlugin } from "rxdb/plugins/query-builder";
+import { RxDBReplicationCouchDBPlugin } from "rxdb/plugins/replication-couchdb";
+import { RxDBUpdatePlugin } from "rxdb/plugins/update";
 
 const log = Logger.makeLogger("db/index");
 
@@ -42,7 +38,7 @@ try {
 const removeCollection = (name: string, db: rxdb.RxDatabase) =>
   db
     .removeCollection(name)
-    .then((_) => console.log(`removed collection ${name}`))
+    .then(() => console.log(`removed collection ${name}`))
     .catch((e) => console.warn(`removing collection ${name} failed because`, e));
 
 export const removeAllCollections = async (db: rxdb.RxDatabase) => {

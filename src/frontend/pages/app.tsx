@@ -1,10 +1,8 @@
-import React from "react";
-import * as dbTypes from "@db/types";
 import { DbsContext } from "./_context";
+import * as dbTypes from "@db/types";
 import Page from "@frontend/containers/page";
 import Pages from "@frontend/containers/pages";
-
-import { get, set } from "lodash/fp";
+import React, { Fragment } from "react";
 
 const ApplicationContainer = () => {
   const dbs = React.useContext(DbsContext);
@@ -21,8 +19,10 @@ const ApplicationContainer = () => {
   return (
     <div>
       <div style={{ width: "30%", backgroundColor: "beige", float: "left" }}>
-        {dbs.map((d) => (
-          <Pages db={d} open={openPage(d)} />
+        {dbs.map((d, index) => (
+          <Fragment key={index}>
+            <Pages db={d} open={openPage(d)} />
+          </Fragment>
         ))}
       </div>
       <div>{activePage && activeDb && <Page db={activeDb} pageID={activePage} />}</div>

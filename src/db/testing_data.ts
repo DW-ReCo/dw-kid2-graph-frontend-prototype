@@ -1,5 +1,4 @@
 import * as t from "./types";
-import * as schema from "./schema";
 import * as rxdb from "rxdb";
 import * as db from "./index";
 import { v4 as uuidv4 } from "uuid";

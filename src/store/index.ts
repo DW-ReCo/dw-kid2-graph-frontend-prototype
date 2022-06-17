@@ -1,5 +1,5 @@
-import create from "zustand";
 import initialState from "./initialState";
+import create from "zustand";
 
 const getLocalStorage = (key: string): object => {
   const item = typeof window !== "undefined" ? window.localStorage.getItem(key) : false;

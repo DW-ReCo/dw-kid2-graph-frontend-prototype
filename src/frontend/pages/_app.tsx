@@ -1,16 +1,12 @@
-import React, { useState, useEffect } from "react";
-import * as db from "@db/index"
-import * as dbTypes from "@db/types";
-import { AppProps } from "next/app";
-import * as cfg from "@cfg/index";
-
-import "@frontend/styles/globals.css";
-
 import { DbsContext } from "./_context";
-
 import DevPanel from "./components/devPanel";
-
+import * as cfg from "@cfg/index";
+import * as db from "@db/index";
+import * as dbTypes from "@db/types";
+import "@frontend/styles/globals.css";
 import * as Logger from "@logger/index";
+import { AppProps } from "next/app";
+import React, { useState, useEffect } from "react";
 
 const log = Logger.makeLogger("frontent/pages/_app");
 
@@ -23,7 +19,6 @@ const App = ({ Component, pageProps }: AppProps) => {
     log.debug(`loaded config`, c);
     setConfig(c);
   };
-
 
   const loadDbs = async () => {
     if (!config) {

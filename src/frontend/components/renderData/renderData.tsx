@@ -1,5 +1,5 @@
-import React from "react";
 import * as types from "./types";
+import React from "react";
 
 const RenderData = ({ documents, title }: types.RenderDataPropTypes) => (
   <>

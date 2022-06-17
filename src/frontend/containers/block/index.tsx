@@ -1,14 +1,11 @@
-import React from "react";
-import * as dbTypes from "@db/types";
 import * as note from "./note";
+import * as dbTypes from "@db/types";
+import React from "react";
 
-const NotFoundType = ({block}: {block: dbTypes.Block}) =>
-  <>Block type {block?.type} not found</>
+const NotFoundType = ({ block }: { block: dbTypes.Block }) => <>Block type {block?.type} not found</>;
 
 const BlockSwitch = ({ db, block }: { db: dbTypes.LoadedDb; block: dbTypes.Block }) =>
-  block.type === "note"
-  ? <note.Component db={db} block={block} />
-  : <NotFoundType block={block} />;
+  block.type === "note" ? <note.Component db={db} block={block} /> : <NotFoundType block={block} />;
 
 const Block = (props: { db: dbTypes.LoadedDb; block: dbTypes.Block }) => {
   const { block, db } = props;

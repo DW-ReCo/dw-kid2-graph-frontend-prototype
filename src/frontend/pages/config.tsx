@@ -1,11 +1,9 @@
-import React from "react";
-import * as cfgTypes from "@cfg/types";
-import { DbsContext } from "./_context";
 import * as cfg from "@cfg/index";
+import * as cfgTypes from "@cfg/types";
 import ConfigEditor from "@frontend/containers/configEditor/index";
+import React, { Fragment } from "react";
 
 const ConfigsEditor = () => {
-  const dbs = React.useContext(DbsContext);
   const [configs, setConfigs] = React.useState<cfgTypes.PartialConfig[]>([]);
 
   // onLoad - when the application loads, load the config
@@ -21,8 +19,10 @@ const ConfigsEditor = () => {
   return (
     <div>
       <h1>Edit Config</h1>
-      {configs.map((config) => (
-        <ConfigEditor config={config} />
+      {configs.map((config, index) => (
+        <Fragment key={index}>
+          <ConfigEditor config={config} />
+        </Fragment>
       ))}
     </div>
   );
