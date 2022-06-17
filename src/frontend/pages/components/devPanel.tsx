@@ -1,8 +1,9 @@
-import { addTestingData } from "../../../db/testing_data";
-import { DbsContext } from "../_context";
+import React, { Fragment } from "react";
 import * as db from "@db/index";
 import { first } from "lodash/fp";
-import React, { Fragment } from "react";
+
+import { addTestingData } from "../../../db/testing_data";
+import { DbsContext } from "../_context";
 
 const DevPanel = () => {
   const dbs = React.useContext(DbsContext);

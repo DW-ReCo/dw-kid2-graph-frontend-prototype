@@ -1,9 +1,9 @@
+import React from "react";
+import JSONEditor from "react-json-editor-ajrm";
 import * as cfg from "@cfg/index";
 import * as cfgTypes from "@cfg/types";
 import * as Logger from "@logger/index";
-import { omit, get } from "lodash/fp";
-import React from "react";
-import JSONEditor from "react-json-editor-ajrm";
+import { get, omit } from "lodash/fp";
 
 const log = Logger.makeLogger("frontent/pages/config");
 

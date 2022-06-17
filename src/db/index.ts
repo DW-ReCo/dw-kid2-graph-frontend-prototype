@@ -1,7 +1,3 @@
-import * as cfg from "../cfg";
-import * as Logger from "../logger";
-import * as schema from "./schema";
-import * as types from "./types";
 import * as PouchHttp from "pouchdb-adapter-http";
 // import * as IdbAdapter from "pouchdb-adapter-idb";
 import * as MemoryAdapter from "pouchdb-adapter-memory";
@@ -14,6 +10,12 @@ import * as pouchdb from "rxdb/plugins/pouchdb";
 import { RxDBQueryBuilderPlugin } from "rxdb/plugins/query-builder";
 import { RxDBReplicationCouchDBPlugin } from "rxdb/plugins/replication-couchdb";
 import { RxDBUpdatePlugin } from "rxdb/plugins/update";
+
+import * as cfg from "../cfg";
+import * as Logger from "../logger";
+
+import * as schema from "./schema";
+import * as types from "./types";
 
 const log = Logger.makeLogger("db/index");
 

@@ -1,6 +1,7 @@
-import * as note from "./note";
-import * as dbTypes from "@db/types";
 import React from "react";
+import * as dbTypes from "@db/types";
+
+import * as note from "./note";
 
 const NotFoundType = ({ block }: { block: dbTypes.Block }) => <>Block type {block?.type} not found</>;
 

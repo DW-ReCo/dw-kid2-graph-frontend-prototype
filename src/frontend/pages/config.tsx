@@ -1,7 +1,7 @@
+import React, { Fragment } from "react";
 import * as cfg from "@cfg/index";
 import * as cfgTypes from "@cfg/types";
 import ConfigEditor from "@frontend/containers/configEditor/index";
-import React, { Fragment } from "react";
 
 const ConfigsEditor = () => {
   const [configs, setConfigs] = React.useState<cfgTypes.PartialConfig[]>([]);

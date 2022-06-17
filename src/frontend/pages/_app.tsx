@@ -1,12 +1,14 @@
-import { DbsContext } from "./_context";
-import DevPanel from "./components/devPanel";
+import React, { useEffect, useState } from "react";
 import * as cfg from "@cfg/index";
 import * as db from "@db/index";
 import * as dbTypes from "@db/types";
-import "@frontend/styles/globals.css";
 import * as Logger from "@logger/index";
 import { AppProps } from "next/app";
-import React, { useState, useEffect } from "react";
+
+import DevPanel from "./components/devPanel";
+import { DbsContext } from "./_context";
+
+import "@frontend/styles/globals.css";
 
 const log = Logger.makeLogger("frontent/pages/_app");
 

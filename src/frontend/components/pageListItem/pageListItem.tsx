@@ -1,5 +1,5 @@
-import * as dbTypes from "@db/types";
 import React from "react";
+import * as dbTypes from "@db/types";
 
 const PageListItem = (props: { page: dbTypes.Page; open: () => void }) => {
   const { page, open } = props;

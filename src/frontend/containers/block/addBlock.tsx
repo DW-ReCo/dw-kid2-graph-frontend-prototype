@@ -1,7 +1,8 @@
-import * as note from "./note";
+import React from "react";
 import * as dbTypes from "@db/types";
 import { promiseAsHook } from "@frontend/utils";
-import React from "react";
+
+import * as note from "./note";
 
 const when = promiseAsHook;
 

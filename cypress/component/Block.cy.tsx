@@ -1,9 +1,10 @@
+import React from "react";
+
 import * as cfgTypes from "../../src/cfg/types";
 import * as db from "../../src/db";
 import { generateTestingDocs1 } from "../../src/db/testing_data";
 import * as dbTypes from "../../src/db/types";
 import Block from "../../src/frontend/containers/block/index";
-import React from "react";
 
 const docs: dbTypes.DbDocument[] = generateTestingDocs1();
 

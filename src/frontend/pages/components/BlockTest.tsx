@@ -1,3 +1,4 @@
+import React, { Fragment } from "react";
 import * as cfgTypes from "@cfg/types";
 import * as db from "@db/index";
 import * as queries from "@db/queries";
@@ -6,7 +7,6 @@ import * as dbTypes from "@db/types";
 import { LoadedDb } from "@db/types";
 import AddBlock from "@frontend/containers/block/addBlock";
 import Block from "@frontend/containers/block/index";
-import React, { Fragment } from "react";
 import { useRxQuery } from "rxdb-hooks";
 
 const docs: dbTypes.DbDocument[] = generateTestingDocs1();

@@ -1,5 +1,6 @@
-import { DbConfig } from "../cfg/types";
 import * as rxdb from "rxdb";
+
+import { DbConfig } from "../cfg/types";
 
 // We store all of our different types into the same database
 //   So here are the document types

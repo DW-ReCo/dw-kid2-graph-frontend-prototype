@@ -1,7 +1,7 @@
+import React from "react";
 import * as queries from "@db/queries";
 import * as dbTypes from "@db/types";
 import Block from "@frontend/containers/block";
-import React from "react";
 import { useRxQuery } from "rxdb-hooks";
 
 const PageBlocks = (props: { db: dbTypes.LoadedDb; page: dbTypes.Page }) => {

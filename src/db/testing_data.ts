@@ -1,7 +1,8 @@
-import * as t from "./types";
 import * as rxdb from "rxdb";
-import * as db from "./index";
 import { v4 as uuidv4 } from "uuid";
+
+import * as db from "./index";
+import * as t from "./types";
 
 // the testing data
 //   here we define the groups of testing data

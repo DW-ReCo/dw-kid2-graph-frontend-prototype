@@ -1,8 +1,9 @@
-import { DbsContext } from "./_context";
+import React, { Fragment } from "react";
 import * as dbTypes from "@db/types";
 import Page from "@frontend/containers/page";
 import Pages from "@frontend/containers/pages";
-import React, { Fragment } from "react";
+
+import { DbsContext } from "./_context";
 
 const ApplicationContainer = () => {
   const dbs = React.useContext(DbsContext);

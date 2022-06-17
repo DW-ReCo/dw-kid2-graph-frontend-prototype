@@ -1,7 +1,7 @@
+import React, { Fragment } from "react";
 import * as queries from "@db/queries";
 import * as dbTypes from "@db/types";
 import PageListItem from "@frontend/components/pageListItem";
-import React, { Fragment } from "react";
 import { useRxQuery } from "rxdb-hooks";
 
 const Pages = (props: { db: dbTypes.LoadedDb; open: (p: dbTypes.Page) => void }) => {
