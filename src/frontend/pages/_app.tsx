@@ -4,7 +4,7 @@ import * as dbTypes from "@db/types";
 import { AppProps } from "next/app";
 import * as cfg from "@cfg/index";
 
-import "../styles/globals.css";
+import "@frontend/styles/globals.css";
 
 import { DbsContext } from "./_context";
 
