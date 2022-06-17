@@ -10,7 +10,8 @@
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
     "lint": "next lint ./src/frontend",
-    "server": "pouchdb-server --host 0.0.0.0 -p 10102 -m -d /tmp/pouchdb-server/ -n true"
+    "server": "pouchdb-server --host 0.0.0.0 -p 10102 -m -d /tmp/pouchdb-server/ -n true",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -55,6 +56,7 @@
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.30.0",
+    "husky": "^8.0.1",
     "postcss": "^8.4.14",
     "prettier": "^2.6.2",
     "tailwindcss": "^3.1.3",
