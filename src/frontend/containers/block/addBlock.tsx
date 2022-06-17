@@ -1,7 +1,6 @@
 import React from "react";
-import { RxDatabase } from "rxdb";
-import * as dbTypes from "../../../db/types";
-import { promiseAsHook } from "../../utils";
+import * as dbTypes from "@db/types";
+import { promiseAsHook } from "@frontend/utils";
 
 import * as note from "./note";
 

@@ -1,8 +1,8 @@
 import React from "react";
 import { useRxQuery } from "rxdb-hooks";
-import * as dbTypes from "../../../db/types";
-import * as queries from "../../../db/queries";
-import PageListItem from "../../components/pageListItem";
+import * as dbTypes from "@db/types";
+import * as queries from "@db/queries";
+import PageListItem from "@frontend/components/pageListItem";
 
 const Pages = (props: { db: dbTypes.LoadedDb; open: (p: dbTypes.Page) => void }) => {
   const { db, open } = props;

@@ -17,7 +17,16 @@
     "forceConsistentCasingInFileNames": true,
     "incremental": true,
     "resolveJsonModule": true,
-    "isolatedModules": true
+    "isolatedModules": true,
+    "baseUrl": ".",
+    "paths": {
+      "@db/*": ["src/db/*"],
+      "@logger/*": ["src/logger/*"],
+      "@store/*": ["src/store/*"],
+      "@cfg/*": ["src/cfg/*"],
+      "@utils/*": ["src/utils/*"],
+      "@frontend/*": ["src/frontend/*"],
+    }
   },
   "include": ["./src/**/*"],
   "exclude": ["node_modules"]

@@ -1,8 +1,8 @@
 import React from "react";
-import * as cfgTypes from "../../cfg/types";
+import * as cfgTypes from "@cfg/types";
 import { DbsContext } from "./_context";
-import * as cfg from "../../cfg";
-import ConfigEditor from "../containers/configEditor";
+import * as cfg from "@cfg/index";
+import ConfigEditor from "@frontend/containers/configEditor/index";
 
 const ConfigsEditor = () => {
   const dbs = React.useContext(DbsContext);

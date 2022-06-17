@@ -1,8 +1,8 @@
 import React from "react";
-import * as dbTypes from "../../db/types";
+import * as dbTypes from "@db/types";
 import { DbsContext } from "./_context";
-import Page from "../containers/page";
-import Pages from "../containers/pages";
+import Page from "@frontend/containers/page";
+import Pages from "@frontend/containers/pages";
 
 import { get, set } from "lodash/fp";
 

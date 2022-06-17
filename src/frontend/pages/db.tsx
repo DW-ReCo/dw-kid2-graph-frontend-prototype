@@ -1,6 +1,6 @@
 import React from "react";
 import { DbsContext } from "./_context";
-import DBRenderer from "../containers/DBRenderer";
+import DBRenderer from "@frontend/containers/DBRenderer/index";
 
 const DBPage = () => {
   const dbs = React.useContext(DbsContext);

@@ -1,18 +1,16 @@
 import React, { useState, useEffect } from "react";
-import * as db from "../../db";
-import * as dbTypes from "../../db/types";
+import * as db from "@db/index"
+import * as dbTypes from "@db/types";
 import { AppProps } from "next/app";
-import * as cfg from "../../cfg";
+import * as cfg from "@cfg/index";
 
-import "../styles/globals.css";
+import "@frontend/styles/globals.css";
 
 import { DbsContext } from "./_context";
 
-import { useStore, setLocalStorage } from "../../store";
-
 import DevPanel from "./components/devPanel";
 
-import * as Logger from "../../logger";
+import * as Logger from "@logger/index";
 
 const log = Logger.makeLogger("frontent/pages/_app");
 
@@ -25,11 +23,7 @@ const App = ({ Component, pageProps }: AppProps) => {
     log.debug(`loaded config`, c);
     setConfig(c);
   };
-  const { data } = useStore();
 
-  useEffect(() => {
-    setLocalStorage("state", data);
-  }, [data]);
 
   const loadDbs = async () => {
     if (!config) {

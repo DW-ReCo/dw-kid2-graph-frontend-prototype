@@ -1,7 +1,5 @@
 import React from "react";
-import { RxDatabase } from "rxdb";
-import * as dbTypes from "../../../db/types";
-
+import * as dbTypes from "@db/types";
 import * as note from "./note";
 
 const NotFoundType = ({block}: {block: dbTypes.Block}) =>

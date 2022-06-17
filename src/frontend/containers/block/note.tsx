@@ -1,9 +1,7 @@
 import React from "react";
-
 import { v4 as uuidv4 } from "uuid";
-
-import { upsertOne } from "../../../db";
-import * as dbTypes from "../../../db/types";
+import { upsertOne } from "@db/index";
+import * as dbTypes from "@db/types";
 
 export const Component = (props: { db: dbTypes.LoadedDb; block: dbTypes.BlockNote }) => {
   const { db, block } = props;

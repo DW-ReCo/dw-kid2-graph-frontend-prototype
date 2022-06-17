@@ -1,13 +1,12 @@
 import React from "react";
-
-import Block from "../../../frontend/containers/block/index";
-import AddBlock from "../../../frontend/containers/block/addBlock";
-import { generateTestingDocs1 } from "../../../db/testing_data";
-import * as dbTypes from "../../../db/types";
-import * as cfgTypes from "../../../cfg/types";
-import * as db from "../../../db";
-import * as queries from "../../../db/queries";
-import { LoadedDb } from "../../../db/types";
+import Block from "@frontend/containers/block/index";
+import AddBlock from "@frontend/containers/block/addBlock";
+import { generateTestingDocs1 } from "@db/testing_data";
+import * as dbTypes from "@db/types";
+import * as cfgTypes from "@cfg/types";
+import * as db from "@db/index";
+import * as queries from "@db/queries";
+import { LoadedDb } from "@db/types";
 import { useRxQuery } from "rxdb-hooks";
 
 const docs: dbTypes.DbDocument[] = generateTestingDocs1();
