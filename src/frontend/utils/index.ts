@@ -9,4 +9,4 @@ export const promiseAsHook = <T>(p: Promise<T>) => {
   }, []);
 
   return result;
-}
+};

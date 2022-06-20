@@ -19,19 +19,19 @@ a:hover {
 }
 
 h1 {
-    @apply text-2xl font-bold;
+  @apply text-2xl font-bold;
 }
 
 h2 {
-    @apply text-xl font-bold;
+  @apply text-xl font-bold;
 }
 
 h3 {
-    @apply text-lg font-bold;
+  @apply text-lg font-bold;
 }
 
 textarea {
-    @apply border-2 border-slate-400 p-2;
+  @apply border-2 border-slate-400 p-2;
 }
 
 .block {

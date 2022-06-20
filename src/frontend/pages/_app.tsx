@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import * as db from "@db/index"
+import * as db from "@db/index";
 import * as dbTypes from "@db/types";
 import { AppProps } from "next/app";
 import * as cfg from "@cfg/index";
@@ -23,7 +23,6 @@ const App = ({ Component, pageProps }: AppProps) => {
     log.debug(`loaded config`, c);
     setConfig(c);
   };
-
 
   const loadDbs = async () => {
     if (!config) {

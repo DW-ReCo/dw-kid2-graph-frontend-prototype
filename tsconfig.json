@@ -25,7 +25,7 @@
       "@store/*": ["src/store/*"],
       "@cfg/*": ["src/cfg/*"],
       "@utils/*": ["src/utils/*"],
-      "@frontend/*": ["src/frontend/*"],
+      "@frontend/*": ["src/frontend/*"]
     }
   },
   "include": ["./src/**/*"],

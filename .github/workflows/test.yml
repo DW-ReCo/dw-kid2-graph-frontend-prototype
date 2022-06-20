@@ -2,7 +2,7 @@ name: test
 on:
   push:
     branches:
-      - 'master'
+      - "master"
   pull_request:
 jobs:
   test-basic-ubuntu-18-v10:
