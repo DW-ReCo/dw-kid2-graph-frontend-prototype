@@ -1,10 +1,13 @@
-import React from "react";
-import * as dbTypes from "@db/types";
-import { promiseAsHook } from "@frontend/utils";
-
 import * as note from "./note";
+import * as dbTypes from "@db/types";
+import {
+  // promiseAsHook,
+  observableAsHook,
+} from "@frontend/utils";
+import React from "react";
 
-const when = promiseAsHook;
+const when = observableAsHook;
+// const when = promiseAsHook;
 
 const AddBlock = ({ db }: { db: dbTypes.LoadedDb }) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
