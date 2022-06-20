@@ -6,7 +6,7 @@ import { Provider as AppStoreProvider } from "@frontend/store/index";
 
 import "@frontend/styles/globals.css";
 
-import DevPanel from "./components/devPanel";
+import DevPanel from "./dev/panel";
 
 import * as Logger from "@logger/index";
 import initialState from "@frontend/store/initialState";
