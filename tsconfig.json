@@ -5,6 +5,7 @@
     "allowJs": true,
     "checkJs": false,
     "outDir": "./next",
+    "jsx": "preserve",
     "removeComments": true,
     "noEmit": false,
     "pretty": true,
