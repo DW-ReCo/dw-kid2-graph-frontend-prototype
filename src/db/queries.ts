@@ -15,6 +15,8 @@ export const page = byId;
 
 export const data = byId;
 
+export const data = (db: RxDatabase, id: string): RxQuery => db.docs.findOne().where("id").equals(id);
+
 export const blocks = (db: RxDatabase, ids: string[]): RxQuery =>
   db.docs.find({
     selector: {

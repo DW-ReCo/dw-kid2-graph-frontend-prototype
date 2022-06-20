@@ -16,6 +16,7 @@ import {
 
 const log = Logger.makeLogger("frontend/containers/block/youtubeLink");
 
+
 export const Add = (props: { db: dbTypes.LoadedDb; block: dbTypes.BlockYoutubeInput }) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { db, block } = props;
@@ -36,6 +37,7 @@ export const Add = (props: { db: dbTypes.LoadedDb; block: dbTypes.BlockYoutubeIn
     };
     upsertOne(db.instance, data).then((_) => {
       queries.merge(db.instance, block.id, { dataId: newId });
+
     });
   };
 
@@ -93,4 +95,5 @@ export const add = async (db: dbTypes.LoadedDb) => {
   };
   await upsertOne(db.instance, newBlock);
   return newBlock;
+
 };
