@@ -14,7 +14,7 @@ Please see [data formats](./docs/data_formats.md)
 
 ### Install the dependencies
 
-This application requires `node` and `npm` to be installed.  To install it, please run:
+This application requires `node` and `npm` to be installed. To install it, please run:
 
 ```bash
 npm i

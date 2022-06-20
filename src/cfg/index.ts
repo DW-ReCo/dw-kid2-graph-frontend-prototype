@@ -31,7 +31,7 @@ export const toLocalStorage = (l: types.LocalStorageConfigLoader, c: types.Parti
 
 const fromServer: (l: types.ServerConfigLoader) => Promise<types.PartialConfig> =
   // in the future, this will fetch config from a server.  for now, it returns nothing
-  (l) => Promise.resolve(types.emptyConfig);
+  () => Promise.resolve(types.emptyConfig);
 
 const fromLoader: (l: types.ConfigLoader) => Promise<types.PartialConfig> = async (l) => {
   switch (l._type) {

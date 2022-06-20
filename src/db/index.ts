@@ -4,7 +4,7 @@ import * as rxdb from "rxdb";
 import * as pouchdb from "rxdb/plugins/pouchdb";
 
 import * as MemoryAdapter from "pouchdb-adapter-memory";
-import * as IdbAdapter from "pouchdb-adapter-idb";
+// import * as IdbAdapter from "pouchdb-adapter-idb";
 import * as PouchHttp from "pouchdb-adapter-http";
 import { RxDBReplicationCouchDBPlugin } from "rxdb/plugins/replication-couchdb";
 import { RxDBLeaderElectionPlugin } from "rxdb/plugins/leader-election";
@@ -42,7 +42,7 @@ try {
 const removeCollection = (name: string, db: rxdb.RxDatabase) =>
   db
     .removeCollection(name)
-    .then((_) => console.log(`removed collection ${name}`))
+    .then(() => console.log(`removed collection ${name}`))
     .catch((e) => console.warn(`removing collection ${name} failed because`, e));
 
 export const removeAllCollections = async (db: rxdb.RxDatabase) => {
