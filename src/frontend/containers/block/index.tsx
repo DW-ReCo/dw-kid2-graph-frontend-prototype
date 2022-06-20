@@ -5,16 +5,11 @@ import React from "react";
 
 const NotFoundType = ({ block }: { block: dbTypes.Block }) => <>Block type {block?.type} not found</>;
 
-/* eslint-disable */
+/* prettier-ignore */
 const BlockSwitch = ({ db, block }: { db: dbTypes.LoadedDb; block: dbTypes.Block }) =>
-  block.type === "note" ? (
-    <note.Component db={db} block={block} />
-  ) : block.type === "youtube_url_input" ? (
-    <youtubeInput.Component db={db} block={block} />
-  ) : (
-    <NotFoundType block={block} />
-  );
-/* eslint-enable */
+  block.type === "note" ? <note.Component db={db} block={block} /> :
+  block.type === "youtube_url_input" ? <youtubeInput.Component db={db} block={block} /> :
+  <NotFoundType block={block} />;
 
 const Block = (props: { db: dbTypes.LoadedDb; block: dbTypes.Block }) => {
   const { block, db } = props;
