@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import * as db from "@db/index";
 
 import { addTestingData } from "../../../db/testing_data";
@@ -26,8 +26,10 @@ const DevPanel = () => {
       <button onClick={addTestingDataDbs}>add testing data (all dbs)</button>
       <>
         Databases:
-        {dbs.map((d) => (
-          <span>{d.name} |</span>
+        {dbs.map((d, index) => (
+          <Fragment key={index}>
+            <span>{d.name} |</span>
+          </Fragment>
         ))}
       </>
     </>
