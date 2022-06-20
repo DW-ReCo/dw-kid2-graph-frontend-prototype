@@ -14,8 +14,17 @@ import initialState from "@frontend/store/initialState";
 const log = Logger.makeLogger("frontent/pages/_app");
 
 const App = ({ Component, pageProps }: AppProps) => {
-  const [state, setState] = useState(initialState);
+  const [state, setState] = useState(
+    typeof window !== "undefined" && localStorage.getItem("kid2-state")
+      ? JSON.parse(localStorage.getItem("kid2-state"))
+      : initialState,
+  );
+
   const { config } = state;
+
+  useEffect(() => {
+    localStorage.setItem("kid2-state", JSON.stringify(state));
+  }, []);
 
   const loadConfig = async () => {
     const c = await cfg.load();
