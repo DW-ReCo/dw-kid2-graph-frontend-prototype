@@ -4,11 +4,11 @@ import { Observable } from "rxjs";
 // takes a promise, and returns a react hook for it.
 // use like this:
 //
-// export const isAvailable = (db: dbTypes.LoadedDb): Promise<boolean> => Promise.resolve(true);
+// export const isAvailable = (_): Promise<boolean> => Promise.resolve(true);
 //
-// const maybeAddNote = promiseAsHook(note.isAvailable(db)) && "it's available!";
+// const maybeAddNote = usePromise(isAvailable()) && "it's available!";
 //
-export const promiseAsHook = <T>(p: Promise<T>) => {
+export const usePromise = <T>(p: Promise<T>) => {
   const [result, setResult] = React.useState<T>();
 
   React.useEffect(() => {
@@ -18,14 +18,14 @@ export const promiseAsHook = <T>(p: Promise<T>) => {
   return result;
 };
 
-// takes a promise, and returns a react hook for it.
+// takes an observable, and returns a react hook for it.
 // usage:
 //
-// export const isAvailable = (db: dbTypes.LoadedDb): Observable<boolean> =>
+// export const isAvailable = (): Observable<boolean> =>
 //   of(true, false, true, false, true).pipe(concatMap(x => of(x).pipe(delay(1000))));
 //
-// const maybeAddNote = observableAsHook(note.isAvailable(db)) && "it's available!";
-export const observableAsHook = <T>(o: Observable<T>) => {
+// const maybeAddNote = useObservable(isAvailable()) && "it's available!";
+export const useObservable = <T>(o: Observable<T>) => {
   const [result, setResult] = React.useState<T>();
 
   React.useEffect(() => {
