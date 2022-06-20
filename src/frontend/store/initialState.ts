@@ -1,7 +1,7 @@
 import { AppStore } from "./types";
 
 export default <AppStore>{
-  config: [],
+  config: {},
   dbs: [],
   appState: {
     isLoading: false,

@@ -3,7 +3,7 @@ import { LoadedDb } from "@db/types";
 
 export type AppStore = {
   dbs: LoadedDb[];
-  config: PartialConfig[];
+  config: PartialConfig;
   appState: {
     isLoading: boolean;
     activeDb?: LoadedDb;
