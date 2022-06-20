@@ -11,13 +11,7 @@ const AddBlock = ({ db }: { db: dbTypes.LoadedDb }) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const maybeAddNote = useObservable(note.isAvailable(db)) && <button onClick={(_) => note.add(db)}>Add Note</button>;
   const maybeAddYoutube = useObservable(youtubeLink.isAvailable(db)) && (
-    <button
-      onClick={(_) => {
-        console.log("added youtube block");
-      }}
-    >
-      Add Youtube Link
-    </button>
+    <button onClick={(_) => youtubeLink.add(db)}>Add Youtube Link</button>
   );
 
   return (

@@ -11,6 +11,7 @@ import { v4 as uuidv4 } from "uuid";
 
 // generate testing data
 //   optionally takes a symbol to prefix the ids with, otherwise we will generate a random one
+/* prettier-ignore */
 export const generateTestingDocs1 = (sym?: string) => {
   const symbol = sym || uuidv4().substring(0, 5);
   const id = (n: string) => symbol + n;
@@ -18,7 +19,9 @@ export const generateTestingDocs1 = (sym?: string) => {
     //
     // data
     //
+    /* prettier-ignore */
     <t.DataYoutubeUrl>{
+    /* prettier-ignore */
       id: id("data1"),
       document_type: "data",
       type: "youtube_url",
@@ -78,7 +81,7 @@ export const generateTestingDocs1 = (sym?: string) => {
       state: "open",
       type: "youtube_url_input",
       document_type: "block" as const,
-      dataId: "data1",
+      dataId: id("data1"),
     },
     <t.BlockNote>{
       id: id("block3"),

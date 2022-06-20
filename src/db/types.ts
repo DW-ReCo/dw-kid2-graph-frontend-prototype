@@ -1,5 +1,5 @@
-import * as rxdb from "rxdb";
 import { DbConfig } from "../cfg/types";
+import * as rxdb from "rxdb";
 
 // We store all of our different types into the same database
 //   So here are the document types
@@ -72,7 +72,7 @@ export type BlockPrototype = DbDocumentPrototype & {
 };
 
 export type BlockNote = BlockPrototype & { type: "note"; body: string };
-export type BlockYoutubeInput = BlockPrototype & { type: "youtube_url_input"; dataId: DataId };
+export type BlockYoutubeInput = BlockPrototype & { type: "youtube_url_input"; document_type: "block"; dataId: DataId };
 export type BlockDownloadedVideo = BlockPrototype & { type: "downloaded_video"; dataId: DataId };
 
 export type Block = BlockNote | BlockYoutubeInput | BlockDownloadedVideo;
