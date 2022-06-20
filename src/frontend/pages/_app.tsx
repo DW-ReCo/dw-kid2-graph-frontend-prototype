@@ -8,7 +8,7 @@ import "@frontend/styles/globals.css";
 
 import { DbsContext } from "./_context";
 
-import DevPanel from "./components/devPanel";
+import DevPanel from "./dev/panel";
 
 import * as Logger from "@logger/index";
 
