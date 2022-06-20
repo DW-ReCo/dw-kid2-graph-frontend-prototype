@@ -3,11 +3,15 @@ import * as db from "@db/index";
 
 import { addTestingData } from "../../../db/testing_data";
 
-import { DbsContext } from "../_context";
 import { first } from "lodash/fp";
+import useAppContext from "@frontend/store/index";
+
+import Link from "next/link";
 
 const DevPanel = () => {
-  const dbs = React.useContext(DbsContext);
+  const {
+    state: { dbs },
+  } = useAppContext();
 
   const firstDb = first(dbs);
 
@@ -19,9 +23,15 @@ const DevPanel = () => {
 
   return (
     <>
-      <a href="/db">databases view | </a>
-      <a href="/app">application prototype | </a>
-      <a href="/config">config editor</a>
+      <Link href="/db">
+        <a>databases view | </a>
+      </Link>
+      <Link href="/app">
+        <a>application prototype | </a>
+      </Link>
+      <Link href="/config">
+        <a>config editor</a>
+      </Link>
       <button onClick={clearDbs}>clear the documents (all dbs)</button>
       <button onClick={addTestingDataDbs}>add testing data (all dbs)</button>
       <>

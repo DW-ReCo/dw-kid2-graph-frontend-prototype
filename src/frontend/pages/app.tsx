@@ -1,18 +1,21 @@
 import React, { Fragment } from "react";
 import * as dbTypes from "@db/types";
-import { DbsContext } from "./_context";
 import Page from "@frontend/containers/page";
 import Pages from "@frontend/containers/pages";
+import useAppContext from "@frontend/store";
 
 const ApplicationContainer = () => {
-  const dbs = React.useContext(DbsContext);
-
-  const [activeDb, setDb] = React.useState<dbTypes.LoadedDb>();
-  const [activePage, setActivePage] = React.useState<dbTypes.Page["id"]>();
+  const {
+    state: {
+      dbs,
+      appState: { activeDb, activePage },
+    },
+    setState,
+  } = useAppContext();
 
   const openPage = (d: dbTypes.LoadedDb) => (p: dbTypes.Page) => {
-    setActivePage(p.id);
-    setDb(d);
+    setState((prev) => ({ ...prev, appState: { ...prev.appState, activePage: p.id } }));
+    setState((prev) => ({ ...prev, appState: { ...prev.appState, activeDb: d } }));
     console.log(`opening page ${p.title}`);
   };
 
