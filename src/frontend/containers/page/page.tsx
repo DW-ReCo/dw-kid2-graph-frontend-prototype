@@ -14,7 +14,7 @@ const Page = (props: { db: dbTypes.LoadedDb; pageID: string }) => {
 
   const onAddBlock = (b: dbTypes.Block) => {
     console.log("aaadddiiinnggg block to pagw");
-    queries.merge(db.instance, page.id, { blocks: [...blocks, b.id] });
+    queries.mergePage(db.instance, page.id, { blocks: [...blocks, b.id] });
   };
 
   if (!page) {

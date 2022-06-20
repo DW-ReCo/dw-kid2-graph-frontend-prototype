@@ -15,7 +15,7 @@ export const Component = (props: { db: dbTypes.LoadedDb; block: dbTypes.BlockNot
   const { body } = block;
 
   const updateText = (text: string) => {
-    queries.merge(db.instance, block.id, { body: text });
+    queries.mergeBlock(db.instance, block.id, { body: text });
   };
 
   return (

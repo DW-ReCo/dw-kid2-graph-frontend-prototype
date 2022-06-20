@@ -28,5 +28,11 @@ export const pageBlocks = (db: RxDatabase, page: types.Page) => blocks(db, page.
 
 // takes a database, an id, and a doc like {dataId: id}, which we will set using { $set: doc }, queries for the doc
 // and makes the changes
-export const merge = (db: RxDatabase, id: string, doc: object) =>
+export const merge = (db: RxDatabase, id: string, doc: Partial<types.DbDocument>) =>
+  db.docs.findOne().where("id").equals(id).update({ $set: doc });
+
+export const mergeBlock = (db: RxDatabase, id: string, doc: Partial<types.Block>) =>
+  db.docs.findOne().where("id").equals(id).update({ $set: doc });
+
+export const mergePage = (db: RxDatabase, id: string, doc: Partial<types.Page>) =>
   db.docs.findOne().where("id").equals(id).update({ $set: doc });
