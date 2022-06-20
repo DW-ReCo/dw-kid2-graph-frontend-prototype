@@ -1,16 +1,15 @@
-import React, { Fragment, useContext } from "react";
+import React, { Fragment } from "react";
 import * as db from "@db/index";
 
 import { addTestingData } from "../../../db/testing_data";
 
-import { DbsContext } from "../_context";
 import { first } from "lodash/fp";
-import { context } from "@store/store";
+import useAppContext from "@frontend/store/index";
 
 const DevPanel = () => {
-  const dbs = React.useContext(DbsContext);
-
-  const { state } = useContext(context);
+  const {
+    state: { dbs },
+  } = useAppContext();
 
   const firstDb = first(dbs);
 
@@ -22,7 +21,6 @@ const DevPanel = () => {
 
   return (
     <>
-      {JSON.stringify(state)}
       <a href="/db">databases view | </a>
       <a href="/app">application prototype | </a>
       <a href="/config">config editor</a>

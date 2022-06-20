@@ -1,28 +1,26 @@
 import React, { useState, useEffect } from "react";
 import * as db from "@db/index";
-import * as dbTypes from "@db/types";
 import { AppProps } from "next/app";
 import * as cfg from "@cfg/index";
-import AppStoreProvider from "@store/store";
+import { Provider as AppStoreProvider } from "@frontend/store/index";
 
 import "@frontend/styles/globals.css";
-
-import { DbsContext } from "./_context";
 
 import DevPanel from "./components/devPanel";
 
 import * as Logger from "@logger/index";
+import initialState from "@frontend/store/initialState";
 
 const log = Logger.makeLogger("frontent/pages/_app");
 
 const App = ({ Component, pageProps }: AppProps) => {
-  const [config, setConfig] = useState<cfg.PartialConfig>();
-  const [dbs, setDbs] = useState<dbTypes.LoadedDb[]>([]);
+  const [state, setState] = useState(initialState);
+  const { config } = state;
 
   const loadConfig = async () => {
     const c = await cfg.load();
     log.debug(`loaded config`, c);
-    setConfig(c);
+    setState((prev) => ({ ...prev, config: c }));
   };
 
   const loadDbs = async () => {
@@ -37,7 +35,7 @@ const App = ({ Component, pageProps }: AppProps) => {
     const { dbs: loaders } = config;
     log.debug(`initializing dbs`, loaders);
     const dbs = await db.initializeAll(loaders);
-    setDbs(dbs);
+    setState((prev) => ({ ...prev, dbs: dbs }));
   };
 
   // onLoad - when the application loads, load the config
@@ -58,14 +56,12 @@ const App = ({ Component, pageProps }: AppProps) => {
 
   return (
     <>
-      <AppStoreProvider>
-        {db && (
-          <DbsContext.Provider value={dbs}>
-            <DevPanel />
-            <Component {...pageProps} />
-          </DbsContext.Provider>
-        )}
-      </AppStoreProvider>
+      {db && (
+        <AppStoreProvider value={{ state, setState }}>
+          <DevPanel />
+          <Component {...pageProps} />
+        </AppStoreProvider>
+      )}
     </>
   );
 };
