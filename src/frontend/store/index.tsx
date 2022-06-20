@@ -1,8 +1,8 @@
-// import * as types from "./types";
+import * as types from "./types";
 
 import { createContext, useContext } from "react";
 
-const context = createContext(null);
+const context = createContext<types.AppStoreContext>(null);
 
 export const { Provider } = context;
 
