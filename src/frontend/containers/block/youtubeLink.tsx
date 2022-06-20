@@ -4,7 +4,6 @@ import * as dbTypes from "@db/types";
 import { uniqueId } from "@frontend/utils";
 import * as Logger from "@logger/index";
 import React from "react";
-import { RxDocumentBase } from "rxdb";
 import { useRxQuery } from "rxdb-hooks";
 import {
   every,
@@ -14,7 +13,6 @@ import {
   of, // concatMap,
   /// delay
 } from "rxjs";
-import { v4 as uuidv4 } from "uuid";
 
 const log = Logger.makeLogger("frontend/containers/block/youtubeLink");
 

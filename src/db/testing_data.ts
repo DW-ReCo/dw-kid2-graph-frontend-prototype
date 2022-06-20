@@ -2,7 +2,6 @@ import * as t from "./types";
 import * as rxdb from "rxdb";
 import * as db from "./index";
 import { uniqueId } from "@frontend/utils/index";
-import { v4 as uuidv4 } from "uuid";
 
 // the testing data
 //   here we define the groups of testing data
@@ -75,7 +74,7 @@ export const generateTestingDocs1 = (sym?: string) => {
       state: "open",
       type: "note",
       document_type: "block" as const,
-      body: "This is a note" + uuidv4(),
+      body: "This is a note" + uniqueId(),
     },
     <t.BlockYoutubeInput>{
       id: id("block2"),
@@ -110,7 +109,7 @@ export const generateTestingDocs1 = (sym?: string) => {
     //
     <t.Page>{
       id: id("page1"),
-      title: "Page 1" + uuidv4(),
+      title: "Page 1" + uniqueId(),
       document_type: "page" as const,
       blocks: [id("block1"), id("block2"), id("block3"), id("block4"), id("block5")],
     },
