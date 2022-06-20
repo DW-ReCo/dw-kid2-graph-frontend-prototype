@@ -1,11 +1,13 @@
-// import { upsertOne } from "@db/index";
-import { upsertOne } from "@db/";
+import { upsertOne } from "@db/index";
 import * as queries from "@db/queries";
 import * as dbTypes from "@db/types";
 import React from "react";
 import { useRxQuery } from "rxdb-hooks";
 import {
+  every,
+  filter,
   Observable,
+  map,
   of, // concatMap,
   /// delay
 } from "rxjs";
@@ -25,9 +27,10 @@ export const Add = (props: { db: dbTypes.LoadedDb; block: dbTypes.BlockYoutubeIn
       type: "youtube_url",
       // @ts-ignore
       document_type: "data",
+      // @ts-ignore
       body: validatedLink,
     };
-    upsertOne(data).then((x) => {
+    upsertOne(db.instance, data).then((x) => {
       console.log(x);
     });
   };
@@ -53,8 +56,14 @@ export const Component = (props: { db: dbTypes.LoadedDb; block: dbTypes.BlockYou
   return <>{data.body}</>;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const isAvailable = (db: dbTypes.LoadedDb): Observable<boolean> => of(true); // .pipe(concatMap((x) => of(x).pipe(delay(1000))));
+/* prettier-ignore */
+export const isAvailable = (db: dbTypes.LoadedDb): Observable<boolean> =>
+  queries.allData(db.instance).$
+         .pipe(map(docs => {
+           return docs
+             .filter(doc => doc.get().type == "youtube_url")
+             .some(x => x)
+         }))
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const add = async (db: dbTypes.LoadedDb) => {
