@@ -23,8 +23,22 @@ const App = ({ Component, pageProps }: AppProps) => {
   const { config } = state;
 
   useEffect(() => {
-    localStorage.setItem("kid2-state", JSON.stringify(state));
-  }, []);
+    const getCircularReplacer = () => {
+      const seen = new WeakSet();
+      return (_key, value) => {
+        if (typeof value === "object" && value !== null) {
+          if (seen.has(value)) {
+            return;
+          }
+          seen.add(value);
+        }
+        return value;
+      };
+    };
+
+    const stringifiedState = JSON.stringify(state, getCircularReplacer());
+    localStorage.setItem("kid2-state", stringifiedState);
+  }, [state]);
 
   const loadConfig = async () => {
     const c = await cfg.load();
@@ -61,7 +75,7 @@ const App = ({ Component, pageProps }: AppProps) => {
     if (window !== undefined) {
       loadDbs();
     }
-  }, [config]);
+  }, [state.config]);
 
   return (
     <>
