@@ -1,14 +1,14 @@
-import React from "react";
-import * as dbTypes from "@db/types";
-import { promiseAsHook } from "@frontend/utils";
-
 import * as note from "./note";
-
-const when = promiseAsHook;
+import * as dbTypes from "@db/types";
+import {
+  // promiseAsHook,
+  useObservable,
+} from "@frontend/utils";
+import React from "react";
 
 const AddBlock = ({ db }: { db: dbTypes.LoadedDb }) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const maybeAddNote = when(note.isAvailable(db)) && <button onClick={(_) => note.add(db)}>Add Note</button>;
+  const maybeAddNote = useObservable(note.isAvailable(db)) && <button onClick={(_) => note.add(db)}>Add Note</button>;
 
   return <div className="block">{maybeAddNote}</div>;
 };
