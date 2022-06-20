@@ -3,6 +3,7 @@ import * as db from "@db/index";
 import * as dbTypes from "@db/types";
 import { AppProps } from "next/app";
 import * as cfg from "@cfg/index";
+import AppStoreProvider from "@store/store";
 
 import "@frontend/styles/globals.css";
 
@@ -57,12 +58,14 @@ const App = ({ Component, pageProps }: AppProps) => {
 
   return (
     <>
-      {db && (
-        <DbsContext.Provider value={dbs}>
-          <DevPanel />
-          <Component {...pageProps} />
-        </DbsContext.Provider>
-      )}
+      <AppStoreProvider>
+        {db && (
+          <DbsContext.Provider value={dbs}>
+            <DevPanel />
+            <Component {...pageProps} />
+          </DbsContext.Provider>
+        )}
+      </AppStoreProvider>
     </>
   );
 };

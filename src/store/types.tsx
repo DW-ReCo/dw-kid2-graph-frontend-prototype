@@ -14,3 +14,8 @@ export type AppStore = {
 export interface AppStoreProviderProps {
   children: React.ReactNode;
 }
+
+export type AppStoreContext = {
+  state: AppStore;
+  setState?: React.Dispatch<React.SetStateAction<AppStore>>;
+};

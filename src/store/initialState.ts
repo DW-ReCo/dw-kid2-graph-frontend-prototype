@@ -1,4 +1,6 @@
-export default {
+import { AppStore } from "./types";
+
+export default <AppStore>{
   config: [],
   dbs: [],
   appState: {

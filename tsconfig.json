@@ -4,7 +4,6 @@
     "target": "es5",
     "allowJs": true,
     "checkJs": false,
-    "jsx": "preserve",
     "outDir": "./next",
     "removeComments": true,
     "noEmit": false,
