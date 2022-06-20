@@ -8,6 +8,8 @@ export type AppStore = {
     isLoading: boolean;
     activeDb?: LoadedDb;
     activePage?: string;
+    dbInitialized: boolean;
+    configLoaded: boolean;
   };
 };
 

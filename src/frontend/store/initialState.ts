@@ -5,5 +5,7 @@ export default <AppStore>{
   dbs: [],
   appState: {
     isLoading: false,
+    dbInitialized: false,
+    configLoaded: false,
   },
 };
