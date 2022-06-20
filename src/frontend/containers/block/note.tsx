@@ -1,7 +1,11 @@
 import { upsertOne } from "@db/index";
 import * as dbTypes from "@db/types";
 import React from "react";
-import { Observable, of, concatMap, delay } from "rxjs";
+import {
+  Observable,
+  of, // concatMap,
+  /// delay
+} from "rxjs";
 import { v4 as uuidv4 } from "uuid";
 
 export const Component = (props: { db: dbTypes.LoadedDb; block: dbTypes.BlockNote }) => {
@@ -35,8 +39,7 @@ export const Component = (props: { db: dbTypes.LoadedDb; block: dbTypes.BlockNot
 // export const isAvailable = (db: dbTypes.LoadedDb): Promise<boolean> => Promise.resolve(true);
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const isAvailable = (db: dbTypes.LoadedDb): Observable<boolean> =>
-  of(true, false, true, false, true, false).pipe(concatMap((x) => of(x).pipe(delay(1000))));
+export const isAvailable = (db: dbTypes.LoadedDb): Observable<boolean> => of(true); // .pipe(concatMap((x) => of(x).pipe(delay(1000))));
 
 export const add = async (db: dbTypes.LoadedDb) => {
   console.log("adding note");
