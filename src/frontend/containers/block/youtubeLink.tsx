@@ -42,9 +42,10 @@ export const Add = (props: { db: dbTypes.LoadedDb; block: dbTypes.BlockYoutubeIn
 
   return (
     <>
-      Add a youtube link:
+      <p>Add a youtube link:</p>
       <input placeholder="paste url" value={url} onChange={(e) => setUrl(e.target.value)} />
       <button onClick={addLink}>Add</button>
+      <p>or choose existing:</p>
     </>
   );
 };
@@ -53,12 +54,22 @@ export const Component = (props: { db: dbTypes.LoadedDb; block: dbTypes.BlockYou
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { db, block } = props;
 
-  const dataQuery = useRxQuery(queries.data(db.instance, block.dataId));
-  const data = dataQuery.result && dataQuery.result[0] && dataQuery.result[0].get();
+  const {
+    result: { 0: dataDoc },
+  } = useRxQuery(queries.data(db.instance, block.dataId));
+  const data = dataDoc?.get();
 
   if (!block.dataId || !data) return <Add db={db} block={block} />;
-
-  return <div>{data?.body}</div>;
+  // <iframe src="https://www.youtube.com/embed/7A4vR1NFS_I"></iframe>
+  // https://www.youtube.com/watch?v=7A4vR1NFS_I
+  if (!data.body) return <div>no url</div>;
+  const youtubeId = data.body.split("=").slice(-1); // TODO proper id extract
+  return (
+    <div>
+      <iframe src={`https://www.youtube.com/embed/${youtubeId}`}></iframe>
+      {data.body}
+    </div>
+  );
 };
 
 // the ability to add a youtube link is always available
