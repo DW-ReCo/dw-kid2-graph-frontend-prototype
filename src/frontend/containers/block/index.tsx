@@ -5,6 +5,7 @@ import React from "react";
 
 const NotFoundType = ({ block }: { block: dbTypes.Block }) => <>Block type {block?.type} not found</>;
 
+/* eslint-disable */
 const BlockSwitch = ({ db, block }: { db: dbTypes.LoadedDb; block: dbTypes.Block }) =>
   block.type === "note" ? (
     <note.Component db={db} block={block} />
@@ -13,6 +14,7 @@ const BlockSwitch = ({ db, block }: { db: dbTypes.LoadedDb; block: dbTypes.Block
   ) : (
     <NotFoundType block={block} />
   );
+/* eslint-enable */
 
 const Block = (props: { db: dbTypes.LoadedDb; block: dbTypes.Block }) => {
   const { block, db } = props;
