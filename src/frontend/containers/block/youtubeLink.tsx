@@ -1,6 +1,7 @@
 import { upsertOne } from "@db/index";
 import * as queries from "@db/queries";
 import * as dbTypes from "@db/types";
+import { uniqueId } from "@frontend/utils";
 import * as Logger from "@logger/index";
 import React from "react";
 import { RxDocumentBase } from "rxdb";
@@ -26,7 +27,7 @@ export const Add = (props: { db: dbTypes.LoadedDb; block: dbTypes.BlockYoutubeIn
   const addLink = () => {
     // TODO validate that it _is_ actually a youtube link
     const validatedLink = url;
-    const newId = uuidv4();
+    const newId = uniqueId();
     const data: dbTypes.DataYoutubeUrl = {
       id: newId,
       type: "youtube_url",
@@ -86,11 +87,12 @@ export const isAvailable = (db: dbTypes.LoadedDb): Observable<boolean> => of(tru
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const add = async (db: dbTypes.LoadedDb) => {
   log.debug("adding block");
-  const newNote: dbTypes.BlockYoutubeInput = {
-    id: uuidv4(),
+  const newBlock: dbTypes.BlockYoutubeInput = {
+    id: uniqueId(),
     //@ts-ignore
     document_type: "block",
     type: "youtube_url_input",
   };
-  await upsertOne(db.instance, newNote);
+  await upsertOne(db.instance, newBlock);
+  return newBlock;
 };

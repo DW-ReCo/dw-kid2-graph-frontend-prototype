@@ -1,5 +1,6 @@
 import React from "react";
 import { Observable } from "rxjs";
+import { v4 as uuidv4 } from "uuid";
 
 // takes a promise, and returns a react hook for it.
 // use like this:
@@ -36,3 +37,5 @@ export const useObservable = <T>(o: Observable<T>) => {
 
   return result;
 };
+
+export const uniqueId = () => window.btoa(uuidv4()).substring(0, 8);

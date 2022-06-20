@@ -1,6 +1,7 @@
 import * as t from "./types";
 import * as rxdb from "rxdb";
 import * as db from "./index";
+import { uniqueId } from "@frontend/utils/index";
 import { v4 as uuidv4 } from "uuid";
 
 // the testing data
@@ -13,7 +14,7 @@ import { v4 as uuidv4 } from "uuid";
 //   optionally takes a symbol to prefix the ids with, otherwise we will generate a random one
 /* prettier-ignore */
 export const generateTestingDocs1 = (sym?: string) => {
-  const symbol = sym || uuidv4().substring(0, 5);
+  const symbol = sym || uniqueId();
   const id = (n: string) => symbol + n;
   return [
     //
