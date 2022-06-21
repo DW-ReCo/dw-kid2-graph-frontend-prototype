@@ -17,7 +17,7 @@ import { config as buildConfig } from "../../build.cfg";
 const fromLocalStorage: (l: types.LocalStorageConfigLoader) => Promise<types.PartialConfig> = ({ key }) => {
   const storedConfigStr: string | null = window.localStorage.getItem(key);
   if (!storedConfigStr) {
-    console.warn(`[cfg] no local config found at key { key }`);
+    console.warn(`[cfg] no local config found at ${key}`);
     return Promise.resolve(types.emptyConfig);
   }
   const storedConfig: types.PartialConfig = JSON.parse(storedConfigStr);

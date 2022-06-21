@@ -1,6 +1,7 @@
 import { upsertOne } from "@db/index";
 import * as queries from "@db/queries";
-import * as dbTypes from "@db/types";
+import * as Db from "@db/types";
+import YoutubeEmbed from "@frontend/components/youtubeEmbed";
 import useConfigContext from "@frontend/hooks/contexts/useConfigContext";
 import { uniqueId } from "@frontend/utils";
 import * as Logger from "@logger/index";
@@ -15,33 +16,25 @@ import {
 
 const log = Logger.makeLogger("frontend/containers/block/youtubeLink");
 
-export const Add = (props: { db: dbTypes.LoadedDb; block: dbTypes.BlockYoutubeInput }) => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+export const Add = (props: { db: Db.LoadedDb; block: Db.BlockYoutubeInput }) => {
   const { db, block } = props;
-
   const { configState } = useConfigContext();
 
   const [url, setUrl] = React.useState<string>("");
 
   const addLink = () => {
     // TODO validate that it _is_ actually a youtube link
-    const validatedLink = url;
-    const newId = uniqueId();
-    const data: dbTypes.DataYoutubeUrl = {
-      id: newId,
-      type: "youtube_url",
-      // @ts-ignore FIXME
-      document_type: "data",
-      // @ts-ignore FIXME
-      body: validatedLink,
-    };
+    const validatedUrl = url;
+
+    const data: Db.DataYoutubeUrl = Db.newDataYoutubeUrl(validatedUrl);
+
     userAddService
       .execute(
         db.instance,
         configState,
       )(data)
       .then((_) => {
-        queries.mergeBlock(db.instance, { id: block.id, dataId: newId });
+        queries.mergeBlock(db.instance, { id: block.id, dataId: data.id });
       });
   };
 
@@ -50,35 +43,28 @@ export const Add = (props: { db: dbTypes.LoadedDb; block: dbTypes.BlockYoutubeIn
       <p>Add a youtube link:</p>
       <input placeholder="paste url" value={url} onChange={(e) => setUrl(e.target.value)} />
       <button onClick={addLink}>Add</button>
-      <p>or choose existing:</p>
     </>
   );
 };
 
-export const Component = (props: { db: dbTypes.LoadedDb; block: dbTypes.BlockYoutubeInput }) => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+export const Component = (props: { db: Db.LoadedDb; block: Db.BlockYoutubeInput }) => {
   const { db, block } = props;
 
-  const {
-    result: { 0: dataDoc },
-  } = useRxQuery(queries.data(db.instance, block.dataId));
-  const data = dataDoc?.get();
+  const { result, isFetching } = useRxQuery(queries.data(db.instance, block.dataId));
+  const data = result[0]?.get();
+
+  // isFetching will only be for a microsecond
+  if (isFetching) return <div>isFetching</div>;
 
   if (!block.dataId || !data) return <Add db={db} block={block} />;
-  // <iframe src="https://www.youtube.com/embed/7A4vR1NFS_I"></iframe>
-  // https://www.youtube.com/watch?v=7A4vR1NFS_I
+
   if (!data.body) return <div>no url</div>;
-  const youtubeId = data.body.split("=").slice(-1); // TODO proper id extract
-  return (
-    <div>
-      <iframe src={`https://www.youtube.com/embed/${youtubeId}`}></iframe>
-      {data.body}
-    </div>
-  );
+
+  return <YoutubeEmbed url={data.body} />;
 };
 
 // the ability to add a youtube link is always available
-export const isAvailable = (db: dbTypes.LoadedDb): Observable<boolean> => of(true);
+export const isAvailable = (db: Db.LoadedDb): Observable<boolean> => of(true);
 /* prettier-ignore */
 /* export const isAvailable = (db: dbTypes.LoadedDb): Observable<boolean> =>
  *   queries.allData(db.instance).$
@@ -89,14 +75,9 @@ export const isAvailable = (db: dbTypes.LoadedDb): Observable<boolean> => of(tru
  *          }))
  *  */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const add = async (db: dbTypes.LoadedDb) => {
+export const add = async (db: Db.LoadedDb) => {
   log.debug("adding block");
-  const newBlock: dbTypes.BlockYoutubeInput = {
-    id: uniqueId(),
-    //@ts-ignore
-    document_type: "block",
-    type: "youtube_url_input",
-  };
+  const newBlock: Db.BlockYoutubeInput = Db.newBlockYoutubeInput();
   await upsertOne(db.instance, newBlock);
   return newBlock;
 
