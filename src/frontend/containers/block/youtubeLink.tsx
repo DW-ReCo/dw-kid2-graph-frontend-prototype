@@ -1,6 +1,7 @@
 import { upsertOne } from "@db/index";
 import * as queries from "@db/queries";
 import * as dbTypes from "@db/types";
+import useConfigContext from "@frontend/hooks/contexts/useConfigContext";
 import { uniqueId } from "@frontend/utils";
 import * as Logger from "@logger/index";
 import userAddService from "@services/userAdd";
@@ -18,6 +19,8 @@ export const Add = (props: { db: dbTypes.LoadedDb; block: dbTypes.BlockYoutubeIn
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { db, block } = props;
 
+  const { configState } = useConfigContext();
+
   const [url, setUrl] = React.useState<string>("");
 
   const addLink = () => {
@@ -32,9 +35,14 @@ export const Add = (props: { db: dbTypes.LoadedDb; block: dbTypes.BlockYoutubeIn
       // @ts-ignore FIXME
       body: validatedLink,
     };
-    upsertOne(db.instance, data).then((_) => {
-      queries.mergeBlock(db.instance, block.id, { dataId: newId });
-    });
+    userAddService
+      .execute(
+        db.instance,
+        configState,
+      )(data)
+      .then((_) => {
+        queries.mergeBlock(db.instance, block.id, { dataId: newId });
+      });
   };
 
   return (

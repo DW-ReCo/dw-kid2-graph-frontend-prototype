@@ -1,8 +1,6 @@
-import { LoadedDb } from "@db/types";
-
 export type AppState = {
   isLoading: boolean;
-  activeDb?: LoadedDb;
+  activeDb?: string;
   activePage?: string;
   dbInitialized: boolean;
   configLoaded: boolean;
