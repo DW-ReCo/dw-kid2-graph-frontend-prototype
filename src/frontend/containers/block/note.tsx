@@ -19,9 +19,9 @@ export const Component = (props: { db: dbTypes.LoadedDb; block: dbTypes.BlockNot
   };
 
   return (
-    <>
-      <textarea value={body} onChange={(e) => updateText(e.target.value)} style={{ width: "100%", height: "100px" }} />
-    </>
+    <textarea onChange={(e) => updateText(e.target.value)} style={{ width: "100%", height: "100px" }}>
+      {body}
+    </textarea>
   );
 };
 
