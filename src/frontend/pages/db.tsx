@@ -1,11 +1,10 @@
 import React from "react";
 import DBRenderer from "@frontend/containers/DBRenderer/index";
-import useAppContext from "@frontend/store";
+import useDbContext from "@frontend/hooks/contexts/useDbContext";
 
 const DBPage = () => {
-  const {
-    state: { dbs },
-  } = useAppContext();
+  const { dbState: dbs } = useDbContext();
+
   return <div>{dbs.map(DBRenderer)}</div>;
 };
 

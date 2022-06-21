@@ -4,14 +4,12 @@ import * as db from "@db/index";
 import { addTestingData } from "../../../db/testing_data";
 
 import { first } from "lodash/fp";
-import useAppContext from "@frontend/store/index";
+import useDbContext from "@frontend/hooks/contexts/useDbContext";
 
 import Link from "next/link";
 
 const DevPanel = () => {
-  const {
-    state: { dbs },
-  } = useAppContext();
+  const { dbState: dbs } = useDbContext();
 
   const firstDb = first(dbs);
 
