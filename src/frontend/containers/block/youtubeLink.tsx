@@ -33,7 +33,7 @@ export const Add = (props: { db: dbTypes.LoadedDb; block: dbTypes.BlockYoutubeIn
       body: validatedLink,
     };
     upsertOne(db.instance, data).then((_) => {
-      queries.mergeBlock(db.instance, block.id, { dataId: newId });
+      queries.mergeBlock(db.instance, { dataId: newId, id: block.id });
     });
   };
 
