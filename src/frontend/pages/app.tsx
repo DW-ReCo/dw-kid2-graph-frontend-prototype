@@ -14,7 +14,9 @@ const ApplicationContainer = () => {
   } = useAppContext();
 
   const openPage = (d: dbTypes.LoadedDb) => (p: dbTypes.Page) => {
+    // @ts-ignore
     setState((prev) => ({ ...prev, appState: { ...prev.appState, activePage: p.id } }));
+    // @ts-ignore
     setState((prev) => ({ ...prev, appState: { ...prev.appState, activeDb: d } }));
     console.log(`opening page ${p.title}`);
   };

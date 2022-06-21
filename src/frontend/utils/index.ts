@@ -1,6 +1,9 @@
 import React from "react";
 import { Observable } from "rxjs";
 import { v4 as uuidv4 } from "uuid";
+
+// cant figure out how to make a declarations file right now, so
+// @ts-ignore
 import Base58 from "base-58";
 
 // takes a promise, and returns a react hook for it.
@@ -40,4 +43,3 @@ export const useObservable = <T>(o: Observable<T>) => {
 };
 
 export const uniqueId = () => Base58.encode(new Buffer(uuidv4())).substring(0, 8);
-

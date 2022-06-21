@@ -17,3 +17,5 @@ export const listenToCharacters = (db: RxDatabase) => {
     );
   });
 };
+
+export const now = (): Date => new Date(Date.now());

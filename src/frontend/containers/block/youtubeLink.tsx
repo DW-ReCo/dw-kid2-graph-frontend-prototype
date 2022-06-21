@@ -3,6 +3,7 @@ import * as queries from "@db/queries";
 import * as dbTypes from "@db/types";
 import { uniqueId } from "@frontend/utils";
 import * as Logger from "@logger/index";
+import userAddService from "@services/userAdd";
 import React from "react";
 import { useRxQuery } from "rxdb-hooks";
 import {
@@ -13,6 +14,14 @@ import {
   of, // concatMap,
   /// delay
 } from "rxjs";
+
+console.log("aaaaaaaaaaaaaaaaaa");
+console.log("aaaaaaaaaaaaaaaaaa");
+console.log("aaaaaaaaaaaaaaaaaa");
+console.log("aaaaaaaaaaaaaaaaaa");
+console.log("aaaaaaaaaaaaaaaaaa");
+console.log("aaaaaaaaaaaaaaaaaa");
+console.log(userAddService);
 
 const log = Logger.makeLogger("frontend/containers/block/youtubeLink");
 

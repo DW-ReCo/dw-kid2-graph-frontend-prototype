@@ -1,5 +1,8 @@
 import * as types from "./types";
+import * as Logger from "../logger";
 import { RxDatabase, RxQuery } from "rxdb";
+
+const log = Logger.makeLogger("db/queries");
 
 export const allBlocks = (db: RxDatabase): RxQuery => db.docs.find().where("document_type").equals("block");
 
@@ -36,3 +39,20 @@ export const mergeBlock = (db: RxDatabase, id: string, doc: Partial<types.Block>
 
 export const mergePage = (db: RxDatabase, id: string, doc: Partial<types.Page>) =>
   db.docs.findOne().where("id").equals(id).update({ $set: doc });
+
+export const upsertDocs = async (db: RxDatabase, docs: types.DbDocument[]): Promise<RxDatabase> => {
+  log.debug(`upserting docs`, docs);
+  return await Promise.all(docs.map((d) => db.docs.atomicUpsert(d))).then((ds) => {
+    log.info(
+      "succeeded in upserting:",
+      ds.map((d) => d.get()),
+    );
+    return db;
+  });
+  // return await db.docs.bulkUpsert(docs).then(ds => {
+  //  log.info("succeeded in upserting:", ds.length);
+  //  return db;
+  // })
+};
+
+export const upsertOne = async (db: RxDatabase, doc: types.DbDocument): Promise<RxDatabase> => upsertDocs(db, [doc]);
