@@ -21,7 +21,7 @@ const log = Logger.makeLogger("frontent/pages/_app");
 const App = ({ Component, pageProps }: AppProps) => {
   const [appState, setAppState] = useState(
     typeof window !== "undefined" && localStorage.getItem("kid2-appState")
-      ? JSON.parse(localStorage.getItem("kid2-appState"))
+      ? JSON.parse(localStorage.getItem("kid2-appState") || "{}")
       : appContextInitialState,
   );
   const [dbState, setDbState] = useState(dbContextInitialState);

@@ -84,12 +84,12 @@ export type BlockPrototype = DbDocumentPrototype & {
 };
 
 export type BlockNote = BlockPrototype & { type: "note"; body: string };
-export type BlockYoutubeInput = BlockPrototype & { type: "youtube_url_input"; dataId: DataId };
-export const newBlockYoutubeInput = () => ({
+export type BlockYoutubeInput = BlockPrototype & { type: "youtube_url_input"; dataId?: DataId };
+export const newBlockYoutubeInput = (): BlockYoutubeInput => ({
   id: uniqueId(),
   document_type: DbDocumentType.Block,
   type: "youtube_url_input",
-  state: "open",
+  state: "open" as const,
 });
 
 export type BlockDownloadedVideo = BlockPrototype & { type: "downloaded_video"; dataId: DataId };
