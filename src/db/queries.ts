@@ -39,6 +39,16 @@ export const mergeBlock = (db: RxDatabase, doc: Partial<types.Block> & { id: typ
 
 export const mergePage = (db: RxDatabase, doc: Partial<types.Page> & { id: types.BlockID }) => merge(db, doc);
 
+export const remove = (db: RxDatabase, id: types.BlockID) =>
+  db.docs
+    .findOne({
+      selector: {
+        id: { $eq: id },
+        document_type: { $in: ["block", "page"] },
+      },
+    })
+    .remove();
+
 export const upsertDocs = async (db: RxDatabase, docs: types.DbDocument[]): Promise<RxDatabase> => {
   log.debug(`upserting docs`, docs);
   return await Promise.all(docs.map((d) => db.docs.atomicUpsert(d))).then((ds) => {
