@@ -78,7 +78,7 @@ const App = ({ Component, pageProps }: AppProps) => {
   useEffect(() => {
     // only do any of this in the browser:
     if (window !== undefined) {
-      loadDbs();
+      configState?.dbs && loadDbs();
     }
   }, [configState]);
 

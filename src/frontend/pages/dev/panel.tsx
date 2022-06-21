@@ -18,6 +18,7 @@ const DevPanel = () => {
   const clearDbs = () => dbs.map((d) => db.clearDocs(d.instance));
 
   const addTestingDataDbs = () => dbs.map((d) => addTestingData(d.instance));
+  console.log(dbs);
 
   return (
     <>

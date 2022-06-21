@@ -16,8 +16,6 @@ const ApplicationContainer = () => {
   const openPage = (d: dbTypes.LoadedDb) => (p: dbTypes.Page) => {
     setAppState((prev) => ({ ...prev, activePage: p.id }));
     setAppState((prev) => ({ ...prev, activeDb: d }));
-
-    console.log(`opening page ${p.title}`);
   };
 
   return (
