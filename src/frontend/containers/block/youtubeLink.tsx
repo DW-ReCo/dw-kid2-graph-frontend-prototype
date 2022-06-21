@@ -7,21 +7,10 @@ import userAddService from "@services/userAdd";
 import React from "react";
 import { useRxQuery } from "rxdb-hooks";
 import {
-  every,
-  filter,
   Observable,
-  map,
   of, // concatMap,
   /// delay
 } from "rxjs";
-
-console.log("aaaaaaaaaaaaaaaaaa");
-console.log("aaaaaaaaaaaaaaaaaa");
-console.log("aaaaaaaaaaaaaaaaaa");
-console.log("aaaaaaaaaaaaaaaaaa");
-console.log("aaaaaaaaaaaaaaaaaa");
-console.log("aaaaaaaaaaaaaaaaaa");
-console.log(userAddService);
 
 const log = Logger.makeLogger("frontend/containers/block/youtubeLink");
 

@@ -2,8 +2,7 @@ import * as types from "./types";
 
 import { createContext, useContext } from "react";
 
-// @ts-ignore
-const context = createContext<types.AppStoreContext>(null);
+const context = createContext<types.AppContext>(null);
 
 export const { Provider } = context;
 
