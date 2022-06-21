@@ -41,7 +41,7 @@ export const Add = (props: { db: dbTypes.LoadedDb; block: dbTypes.BlockYoutubeIn
         configState,
       )(data)
       .then((_) => {
-        queries.mergeBlock(db.instance, block.id, { dataId: newId });
+        queries.mergeBlock(db.instance, { id: block.id, dataId: newId });
       });
   };
 
