@@ -3,7 +3,7 @@ import * as types from "./types";
 import { createContext, useContext } from "react";
 import { LoadedDb } from "@db/types";
 
-const context = createContext<types.DbContext>(null);
+const context = createContext<types.DbContext | undefined>(undefined);
 
 export const { Provider } = context;
 

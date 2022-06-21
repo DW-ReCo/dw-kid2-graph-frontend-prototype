@@ -2,7 +2,7 @@ import * as types from "./types";
 
 import { createContext, useContext } from "react";
 
-const context = createContext<types.AppContext>(null);
+const context = createContext<types.AppContext | undefined>(undefined);
 
 export const { Provider } = context;
 

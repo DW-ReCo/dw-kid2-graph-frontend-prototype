@@ -10,10 +10,13 @@ const PageListItem = (props: { db: dbTypes.LoadedDb; page: dbTypes.Page; open: (
     queries.mergePage(db.instance, { id: page.id, title: newTitle });
   };
 
+  const remove = (db: dbTypes.LoadedDb, id: string) => queries.remove(db.instance, id);
+
   return (
     <div>
       <input onChange={(e) => updatePageTitle(e.target.value)} value={page.title} />
       <button onClick={open}>Open</button>
+      <button onClick={() => remove(db, page.id)}>Remove</button>
     </div>
   );
 };

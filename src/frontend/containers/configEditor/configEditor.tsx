@@ -3,6 +3,7 @@ import * as cfgTypes from "@cfg/types";
 import { omit, get } from "lodash/fp";
 import * as Logger from "@logger/index";
 import * as cfg from "@cfg/index";
+// @ts-ignore
 import JSONEditor from "react-json-editor-ajrm";
 
 const log = Logger.makeLogger("frontent/pages/config");
