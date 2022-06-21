@@ -25,6 +25,7 @@
       "@store/*": ["src/store/*"],
       "@cfg/*": ["src/cfg/*"],
       "@utils/*": ["src/utils/*"],
+      "@services/*": ["src/services/*"],
       "@frontend/*": ["src/frontend/*"]
     }
   },

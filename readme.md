@@ -31,7 +31,21 @@ npm run dev:next
 With a replication server:
 
 ```bash
-npm run dev:next
+npm run dev
+```
+
+### Build the application
+
+To build the application as a static site run:
+
+```bash
+npm run build
+```
+
+To serve the build run:
+
+```bash
+npm run start
 ```
 
 ### Testing

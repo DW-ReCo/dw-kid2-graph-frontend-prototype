@@ -13,6 +13,8 @@ import { RxDBUpdatePlugin } from "rxdb/plugins/update";
 import { RxDBDevModePlugin } from "rxdb/plugins/dev-mode";
 import { getRxStorageMemory } from "rxdb/plugins/memory";
 
+import * as queries from "./queries";
+
 import * as cfg from "../cfg";
 import * as Logger from "../logger";
 
@@ -39,6 +41,11 @@ try {
   log.error(e);
 }
 
+// deprecated, moved namespace
+export const upsertOne = queries.upsertOne;
+// deprecated, moved namespace
+export const upsertDocs = queries.upsertDocs;
+
 const removeCollection = (name: string, db: rxdb.RxDatabase) =>
   db
     .removeCollection(name)
@@ -64,24 +71,6 @@ export const clearDocs = async (db: rxdb.RxDatabase): Promise<rxdb.RxDatabase> =
   await db.docs.find().remove();
   return db;
 };
-
-export const upsertDocs = async (db: rxdb.RxDatabase, docs: types.DbDocument[]): Promise<rxdb.RxDatabase> => {
-  log.debug(`upserting docs`, docs);
-  return await Promise.all(docs.map((d) => db.docs.atomicUpsert(d))).then((ds) => {
-    log.info(
-      "succeeded in upserting:",
-      ds.map((d) => d.get()),
-    );
-    return db;
-  });
-  // return await db.docs.bulkUpsert(docs).then(ds => {
-  //  log.info("succeeded in upserting:", ds.length);
-  //  return db;
-  // })
-};
-
-export const upsertOne = async (db: rxdb.RxDatabase, doc: types.DbDocument): Promise<rxdb.RxDatabase> =>
-  upsertDocs(db, [doc]);
 
 const makeDb = async (cfg: cfg.DbConfig) => {
   //  pouchdb.addPouchPlugin(MemoryAdapter);

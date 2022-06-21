@@ -2,3 +2,4 @@ node_modules
 .next
 src/frontend/.next
 src/frontend/out
+src/db/testing_data.ts

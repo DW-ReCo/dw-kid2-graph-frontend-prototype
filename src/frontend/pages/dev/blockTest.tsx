@@ -14,7 +14,7 @@ const docs: dbTypes.DbDocument[] = generateTestingDocs1();
 const AllBlocks = (props: { db: LoadedDb }) => {
   const { db } = props;
   const { result: docs } = useRxQuery(queries.allBlocks(db.instance));
-  const blocks: dbTypes.Block[] = docs.map((d) => d.get());
+  const blocks: dbTypes.Block[] = docs.map((d) => d.get()) as dbTypes.Block[];
 
   return (
     <>

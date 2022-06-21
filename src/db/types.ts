@@ -1,11 +1,16 @@
-import * as rxdb from "rxdb";
 import { DbConfig } from "../cfg/types";
+import * as rxdb from "rxdb";
 
 // We store all of our different types into the same database
 //   So here are the document types
-export type DbDocumentType = "data" | "execution" | "block" | "page";
+export enum DbDocumentType {
+  Data = "data",
+  Execution = "execution",
+  Block = "block",
+  Page = "page",
+}
 
-export type DbDocumentPrototype = { document_type: DocumentType };
+export type DbDocumentPrototype = { document_type: DbDocumentType };
 
 // aptly named "data" types, for different datas we operate on
 
@@ -15,7 +20,7 @@ export type DataType = "url" | "youtube_url" | "youtube_api_result" | "video_fil
 export type DataPrototype = DbDocumentPrototype & {
   id: DataId;
   type: DataType;
-  document_type: "data";
+  document_type: DbDocumentType.Data;
   body: object;
 };
 export type DataURL = DataPrototype & { body: URL; type: "url" };
@@ -48,8 +53,9 @@ export type DataLink = { key?: string; data_id: DataId };
 export type ExecutionPrototype = DbDocumentPrototype & {
   id: ExecutionID; // maybe cpmputed or uuid
   type: ExecutionType;
-  document_type: "execution";
-  done_at: Date;
+  document_type: DbDocumentType;
+  started_at: Date;
+  finished_at: Date;
   of_data: Array<DataLink>;
   to_data: Array<DataLink>;
 };
@@ -68,7 +74,7 @@ export type BlockPrototype = DbDocumentPrototype & {
   id: BlockID;
   state: "open" | "closed";
   type: BlockType;
-  document_type: "block";
+  document_type: DbDocumentType.Block;
 };
 
 export type BlockNote = BlockPrototype & { type: "note"; body: string };
@@ -83,7 +89,12 @@ export const isBlock = (doc: DbDocument): doc is Block => doc.document_type === 
 //
 //   collections of blocks
 
-export type Page = DbDocumentPrototype & { id: string; document_type: "page"; title: string; blocks: BlockID[] };
+export type Page = DbDocumentPrototype & {
+  id: string;
+  document_type: DbDocumentType.Page;
+  title: string;
+  blocks: BlockID[];
+};
 
 export type DbDocument = Page | Block | Execution | Data;
 
