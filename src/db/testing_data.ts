@@ -23,7 +23,7 @@ export const generateTestingDocs1 = (sym?: string) => {
     <t.DataYoutubeUrl>{
     /* prettier-ignore */
       id: id("data1"),
-      document_type: "data",
+      document_type: t.DbDocumentType.Data,
       type: "youtube_url",
       body: "https://www.youtube.com/watch?v=jNQXAC9IVRw",
     },
@@ -44,15 +44,17 @@ export const generateTestingDocs1 = (sym?: string) => {
     // //
     <t.ExecutionUserAdded>{
       id: id("execution1"),
-      done_at: new Date(Date.now()),
-      document_type: "execution" as const,
+      started_at: new Date(Date.now()),
+      finished_at: new Date(Date.now()),
+      document_type: t.DbDocumentType.Execution,
       type: "user_added",
       of_data: [] as t.DataLink[],
       to_data: [{ data_id: id("data1") }],
     },
     <t.ExecutionUserAdded>{
       id: id("execution2"),
-      done_at: new Date(Date.now()),
+      started_at: new Date(Date.now()),
+      finished_at: new Date(Date.now()),
       type: "user_added",
       document_type: "execution" as const,
       of_data: [] as t.DataLink[],
@@ -62,7 +64,8 @@ export const generateTestingDocs1 = (sym?: string) => {
       id: id("execution3"),
       document_type: "execution" as const,
       type: "download_youtube_v1",
-      done_at: new Date(Date.now()),
+      started_at: new Date(Date.now()),
+      finished_at: new Date(Date.now()),
       of_data: [{ data_id: id("data2") }],
       to_data: [{ data_id: id("data3") }],
     },
