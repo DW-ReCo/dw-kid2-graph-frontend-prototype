@@ -1,5 +1,6 @@
 import { DbConfig } from "../cfg/types";
 import * as rxdb from "rxdb";
+import { uniqueId } from "@frontend/utils";
 
 // We store all of our different types into the same database
 //   So here are the document types
@@ -21,7 +22,6 @@ export type DataPrototype = DbDocumentPrototype & {
   id: DataId;
   type: DataType;
   document_type: DbDocumentType.Data;
-  body: object;
 };
 export type DataURL = DataPrototype & { body: URL; type: "url" };
 
@@ -29,6 +29,12 @@ export type DataYoutubeUrl = DataPrototype & {
   type: "youtube_url";
   body: string /* & { host: "youtube.com" | "www.youtube.com" } */;
 };
+export const newDataYoutubeUrl = (url: string): DataYoutubeUrl => ({
+  id: uniqueId(),
+  type: "youtube_url",
+  document_type: DbDocumentType.Data,
+  body: url,
+});
 
 export type DataVideoFileUrl = DataPrototype & {
   type: "video_file_url";
@@ -79,6 +85,13 @@ export type BlockPrototype = DbDocumentPrototype & {
 
 export type BlockNote = BlockPrototype & { type: "note"; body: string };
 export type BlockYoutubeInput = BlockPrototype & { type: "youtube_url_input"; dataId: DataId };
+export const newBlockYoutubeInput = () => ({
+  id: uniqueId(),
+  document_type: DbDocumentType.Block,
+  type: "youtube_url_input",
+  state: "open",
+});
+
 export type BlockDownloadedVideo = BlockPrototype & { type: "downloaded_video"; dataId: DataId };
 
 export type Block = BlockNote | BlockYoutubeInput | BlockDownloadedVideo;

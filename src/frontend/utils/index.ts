@@ -43,3 +43,9 @@ export const useObservable = <T>(o: Observable<T>) => {
 };
 
 export const uniqueId = () => Base58.encode(new Buffer(uuidv4())).substring(0, 8);
+
+// extracts a youtube id from a url, or returns undefined
+// TODO actually do what we just described
+//   this will only work with specific url strings, we need a function
+//   that works more generically
+export const extractYoutubeId = (s: string) => s.split("=").slice(-1);
