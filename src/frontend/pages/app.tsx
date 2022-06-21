@@ -3,7 +3,7 @@ import * as dbTypes from "@db/types";
 import Page from "@frontend/containers/page";
 import Pages from "@frontend/containers/pages";
 import useAppContext from "@frontend/hooks/contexts/useAppContext";
-import useDbContext from "@frontend/hooks/contexts/useDbContext";
+import useDbContext, { getActiveDb } from "@frontend/hooks/contexts/useDbContext";
 
 const ApplicationContainer = () => {
   const {
@@ -15,8 +15,10 @@ const ApplicationContainer = () => {
 
   const openPage = (d: dbTypes.LoadedDb) => (p: dbTypes.Page) => {
     setAppState((prev) => ({ ...prev, activePage: p.id }));
-    setAppState((prev) => ({ ...prev, activeDb: d }));
+    setAppState((prev) => ({ ...prev, activeDb: d.name }));
   };
+
+  const activeDbInstance = getActiveDb(activeDb, dbs);
 
   return (
     <div>
@@ -27,7 +29,7 @@ const ApplicationContainer = () => {
           </Fragment>
         ))}
       </div>
-      <div>{activePage && activeDb && <Page db={activeDb} pageID={activePage} />}</div>
+      <div>{activePage && activeDb && activeDbInstance && <Page db={activeDbInstance} pageID={activePage} />}</div>
     </div>
   );
 };
