@@ -1,7 +1,7 @@
 import * as t from "./types";
 import * as rxdb from "rxdb";
 import * as db from "./index";
-import { v4 as uuidv4 } from "uuid";
+import { uniqueId } from "@frontend/utils/index";
 
 // the testing data
 //   here we define the groups of testing data
@@ -11,14 +11,17 @@ import { v4 as uuidv4 } from "uuid";
 
 // generate testing data
 //   optionally takes a symbol to prefix the ids with, otherwise we will generate a random one
+/* prettier-ignore */
 export const generateTestingDocs1 = (sym?: string) => {
-  const symbol = sym || uuidv4().substring(0, 5);
+  const symbol = sym || uniqueId();
   const id = (n: string) => symbol + n;
   return [
     //
     // data
     //
+    /* prettier-ignore */
     <t.DataYoutubeUrl>{
+    /* prettier-ignore */
       id: id("data1"),
       document_type: "data",
       type: "youtube_url",
@@ -71,14 +74,14 @@ export const generateTestingDocs1 = (sym?: string) => {
       state: "open",
       type: "note",
       document_type: "block" as const,
-      body: "This is a note" + uuidv4(),
+      body: "This is a note" + uniqueId(),
     },
     <t.BlockYoutubeInput>{
       id: id("block2"),
       state: "open",
       type: "youtube_url_input",
       document_type: "block" as const,
-      dataId: "data1",
+      dataId: id("data1"),
     },
     <t.BlockNote>{
       id: id("block3"),
@@ -106,7 +109,7 @@ export const generateTestingDocs1 = (sym?: string) => {
     //
     <t.Page>{
       id: id("page1"),
-      title: "Page 1" + uuidv4(),
+      title: "Page 1" + uniqueId(),
       document_type: "page" as const,
       blocks: [id("block1"), id("block2"), id("block3"), id("block4"), id("block5")],
     },
