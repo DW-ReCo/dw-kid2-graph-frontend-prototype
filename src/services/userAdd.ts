@@ -6,7 +6,7 @@ import * as Utils from "@utils/index";
 
 import * as Database from "@db/types";
 
-import * as queries from "@db/queries";
+import * as Queries from "@db/queries";
 import { uniqueId } from "@frontend/utils";
 
 // the user adding service takes one argument,
@@ -18,7 +18,7 @@ const execute: Types.ExecuteFunction<[Database.Data], Database.Data> = (db, cfg)
 
   const started_at = Utils.now();
 
-  await queries.upsertOne(db, validData);
+  await Queries.upsertOne(db, validData);
 
   const finished_at = Utils.now();
 
@@ -32,7 +32,7 @@ const execute: Types.ExecuteFunction<[Database.Data], Database.Data> = (db, cfg)
     to_data: [{ data_id: validData.id }],
   };
 
-  await queries.upsertOne(db, newExecution);
+  await Queries.upsertOne(db, newExecution);
 
   return { record: newExecution, created: validData };
 };
