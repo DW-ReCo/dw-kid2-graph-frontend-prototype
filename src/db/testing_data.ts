@@ -1,6 +1,6 @@
 import * as Types from "./types";
 import * as Rxdb from "rxdb";
-import * as Db from "./index";
+import * as Database from "./index";
 import { uniqueId } from "@frontend/utils/index";
 
 // the testing data
@@ -121,6 +121,6 @@ export const generateTestingDocs1 = (sym?: string) => {
 
 export const addTestingData = async (instance: Rxdb.RxDatabase) => {
   const docs = generateTestingDocs1("same");
-  await Db.upsertDocs(instance, docs);
+  await Database.upsertDocs(instance, docs);
   return docs;
 };
