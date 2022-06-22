@@ -3,7 +3,7 @@ import Block from "@frontend/containers/block/index";
 import AddBlock from "@frontend/containers/block/addBlock";
 import { generateTestingDocs1 } from "@db/testing_data";
 import * as DatabaseTypes from "@db/types";
-import * as ConfigTypes from "src/config/types";
+import * as ConfigTypes from "@config/types";
 import * as Database from "@db/index";
 import * as Queries from "@db/queries";
 import { LoadedDb } from "@db/types";
