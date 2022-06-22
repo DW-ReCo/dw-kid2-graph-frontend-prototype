@@ -1,16 +1,18 @@
 import React from "react";
 import RenderData from "@frontend/components/renderData";
-import * as dbTypes from "@db/types";
-import * as queries from "@db/queries";
+import * as DatabaseTypes from "@db/types";
+import * as Queries from "@db/queries";
 import { RxQueryResultDoc, useRxQuery } from "rxdb-hooks";
 
-const DBRenderer = (dbL: dbTypes.LoadedDb) => {
+const DBRenderer = (dbL: DatabaseTypes.LoadedDb) => {
   const { instance, name, description } = dbL;
 
-  const { result: allBlocks }: RxQueryResultDoc<dbTypes.Block> = useRxQuery(queries.allBlocks(instance));
-  const { result: allData }: RxQueryResultDoc<dbTypes.Data> = useRxQuery(queries.allData(instance));
-  const { result: allExecutions }: RxQueryResultDoc<dbTypes.Execution> = useRxQuery(queries.allExecutions(instance));
-  const { result: allPages }: RxQueryResultDoc<dbTypes.Page> = useRxQuery(queries.allPages(instance));
+  const { result: allBlocks }: RxQueryResultDoc<DatabaseTypes.Block> = useRxQuery(Queries.allBlocks(instance));
+  const { result: allData }: RxQueryResultDoc<DatabaseTypes.Data> = useRxQuery(Queries.allData(instance));
+  const { result: allExecutions }: RxQueryResultDoc<DatabaseTypes.Execution> = useRxQuery(
+    Queries.allExecutions(instance),
+  );
+  const { result: allPages }: RxQueryResultDoc<DatabaseTypes.Page> = useRxQuery(Queries.allPages(instance));
 
   return (
     <div>
