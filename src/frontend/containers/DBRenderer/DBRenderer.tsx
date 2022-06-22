@@ -3,6 +3,7 @@ import RenderData from "@frontend/components/renderData";
 import * as dbTypes from "@db/types";
 import * as queries from "@db/queries";
 import { RxQueryResultDoc, useRxQuery } from "rxdb-hooks";
+import RenderDataWrapper from "@frontend/components/renderData/wrapper";
 
 const DBRenderer = (dbL: dbTypes.LoadedDb) => {
   const { instance, name, description } = dbL;
@@ -16,12 +17,12 @@ const DBRenderer = (dbL: dbTypes.LoadedDb) => {
     <div className="w-full">
       <h1>{name}</h1>
       <p>{description}</p>
-      <div className="flex flex-row gap-2 content-evenly">
+      <RenderDataWrapper>
         <RenderData title="Blocks" documents={allBlocks} />
         <RenderData title="Data" documents={allData} />
         <RenderData title="Executions" documents={allExecutions} />
         <RenderData title="Pages" documents={allPages} />
-      </div>
+      </RenderDataWrapper>
     </div>
   );
 };
