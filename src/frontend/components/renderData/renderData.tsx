@@ -10,7 +10,7 @@ const RenderData = ({ documents, title }: types.RenderDataPropTypes) => (
         <li key={index} className="pb-2">
           <pre
             className="text-xs"
-            dangerouslySetInnerHTML={{ __html: syntaxHighlight(JSON.stringify(document, undefined, 4)) }}
+            dangerouslySetInnerHTML={{ __html: syntaxHighlight(JSON.stringify(document, undefined, 2)) }}
           />
         </li>
       ))}
