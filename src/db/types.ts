@@ -1,5 +1,5 @@
-import { DbConfig } from "../cfg/types";
-import * as rxdb from "rxdb";
+import { DbConfig } from "@config/types";
+import * as Rxdb from "rxdb";
 import { uniqueId } from "@frontend/utils";
 
 // We store all of our different types into the same database
@@ -111,4 +111,4 @@ export type Page = DbDocumentPrototype & {
 
 export type DbDocument = Page | Block | Execution | Data;
 
-export type LoadedDb = DbConfig & { instance: rxdb.RxDatabase };
+export type LoadedDb = DbConfig & { instance: Rxdb.RxDatabase };

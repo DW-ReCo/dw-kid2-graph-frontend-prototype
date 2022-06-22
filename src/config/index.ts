@@ -1,5 +1,5 @@
 import { mergeAll } from "lodash/fp";
-import * as types from "./types";
+import * as Types from "./types";
 export * from "./types";
 import { config as buildConfig } from "../../build.cfg";
 
@@ -14,26 +14,26 @@ import { config as buildConfig } from "../../build.cfg";
  *
  */
 
-const fromLocalStorage: (l: types.LocalStorageConfigLoader) => Promise<types.PartialConfig> = ({ key }) => {
+const fromLocalStorage: (l: Types.LocalStorageConfigLoader) => Promise<Types.PartialConfig> = ({ key }) => {
   const storedConfigStr: string | null = window.localStorage.getItem(key);
   if (!storedConfigStr) {
     console.warn(`[cfg] no local config found at ${key}`);
-    return Promise.resolve(types.emptyConfig);
+    return Promise.resolve(Types.emptyConfig);
   }
-  const storedConfig: types.PartialConfig = JSON.parse(storedConfigStr);
+  const storedConfig: Types.PartialConfig = JSON.parse(storedConfigStr);
   return Promise.resolve(storedConfig);
 };
 
-export const toLocalStorage = (l: types.LocalStorageConfigLoader, c: types.PartialConfig) => {
+export const toLocalStorage = (l: Types.LocalStorageConfigLoader, c: Types.PartialConfig) => {
   const { key } = l;
   typeof window !== "undefined" ? window.localStorage.setItem(key, JSON.stringify(c)) : false;
 };
 
-const fromServer: (l: types.ServerConfigLoader) => Promise<types.PartialConfig> =
+const fromServer: (l: Types.ServerConfigLoader) => Promise<Types.PartialConfig> =
   // in the future, this will fetch config from a server.  for now, it returns nothing
-  () => Promise.resolve(types.emptyConfig);
+  () => Promise.resolve(Types.emptyConfig);
 
-const fromLoader: (l: types.ConfigLoader) => Promise<types.PartialConfig> = async (l) => {
+const fromLoader: (l: Types.ConfigLoader) => Promise<Types.PartialConfig> = async (l) => {
   switch (l._type) {
     case "local_storage_loader":
       return fromLocalStorage(l);
@@ -45,10 +45,10 @@ const fromLoader: (l: types.ConfigLoader) => Promise<types.PartialConfig> = asyn
 // The loading function, takes all the configs defined in the build and loads them.
 // in the future, this function could work recursively, i.e the user has
 // configured places to load more config from
-export const all: () => Promise<types.PartialConfig[]> = async () => {
+export const all: () => Promise<Types.PartialConfig[]> = async () => {
   const { runtime_loads } = buildConfig;
 
-  const getLoader = (loader: types.ConfigLoader) =>
+  const getLoader = (loader: Types.ConfigLoader) =>
     fromLoader(loader).then((config) => ({ ...config, from_loader: loader }));
 
   // turn the runtime loads into PartialConfigs
@@ -57,7 +57,7 @@ export const all: () => Promise<types.PartialConfig[]> = async () => {
   return [buildConfig, ...configs];
 };
 
-export const load: () => Promise<types.PartialConfig> = async () => {
+export const load: () => Promise<Types.PartialConfig> = async () => {
   // TODO: deep merge
   return all().then(mergeAll);
 };

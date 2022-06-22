@@ -1,4 +1,4 @@
-import * as types from "./src/cfg/types";
+import * as Types from "@config/types";
 import { merge } from "lodash/fp";
 
 const customConfig = process.env.CUSTOM_CFG !== undefined ? JSON.parse(process?.env?.CUSTOM_CFG) : {};
@@ -8,7 +8,7 @@ const customConfig = process.env.CUSTOM_CFG !== undefined ? JSON.parse(process?.
 //
 // both configs have the same format, though, the type PartialConfig
 //
-const initialConfig: types.BuildConfig = {
+const initialConfig: Types.BuildConfig = {
   _type: "kid2_config",
   // these loads values
   runtime_loads: [
@@ -27,4 +27,4 @@ const initialConfig: types.BuildConfig = {
 
 // TODO: consider if a deep merge should be used here.
 // In the build we might want to overwrite these
-export const config: types.BuildConfig = merge(initialConfig, customConfig);
+export const config: Types.BuildConfig = merge(initialConfig, customConfig);

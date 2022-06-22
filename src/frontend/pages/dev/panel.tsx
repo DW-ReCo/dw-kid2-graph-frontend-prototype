@@ -1,5 +1,5 @@
-import React, { Fragment, useState } from "react";
-import * as db from "@db/index";
+import React, { Fragment } from "react";
+import * as Database from "@db/index";
 
 import { addTestingData } from "../../../db/testing_data";
 
@@ -18,7 +18,7 @@ const DevPanel = () => {
 
   if (!firstDb) return <>No Db</>;
 
-  const clearDbs = () => dbs.map((d) => db.clearDocs(d.instance));
+  const clearDbs = () => dbs.map((d) => Database.clearDocs(d.instance));
 
   const addTestingDataDbs = () => dbs.map((d) => addTestingData(d.instance));
 

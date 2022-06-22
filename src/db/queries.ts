@@ -1,4 +1,4 @@
-import * as types from "./types";
+import * as Types from "./types";
 import * as Logger from "../logger";
 import { RxDatabase, RxQuery } from "rxdb";
 
@@ -27,19 +27,19 @@ export const blocks = (db: RxDatabase, ids: string[]): RxQuery =>
     },
   });
 
-export const pageBlocks = (db: RxDatabase, page: types.Page) => blocks(db, page.blocks);
+export const pageBlocks = (db: RxDatabase, page: Types.Page) => blocks(db, page.blocks);
 
 // takes a database, an id, and a doc like {dataId: id}, which we will set using { $set: doc }, queries for the doc
 // and makes the changes
-// export const merge = (db: RxDatabase, id: string, doc: Partial<types.DbDocument>) =>
-export const merge = (db: RxDatabase, doc: Partial<types.DbDocument> & { id: types.BlockID }) =>
+// export const merge = (db: RxDatabase, id: string, doc: Partial<Types.DbDocument>) =>
+export const merge = (db: RxDatabase, doc: Partial<Types.DbDocument> & { id: Types.BlockID }) =>
   db.docs.findOne().where("id").equals(doc.id).update({ $set: doc });
 
-export const mergeBlock = (db: RxDatabase, doc: Partial<types.Block> & { id: types.BlockID }) => merge(db, doc);
+export const mergeBlock = (db: RxDatabase, doc: Partial<Types.Block> & { id: Types.BlockID }) => merge(db, doc);
 
-export const mergePage = (db: RxDatabase, doc: Partial<types.Page> & { id: types.BlockID }) => merge(db, doc);
+export const mergePage = (db: RxDatabase, doc: Partial<Types.Page> & { id: Types.BlockID }) => merge(db, doc);
 
-export const remove = (db: RxDatabase, id: types.BlockID) =>
+export const remove = (db: RxDatabase, id: Types.BlockID) =>
   db.docs
     .findOne({
       selector: {
@@ -49,7 +49,7 @@ export const remove = (db: RxDatabase, id: types.BlockID) =>
     })
     .remove();
 
-export const upsertDocs = async (db: RxDatabase, docs: types.DbDocument[]): Promise<RxDatabase> => {
+export const upsertDocs = async (db: RxDatabase, docs: Types.DbDocument[]): Promise<RxDatabase> => {
   log.debug(`upserting docs`, docs);
   return await Promise.all(docs.map((d) => db.docs.atomicUpsert(d))).then((ds) => {
     log.info(
@@ -64,4 +64,4 @@ export const upsertDocs = async (db: RxDatabase, docs: types.DbDocument[]): Prom
   // })
 };
 
-export const upsertOne = async (db: RxDatabase, doc: types.DbDocument): Promise<RxDatabase> => upsertDocs(db, [doc]);
+export const upsertOne = async (db: RxDatabase, doc: Types.DbDocument): Promise<RxDatabase> => upsertDocs(db, [doc]);

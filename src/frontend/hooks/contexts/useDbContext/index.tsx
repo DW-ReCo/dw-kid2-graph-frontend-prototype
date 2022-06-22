@@ -1,9 +1,9 @@
-import * as types from "./types";
+import * as Types from "./types";
 
 import { createContext, useContext } from "react";
 import { LoadedDb } from "@db/types";
 
-const context = createContext<types.DbContext | undefined>(undefined);
+const context = createContext<Types.DbContext | undefined>(undefined);
 
 export const { Provider } = context;
 

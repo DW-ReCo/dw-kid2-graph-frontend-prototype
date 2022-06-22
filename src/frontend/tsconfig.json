@@ -20,7 +20,7 @@
       "@logger/*": ["src/logger/*"],
       "@services/*": ["src/services/*"],
       "@store/*": ["src/store/*"],
-      "@cfg/*": ["src/cfg/*"],
+      "@config/*": ["src/config/*"],
       "@utils/*": ["src/utils/*"],
       "@frontend/*": ["src/frontend/*"]
     }

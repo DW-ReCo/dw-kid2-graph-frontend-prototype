@@ -1,5 +1,5 @@
 import { extractYoutubeId } from "@frontend/utils";
-import React, { Fragment } from "react";
+import React from "react";
 
 const YoutubeEmbed = (props: { url: string }) => {
   const { url } = props;

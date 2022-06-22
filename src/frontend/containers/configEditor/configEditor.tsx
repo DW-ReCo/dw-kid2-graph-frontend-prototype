@@ -1,14 +1,14 @@
 import React from "react";
-import * as cfgTypes from "@cfg/types";
+import * as ConfigTypes from "src/config/types";
 import { omit, get } from "lodash/fp";
 import * as Logger from "@logger/index";
-import * as cfg from "@cfg/index";
+import * as Config from "src/config/index";
 // @ts-ignore
 import JSONEditor from "react-json-editor-ajrm";
 
 const log = Logger.makeLogger("frontent/pages/config");
 
-const ConfigEditor = (props: { config: cfgTypes.PartialConfig }) => {
+const ConfigEditor = (props: { config: ConfigTypes.PartialConfig }) => {
   const { config } = props;
   const { from_loader: loader } = config;
 
@@ -24,7 +24,7 @@ const ConfigEditor = (props: { config: cfgTypes.PartialConfig }) => {
       const cc = JSON.parse(c);
       // TODO verify valid config
       // TODO remove AS
-      cfg.toLocalStorage(loader as cfgTypes.LocalStorageConfigLoader, cc);
+      Config.toLocalStorage(loader as ConfigTypes.LocalStorageConfigLoader, cc);
       // TODO then reload app config!!!!
       console.log(cc);
     } catch (e) {
