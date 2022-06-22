@@ -83,18 +83,16 @@ const App = ({ Component, pageProps }: AppProps) => {
   }, [configState]);
 
   return (
-    <>
-      {Database && (
-        <AppContextProvider value={{ appState, setAppState }}>
-          <ConfigContextProvider value={{ configState, setConfigState }}>
-            <DbContextProvider value={{ dbState, setDbState }}>
-              <DevPanel />
-              <Component {...pageProps} />
-            </DbContextProvider>
-          </ConfigContextProvider>
-        </AppContextProvider>
-      )}
-    </>
+    <AppContextProvider value={{ appState, setAppState }}>
+      <ConfigContextProvider value={{ configState, setConfigState }}>
+        <DbContextProvider value={{ dbState, setDbState }}>
+          <div className="w-full flex">
+            <div className="flex-1">{Database && <Component {...pageProps} />}</div>
+            <DevPanel />
+          </div>
+        </DbContextProvider>
+      </ConfigContextProvider>
+    </AppContextProvider>
   );
 };
 
