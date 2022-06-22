@@ -1,16 +1,16 @@
 import React from "react";
-import * as dbTypes from "@db/types";
+import * as DatabaseTypes from "@db/types";
 
-import * as queries from "@db/queries";
+import * as Queries from "@db/queries";
 
-const PageListItem = (props: { db: dbTypes.LoadedDb; page: dbTypes.Page; open: () => void }) => {
+const PageListItem = (props: { db: DatabaseTypes.LoadedDb; page: DatabaseTypes.Page; open: () => void }) => {
   const { page, open, db } = props;
 
   const updatePageTitle = (newTitle: string) => {
-    queries.mergePage(db.instance, { id: page.id, title: newTitle });
+    Queries.mergePage(db.instance, { id: page.id, title: newTitle });
   };
 
-  const remove = (db: dbTypes.LoadedDb, id: string) => queries.remove(db.instance, id);
+  const remove = (db: DatabaseTypes.LoadedDb, id: string) => Queries.remove(db.instance, id);
 
   return (
     <div>

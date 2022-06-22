@@ -1,6 +1,6 @@
-import * as t from "./types";
-import * as rxdb from "rxdb";
-import * as db from "./index";
+import * as Types from "./types";
+import * as Rxdb from "rxdb";
+import * as Db from "./index";
 import { uniqueId } from "@frontend/utils/index";
 
 // the testing data
@@ -20,20 +20,20 @@ export const generateTestingDocs1 = (sym?: string) => {
     // data
     //
     /* prettier-ignore */
-    <t.DataYoutubeUrl>{
+    <Types.DataYoutubeUrl>{
     /* prettier-ignore */
       id: id("data1"),
-      document_type: t.DbDocumentType.Data,
+      document_type: Types.DbDocumentType.Data,
       type: "youtube_url",
       body: "https://www.youtube.com/watch?v=jNQXAC9IVRw",
     },
-    <t.DataYoutubeUrl>{
+    <Types.DataYoutubeUrl>{
       id: id("data2"),
       type: "youtube_url",
-      document_type: "data" as t.DbDocumentType,
+      document_type: "data" as Types.DbDocumentType,
       body: "https://www.youtube.com/watch?v=uImk2RgCq_U&t=33s",
     },
-    <t.DataVideoFileUrl>{
+    <Types.DataVideoFileUrl>{
       id: id("data3"),
       type: "video_file_url",
       document_type: "data" as const,
@@ -42,25 +42,25 @@ export const generateTestingDocs1 = (sym?: string) => {
     // //
     // // executions
     // //
-    <t.ExecutionUserAdded>{
+    <Types.ExecutionUserAdded>{
       id: id("execution1"),
       started_at: new Date(Date.now()),
       finished_at: new Date(Date.now()),
-      document_type: t.DbDocumentType.Execution,
+      document_type: Types.DbDocumentType.Execution,
       type: "user_added",
-      of_data: [] as t.DataLink[],
+      of_data: [] as Types.DataLink[],
       to_data: [{ data_id: id("data1") }],
     },
-    <t.ExecutionUserAdded>{
+    <Types.ExecutionUserAdded>{
       id: id("execution2"),
       started_at: new Date(Date.now()),
       finished_at: new Date(Date.now()),
       type: "user_added",
       document_type: "execution" as const,
-      of_data: [] as t.DataLink[],
+      of_data: [] as Types.DataLink[],
       to_data: [{ data_id: id("data1") }],
     },
-    <t.ExecutionYoutubeDL>{
+    <Types.ExecutionYoutubeDL>{
       id: id("execution3"),
       document_type: "execution" as const,
       type: "download_youtube_v1",
@@ -72,35 +72,35 @@ export const generateTestingDocs1 = (sym?: string) => {
     //
     // blocks
     //
-    <t.BlockNote>{
+    <Types.BlockNote>{
       id: id("block1"),
       state: "open",
       type: "note",
       document_type: "block" as const,
       body: "This is a note" + uniqueId(),
     },
-    <t.BlockYoutubeInput>{
+    <Types.BlockYoutubeInput>{
       id: id("block2"),
       state: "open",
       type: "youtube_url_input",
       document_type: "block" as const,
       dataId: id("data1"),
     },
-    <t.BlockNote>{
+    <Types.BlockNote>{
       id: id("block3"),
       state: "open",
       type: "note",
       document_type: "block" as const,
       body: "This is another note",
     },
-    <t.BlockYoutubeInput>{
+    <Types.BlockYoutubeInput>{
       id: id("block4"),
       state: "open",
       type: "youtube_url_input",
       document_type: "block" as const,
       dataId: id("data2"),
     },
-    <t.BlockDownloadedVideo>{
+    <Types.BlockDownloadedVideo>{
       id: id("block5"),
       state: "open",
       type: "downloaded_video",
@@ -110,7 +110,7 @@ export const generateTestingDocs1 = (sym?: string) => {
     //
     // pages
     //
-    <t.Page>{
+    <Types.Page>{
       id: id("page1"),
       title: "Page 1" + uniqueId(),
       document_type: "page" as const,
@@ -119,8 +119,8 @@ export const generateTestingDocs1 = (sym?: string) => {
   ];
 };
 
-export const addTestingData = async (instance: rxdb.RxDatabase) => {
+export const addTestingData = async (instance: Rxdb.RxDatabase) => {
   const docs = generateTestingDocs1("same");
-  await db.upsertDocs(instance, docs);
+  await Db.upsertDocs(instance, docs);
   return docs;
 };

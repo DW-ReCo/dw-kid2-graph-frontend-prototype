@@ -1,8 +1,8 @@
-import * as types from "./types";
+import * as Types from "./types";
 
 import { createContext, useContext } from "react";
 
-const context = createContext<types.ConfigContext | undefined>(undefined);
+const context = createContext<Types.ConfigContext | undefined>(undefined);
 
 export const { Provider } = context;
 
