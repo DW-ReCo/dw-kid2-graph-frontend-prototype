@@ -13,13 +13,15 @@ const DBRenderer = (dbL: dbTypes.LoadedDb) => {
   const { result: allPages }: RxQueryResultDoc<dbTypes.Page> = useRxQuery(queries.allPages(instance));
 
   return (
-    <div>
+    <div className="w-full">
       <h1>{name}</h1>
       <p>{description}</p>
-      <RenderData title="Blocks" documents={allBlocks} />
-      <RenderData title="Data" documents={allData} />
-      <RenderData title="Executions" documents={allExecutions} />
-      <RenderData title="Pages" documents={allPages} />
+      <div className="flex flex-row gap-2 content-evenly">
+        <RenderData title="Blocks" documents={allBlocks} />
+        <RenderData title="Data" documents={allData} />
+        <RenderData title="Executions" documents={allExecutions} />
+        <RenderData title="Pages" documents={allPages} />
+      </div>
     </div>
   );
 };
