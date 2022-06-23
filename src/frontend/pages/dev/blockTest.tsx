@@ -17,9 +17,7 @@ const AllBlocks = (props: { db: Types.LoadedDb }) => {
   return (
     <>
       {blocks.map((block, index) => (
-        <Fragment key={index}>
-          <Block db={db} block={block} />
-        </Fragment>
+        <Fragment key={index}></Fragment>
       ))}
     </>
   );
