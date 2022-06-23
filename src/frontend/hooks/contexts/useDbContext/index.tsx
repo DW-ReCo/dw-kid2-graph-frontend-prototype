@@ -1,7 +1,7 @@
 import * as Types from "./types";
+import { LoadedDb } from "@data-types/index";
 
 import { createContext, useContext } from "react";
-import { LoadedDb } from "@db/types";
 
 const context = createContext<Types.DbContext | undefined>(undefined);
 

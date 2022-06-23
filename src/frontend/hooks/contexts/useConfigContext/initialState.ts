@@ -1,3 +1,3 @@
-import { PartialConfig } from "@types";
+import { PartialConfig } from "@data-types/index";
 
 export default <PartialConfig>{};

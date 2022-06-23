@@ -10,7 +10,9 @@ import Link from "next/link";
 import clsx from "clsx";
 
 const DevPanel = () => {
+  // @ts-ignore
   const { dbState: dbs } = useDbContext();
+  // dbContext can be undefined FIXME
 
   const [devPanelState, setDevPanelState] = useState(true);
 

@@ -19,7 +19,7 @@ import * as Config from "../config";
 import * as Logger from "../logger";
 
 import * as Schema from "./schema";
-import * as Types from "@types/index";
+import * as Types from "@data-types/index";
 
 const log = Logger.makeLogger("db/index");
 
@@ -72,7 +72,7 @@ export const clearDocs = async (db: Rxdb.RxDatabase): Promise<Rxdb.RxDatabase> =
   return db;
 };
 
-const makeDb = async (cfg: Config.DbConfig) => {
+const makeDb = async (cfg: Types.DbConfig) => {
   //  Pouchdb.addPouchPlugin(MemoryAdapter);
   return Rxdb.createRxDatabase({
     name: cfg.name, // database name
@@ -85,12 +85,12 @@ const makeDb = async (cfg: Config.DbConfig) => {
 };
 
 // TODO!
-const initializeLocalDb = async (db: Rxdb.RxDatabase, cfg: Config.LocalDbConfig): Promise<Rxdb.RxDatabase> => {
+const initializeLocalDb = async (db: Rxdb.RxDatabase, cfg: Types.LocalDbConfig): Promise<Rxdb.RxDatabase> => {
   log.debug(`initializing local db with`, cfg.name);
   return await addCollections(db);
 };
 
-const initializeServerDb = async (db: Rxdb.RxDatabase, cfg: Config.ServerDbConfig) => {
+const initializeServerDb = async (db: Rxdb.RxDatabase, cfg: Types.ServerDbConfig) => {
   log.debug(`initializing server with`, cfg.name, cfg.location);
 
   if (window !== undefined) {
@@ -107,7 +107,7 @@ const initializeServerDb = async (db: Rxdb.RxDatabase, cfg: Config.ServerDbConfi
   return await addCollections(db);
 };
 
-export const initializeOne = async (dbLoader: Config.DbConfig): Promise<Rxdb.RxDatabase> => {
+export const initializeOne = async (dbLoader: Types.DbConfig): Promise<Rxdb.RxDatabase> => {
   // remove any old version od the database
   await Rxdb.removeRxDatabase(dbLoader.name, Pouchdb.getRxStoragePouch("memory"));
 
@@ -122,6 +122,6 @@ export const initializeOne = async (dbLoader: Config.DbConfig): Promise<Rxdb.RxD
     : log.throw(`type ${t} is not a valid database type`);
 };
 
-export const initializeAll = async (loaders: Config.DbConfig[]): Promise<Array<Types.LoadedDb>> => {
+export const initializeAll = async (loaders: Types.DbConfig[]): Promise<Array<Types.LoadedDb>> => {
   return Promise.all(loaders.map((loader) => initializeOne(loader).then((db) => ({ ...loader, instance: db }))));
 };

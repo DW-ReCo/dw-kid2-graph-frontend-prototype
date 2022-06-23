@@ -1,6 +1,6 @@
 import { upsertOne } from "@db/index";
 import * as Queries from "@db/queries";
-import * as DatabaseTypes from "@db/types";
+import * as DatabaseTypes from "@data-types/index";
 import YoutubeEmbed from "@frontend/components/youtubeEmbed";
 import useConfigContext from "@frontend/hooks/contexts/useConfigContext";
 import { uniqueId } from "@frontend/utils";

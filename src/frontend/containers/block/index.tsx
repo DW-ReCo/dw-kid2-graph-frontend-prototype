@@ -1,9 +1,9 @@
 import * as Note from "./note";
 import * as YoutubeInput from "./youtubeLink";
-import * as DatabaseTypes from "@db/types";
+import * as DatabaseTypes from "@data-types/index";
 import React from "react";
 
-const NotFoundType = ({ block }: { block: DatabaseTypes.Block }) => <>Block type {block?.type} not found</>;
+const NotFoundType = ({ block }: { block: DatabaseTypes.Block }) => <>Block type {block["block/type"]} not found</>;
 
 /* prettier-ignore */
 const BlockSwitch = ({ db, block }: { db: DatabaseTypes.LoadedDb; block: DatabaseTypes.Block }) =>

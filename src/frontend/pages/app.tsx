@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import * as DatabaseTypes from "@db/types";
+import * as Types from "@data-types/index";
 import Page from "@frontend/containers/page";
 import Pages from "@frontend/containers/pages";
 import useAppContext from "@frontend/hooks/contexts/useAppContext";
@@ -13,8 +13,8 @@ const ApplicationContainer = () => {
 
   const { dbState: dbs } = useDbContext();
 
-  const openPage = (d: DatabaseTypes.LoadedDb) => (p: DatabaseTypes.Page) => {
-    setAppState((prev) => ({ ...prev, activePage: p.id }));
+  const openPage = (d: Types.LoadedDb) => (p: Types.Page) => {
+    setAppState((prev) => ({ ...prev, activePage: p["document/id"] }));
     setAppState((prev) => ({ ...prev, activeDb: d.name }));
   };
 

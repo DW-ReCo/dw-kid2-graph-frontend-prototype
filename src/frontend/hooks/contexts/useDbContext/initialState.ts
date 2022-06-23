@@ -1,3 +1,3 @@
-import { LoadedDb } from "@db/types";
+import { LoadedDb } from "@data-types/index";
 
 export default <LoadedDb[]>[];
