@@ -50,7 +50,7 @@ export const uniqueId = () => Base58.encode(new Buffer(uuidv4())).substring(0, 8
 //   that works more generically
 export const extractYoutubeId = (s: string) => s.split("=").slice(-1);
 
-export const moveElementPosition = (arr: Array<string>, fromIndex: number, toIndex: number): Array<string> => {
+export const moveElementPosition = (arr: any[], fromIndex: number, toIndex: number): any[] => {
   if (toIndex >= arr.length) {
     let k = toIndex - arr.length + 1;
     while (k--) {
