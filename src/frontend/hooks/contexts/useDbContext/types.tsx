@@ -1,4 +1,4 @@
-import { LoadedDb } from "@db/types";
+import { LoadedDb } from "@data-types/index";
 
 export type DbContext = {
   dbState: LoadedDb[];

@@ -15,7 +15,6 @@ export type DocumentPrototype = {
 };
 
 // creates a new document
-export const create = (t: DocumentType): DocumentPrototype => ({
+export const createDocument = () => ({
   "document/id": uniqueId(),
-  "document/type": t,
 });

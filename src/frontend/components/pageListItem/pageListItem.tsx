@@ -9,7 +9,7 @@ const PageListItem = (props: { db: DatabaseTypes.LoadedDb; page: DatabaseTypes.P
   const { page, open, db } = props;
 
   const updatePageTitle = (newTitle: string) => {
-    Queries.mergePage(db.instance, { id: page["document/id"], title: newTitle });
+    Queries.mergePage(db.instance, { "document/id": page["document/id"], "page/title": newTitle });
   };
 
   const remove = (db: DatabaseTypes.LoadedDb, id: string) => Queries.remove(db.instance, id);

@@ -18,7 +18,7 @@ const Pages = (props: { db: Types.LoadedDb; open: (p: Types.Page) => void }) => 
     const id = uniqueId();
     const newPage: Types.Page = {
       "document/id": id,
-      "document/type": Types.DbDocumentType.Page,
+      "document/type": Types.DocumentType.Page,
       "page/title": `Page ${id}`,
       "page/blocks": [],
     };

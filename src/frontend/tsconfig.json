@@ -9,6 +9,7 @@
     "noEmit": false,
     "incremental": true,
     "esModuleInterop": true,
+    "noImplicitAny": false,
     "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,

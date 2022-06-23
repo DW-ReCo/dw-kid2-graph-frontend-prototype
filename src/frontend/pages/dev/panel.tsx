@@ -1,6 +1,8 @@
 import React, { Fragment, useState } from "react";
 import * as Database from "@db/index";
 
+import * as Types from "@data-types/index";
+
 import { addTestingData } from "../../../db/testing_data";
 
 import { first } from "lodash/fp";
@@ -20,9 +22,9 @@ const DevPanel = () => {
 
   if (!firstDb) return <>No Db</>;
 
-  const clearDbs = () => dbs.map((d) => Database.clearDocs(d.instance));
+  const clearDbs = () => dbs.map((d: Types.LoadedDb) => Database.clearDocs(d.instance));
 
-  const addTestingDataDbs = () => dbs.map((d) => addTestingData(d.instance));
+  const addTestingDataDbs = () => dbs.map((d: Types.LoadedDb) => addTestingData(d.instance));
 
   const LINKS = [
     { label: "Database view", href: "/db" },

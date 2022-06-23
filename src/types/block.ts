@@ -18,6 +18,13 @@ export type BlockPrototype = DocumentPrototype & {
   "block/type": BlockType;
 };
 
+const b: BlockPrototype = {
+  "document/type": DocumentType.Block,
+  "document/id": "saddas",
+  "block/state": "open",
+  "block/type": BlockType.note,
+};
+
 export type BlockNote = BlockPrototype & {
   "block/type": BlockType.note;
   "block/body": string;
@@ -25,11 +32,12 @@ export type BlockNote = BlockPrototype & {
 
 export type BlockYoutubeInput = BlockPrototype & {
   "block/type": BlockType.youtube_url_input;
-  "block/data_id": Document.DocumentId;
+  "block/data_id"?: Document.DocumentId;
 };
 
 export const newBlockYoutubeInput = (): BlockYoutubeInput => ({
-  ...Document.create(DocumentType.Block),
+  ...Document.createDocument(),
+  "document/type": DocumentType.Block,
   "block/type": BlockType.youtube_url_input,
   "block/state": "open" as const,
 });

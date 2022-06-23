@@ -1,5 +1,5 @@
 import * as Document from "./document";
-import { DocumentPrototype, DocumentType } from "./document";
+import { DocumentPrototype, DocumentType, DocumentId } from "./document";
 
 import { Data } from "./data";
 
@@ -13,7 +13,8 @@ export enum ExecutionType {
   user_added,
 }
 
-export type DataLink = Data;
+// TODO for now data link just has the ID in it
+export type DataLink = { "document/id": DocumentId };
 
 export type ExecutionPrototype = DocumentPrototype & {
   "document/type": DocumentType.Execution;

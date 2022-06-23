@@ -1,4 +1,4 @@
-import { DbConfig } from "@config/types";
+import { DbConfig } from "./config";
 import * as Rxdb from "rxdb";
 
 import { Page } from "./page";

@@ -18,7 +18,10 @@ const log = Logger.makeLogger("frontend/containers/block/youtubeLink");
 
 export const Add = (props: { db: DatabaseTypes.LoadedDb; block: DatabaseTypes.BlockYoutubeInput }) => {
   const { db, block } = props;
+
+  // @ts-ignore
   const { configState } = useConfigContext();
+  // maybe undefined FIXME
 
   const [url, setUrl] = React.useState<string>("");
 
@@ -34,7 +37,7 @@ export const Add = (props: { db: DatabaseTypes.LoadedDb; block: DatabaseTypes.Bl
         configState,
       )(data)
       .then((_) => {
-        Queries.mergeBlock(db.instance, { id: block.id, dataId: data.id });
+        Queries.mergeBlock(db.instance, { "document/id": block["document/id"], "block/data_id": data["document/id"] });
       });
   };
 
@@ -50,17 +53,19 @@ export const Add = (props: { db: DatabaseTypes.LoadedDb; block: DatabaseTypes.Bl
 export const Component = (props: { db: DatabaseTypes.LoadedDb; block: DatabaseTypes.BlockYoutubeInput }) => {
   const { db, block } = props;
 
-  const { result, isFetching } = useRxQuery(Queries.data(db.instance, block.dataId));
+  // @ts-ignore
+  const { result, isFetching } = useRxQuery(Queries.data(db.instance, block["block/data_id"]));
+  // FIXME
   const data = result[0]?.get();
 
   // isFetching will only be for a microsecond
   if (isFetching) return <div>isFetching</div>;
 
-  if (!block.dataId || !data) return <Add db={db} block={block} />;
+  if (!block["block/data_id"] || !data) return <Add db={db} block={block} />;
 
-  if (!data.body) return <div>no url</div>;
+  if (!data["data/body"]) return <div>no url</div>;
 
-  return <YoutubeEmbed url={data.body} />;
+  return <YoutubeEmbed url={data["data/body"]} />;
 };
 
 // the ability to add a youtube link is always available

@@ -12,10 +12,10 @@ import {
 
 export const Component = (props: { db: DatabaseTypes.LoadedDb; block: DatabaseTypes.BlockNote }) => {
   const { db, block } = props;
-  const { body } = block;
+  const { "block/body": body } = block;
 
   const updateText = (text: string) => {
-    Queries.mergeBlock(db.instance, { id: block.id, body: text });
+    Queries.mergeBlock(db.instance, { "document/id": block["document/id"], "block/body": text });
   };
 
   return (
@@ -34,10 +34,10 @@ export const isAvailable = (db: DatabaseTypes.LoadedDb): Observable<boolean> => 
 export const add = async (db: DatabaseTypes.LoadedDb) => {
   console.log("adding note");
   const newNote: DatabaseTypes.BlockNote = {
-    id: uniqueId(),
+    "document/id": uniqueId(),
     //@ts-ignore
-    document_type: "block",
-    type: "note",
+    "document/type": "block",
+    "block/type": DatabaseTypes.BlockType.note,
   };
   await upsertOne(db.instance, newNote);
   return newNote;

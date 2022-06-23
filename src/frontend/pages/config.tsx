@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import * as ConfigTypes from "src/config/types";
+import * as ConfigTypes from "@data-types/index";
 import * as Config from "src/config/index";
 import ConfigEditor from "@frontend/containers/configEditor/index";
 

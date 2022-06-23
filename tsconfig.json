@@ -16,6 +16,7 @@
     "lib": ["dom", "dom.iterable", "esnext"],
     "forceConsistentCasingInFileNames": true,
     "incremental": true,
+    "noImplicitAny": false,
     "resolveJsonModule": true,
     "isolatedModules": true,
     "baseUrl": ".",

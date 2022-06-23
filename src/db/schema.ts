@@ -6,8 +6,11 @@ export const collectionSchema = {
     schema: {
       version: 0,
       type: "object",
-      primaryKey: "id",
-      properties: { id: { type: "string", maxLength: 100 }, document_type: { type: "string", maxLength: 100 } },
+      primaryKey: "document__id",
+      properties: {
+        document__id: { type: "string", maxLength: 100 },
+        document__type: { type: "string", maxLength: 100 },
+      },
     },
   },
 };

@@ -24,7 +24,8 @@ export type DataYoutubeUrl = DataPrototype & {
 };
 
 export const newDataYoutubeUrl = (url: string): DataYoutubeUrl => ({
-  ...Document.create(DocumentType.Data),
+  ...Document.createDocument(),
+  "document/type": DocumentType.Data,
   "data/type": DataType.youtube_url,
   "data/body": url,
 });
