@@ -4,8 +4,10 @@ import { syntaxHighlight } from "@utils/index";
 import DOMPurify from "dompurify";
 
 const RenderData = ({ documents, title }: types.RenderDataPropTypes) => {
-  const documentSyntaxHighlighted = syntaxHighlight(JSON.stringify(document, undefined, 2));
-  const cleanMarkup = DOMPurify.sanitize(documentSyntaxHighlighted);
+  const cleanMarkup = (document: object): string => {
+    const documentSyntaxHighlighted = syntaxHighlight(JSON.stringify(document, undefined, 2));
+    return DOMPurify.sanitize(documentSyntaxHighlighted);
+  };
 
   return (
     <div className="flex-1 max-w-1/4">
@@ -13,7 +15,7 @@ const RenderData = ({ documents, title }: types.RenderDataPropTypes) => {
       <ul className="pt-4">
         {documents.map((document: object, index: number) => (
           <li key={index} className="pb-2">
-            <pre className="text-xs" dangerouslySetInnerHTML={{ __html: cleanMarkup }} />
+            <pre className="text-xs" dangerouslySetInnerHTML={{ __html: cleanMarkup(document) }} />
           </li>
         ))}
       </ul>
