@@ -36,8 +36,12 @@ const Pages = (props: { db: DatabaseTypes.LoadedDb; open: (p: DatabaseTypes.Page
     <div>
       <h3>{db.name}</h3>
       <p>{db.description}</p>
-      {pages(allPages)}
-      <button onClick={addNewPage}>+</button>
+      <ul>
+        {pages(allPages)}
+        <li>
+          <button onClick={addNewPage}>+ page</button>
+        </li>
+      </ul>
     </div>
   );
 };

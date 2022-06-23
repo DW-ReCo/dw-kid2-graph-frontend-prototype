@@ -47,7 +47,7 @@ textarea {
 }
 
 .block {
-  @apply border-2 p-6;
+  @apply p-6 my-6 rounded-lg shadow-sm bg-sky-100;
 }
 .meta-tag {
   @apply bg-slate-300 border-2;

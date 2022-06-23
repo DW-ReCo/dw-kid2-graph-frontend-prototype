@@ -22,7 +22,7 @@ const ApplicationContainer = () => {
 
   return (
     <div>
-      <div style={{ width: "30%", backgroundColor: "beige", float: "left" }}>
+      <div style={{ width: "100%", backgroundColor: "beige" }}>
         {dbs.map((d, index) => (
           <Fragment key={index}>
             <Pages db={d} open={openPage(d)} />
