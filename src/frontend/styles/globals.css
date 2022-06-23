@@ -6,8 +6,20 @@ button {
   @apply bg-slate-200 p-2 m-2;
 }
 
+button.button--small {
+  @apply bg-slate-200 py-1 m-1;
+}
+
 button:hover {
   @apply bg-slate-300;
+}
+
+button.button-dev-panel-toggle {
+  @apply absolute top-[50%] bottom-[50%] -ml-4 rounded-full leading-none w-7 h-7 bg-orange-500 p-0 text-white;
+}
+
+.button-dev-panel-toggle:hover {
+  @apply bg-orange-300;
 }
 
 a {
@@ -35,7 +47,7 @@ textarea {
 }
 
 .block {
-  @apply border-2 p-6;
+  @apply p-6 my-6 rounded-lg shadow-sm bg-sky-100;
 }
 .meta-tag {
   @apply bg-slate-300 border-2;
@@ -46,3 +58,11 @@ textarea {
 .boolean { color: blue; }
 .null { color: magenta; }
 .key { color: red; }
+
+summary {
+  @apply -ml-8 inline-block cursor-pointer;
+}
+
+details {
+  @apply ml-8 mb-5;
+}

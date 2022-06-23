@@ -1,4 +1,4 @@
-import { PartialConfig } from "@cfg/types";
+import { PartialConfig } from "@config/types";
 
 export type ConfigContext = {
   configState: PartialConfig;

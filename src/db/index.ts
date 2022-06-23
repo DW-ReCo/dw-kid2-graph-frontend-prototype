@@ -1,7 +1,7 @@
-import * as rxdb from "rxdb";
+import * as Rxdb from "rxdb";
 
 // because we use the PouchDB RxStorage, we have to add the indexeddb adapter first.
-import * as pouchdb from "rxdb/plugins/pouchdb";
+import * as Pouchdb from "rxdb/plugins/pouchdb";
 
 import * as MemoryAdapter from "pouchdb-adapter-memory";
 // import * as IdbAdapter from "pouchdb-adapter-idb";
@@ -13,71 +13,71 @@ import { RxDBUpdatePlugin } from "rxdb/plugins/update";
 import { RxDBDevModePlugin } from "rxdb/plugins/dev-mode";
 import { getRxStorageMemory } from "rxdb/plugins/memory";
 
-import * as queries from "./queries";
+import * as Queries from "./queries";
 
-import * as cfg from "../cfg";
+import * as Config from "../config";
 import * as Logger from "../logger";
 
-import * as schema from "./schema";
-import * as types from "./types";
+import * as Schema from "./schema";
+import * as Types from "./types";
 
 const log = Logger.makeLogger("db/index");
 
 try {
   // cheap way to make sure we dont add the plugins twice...
-  rxdb.addRxPlugin(RxDBDevModePlugin); // FIXME: only when dev enabled
+  Rxdb.addRxPlugin(RxDBDevModePlugin); // FIXME: only when dev enabled
 
-  rxdb.addRxPlugin(RxDBQueryBuilderPlugin);
-  rxdb.addRxPlugin(RxDBReplicationCouchDBPlugin);
-  rxdb.addRxPlugin(RxDBLeaderElectionPlugin);
-  rxdb.addRxPlugin(RxDBUpdatePlugin);
-  pouchdb.addPouchPlugin(PouchHttp);
+  Rxdb.addRxPlugin(RxDBQueryBuilderPlugin);
+  Rxdb.addRxPlugin(RxDBReplicationCouchDBPlugin);
+  Rxdb.addRxPlugin(RxDBLeaderElectionPlugin);
+  Rxdb.addRxPlugin(RxDBUpdatePlugin);
+  Pouchdb.addPouchPlugin(PouchHttp);
 
-  // pouchdb.addPouchPlugin(MemoryAdapter);
-  // pouchdb.addPouchPlugin(IdbAdapter);
-  pouchdb.addPouchPlugin(MemoryAdapter);
+  // Pouchdb.addPouchPlugin(MemoryAdapter);
+  // Pouchdb.addPouchPlugin(IdbAdapter);
+  Pouchdb.addPouchPlugin(MemoryAdapter);
 } catch (e) {
   // TODO only do this if "plugin already added" error
   log.error(e);
 }
 
 // deprecated, moved namespace
-export const upsertOne = queries.upsertOne;
+export const upsertOne = Queries.upsertOne;
 // deprecated, moved namespace
-export const upsertDocs = queries.upsertDocs;
+export const upsertDocs = Queries.upsertDocs;
 
-const removeCollection = (name: string, db: rxdb.RxDatabase) =>
+const removeCollection = (name: string, db: Rxdb.RxDatabase) =>
   db
     .removeCollection(name)
     .then(() => console.log(`removed collection ${name}`))
     .catch((e) => console.warn(`removing collection ${name} failed because`, e));
 
-export const removeAllCollections = async (db: rxdb.RxDatabase) => {
+export const removeAllCollections = async (db: Rxdb.RxDatabase) => {
   log.debug(`clearing all collections`);
   const collections = Object.keys(db.collections);
   await Promise.all(collections.map((col) => removeCollection(col, db)));
   return db;
 };
 
-export const addCollections = async (db: rxdb.RxDatabase) => {
+export const addCollections = async (db: Rxdb.RxDatabase) => {
   // create a sample collection
   await removeAllCollections(db);
-  log.info("addCollections", schema.collectionSchema);
-  await db.addCollections(schema.collectionSchema);
+  log.info("addCollections", Schema.collectionSchema);
+  await db.addCollections(Schema.collectionSchema);
   return db;
 };
 
-export const clearDocs = async (db: rxdb.RxDatabase): Promise<rxdb.RxDatabase> => {
+export const clearDocs = async (db: Rxdb.RxDatabase): Promise<Rxdb.RxDatabase> => {
   await db.docs.find().remove();
   return db;
 };
 
-const makeDb = async (cfg: cfg.DbConfig) => {
-  //  pouchdb.addPouchPlugin(MemoryAdapter);
-  return rxdb.createRxDatabase({
+const makeDb = async (cfg: Config.DbConfig) => {
+  //  Pouchdb.addPouchPlugin(MemoryAdapter);
+  return Rxdb.createRxDatabase({
     name: cfg.name, // database name
-    // storage: pouchdb.getRxStoragePouch("idb"), // RxStorage, idb = IndexedDB, currently waiting for issue #26
-    // storage: pouchdb.getRxStoragePouch("memory"), // RxStorage, idb = IndexedDB, currently waiting for issue #26
+    // storage: Pouchdb.getRxStoragePouch("idb"), // RxStorage, idb = IndexedDB, currently waiting for issue #26
+    // storage: Pouchdb.getRxStoragePouch("memory"), // RxStorage, idb = IndexedDB, currently waiting for issue #26
     storage: getRxStorageMemory(),
     cleanupPolicy: {}, // <- custom cleanup policy (optional)
     eventReduce: true, // <- enable event-reduce to detect changes
@@ -85,12 +85,12 @@ const makeDb = async (cfg: cfg.DbConfig) => {
 };
 
 // TODO!
-const initializeLocalDb = async (db: rxdb.RxDatabase, cfg: cfg.LocalDbConfig): Promise<rxdb.RxDatabase> => {
+const initializeLocalDb = async (db: Rxdb.RxDatabase, cfg: Config.LocalDbConfig): Promise<Rxdb.RxDatabase> => {
   log.debug(`initializing local db with`, cfg.name);
   return await addCollections(db);
 };
 
-const initializeServerDb = async (db: rxdb.RxDatabase, cfg: cfg.ServerDbConfig) => {
+const initializeServerDb = async (db: Rxdb.RxDatabase, cfg: Config.ServerDbConfig) => {
   log.debug(`initializing server with`, cfg.name, cfg.location);
 
   if (window !== undefined) {
@@ -107,9 +107,9 @@ const initializeServerDb = async (db: rxdb.RxDatabase, cfg: cfg.ServerDbConfig) 
   return await addCollections(db);
 };
 
-export const initializeOne = async (dbLoader: cfg.DbConfig): Promise<rxdb.RxDatabase> => {
+export const initializeOne = async (dbLoader: Config.DbConfig): Promise<Rxdb.RxDatabase> => {
   // remove any old version od the database
-  await rxdb.removeRxDatabase(dbLoader.name, pouchdb.getRxStoragePouch("memory"));
+  await Rxdb.removeRxDatabase(dbLoader.name, Pouchdb.getRxStoragePouch("memory"));
 
   const db = await makeDb(dbLoader);
 
@@ -122,6 +122,6 @@ export const initializeOne = async (dbLoader: cfg.DbConfig): Promise<rxdb.RxData
     : log.throw(`type ${t} is not a valid database type`);
 };
 
-export const initializeAll = async (loaders: cfg.DbConfig[]): Promise<Array<types.LoadedDb>> => {
+export const initializeAll = async (loaders: Config.DbConfig[]): Promise<Array<Types.LoadedDb>> => {
   return Promise.all(loaders.map((loader) => initializeOne(loader).then((db) => ({ ...loader, instance: db }))));
 };

@@ -23,7 +23,7 @@
       "@db/*": ["src/db/*"],
       "@logger/*": ["src/logger/*"],
       "@store/*": ["src/store/*"],
-      "@cfg/*": ["src/cfg/*"],
+      "@config/*": ["src/config/*"],
       "@utils/*": ["src/utils/*"],
       "@services/*": ["src/services/*"],
       "@frontend/*": ["src/frontend/*"]

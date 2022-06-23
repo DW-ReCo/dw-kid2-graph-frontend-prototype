@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import * as db from "@db/index";
+import * as Database from "@db/index";
 import { AppProps } from "next/app";
-import * as cfg from "@cfg/index";
+import * as Config from "src/config/index";
 import { Provider as AppContextProvider } from "@frontend/hooks/contexts/useAppContext";
 import { Provider as ConfigContextProvider } from "@frontend/hooks/contexts/useConfigContext";
 import { Provider as DbContextProvider } from "@frontend/hooks/contexts/useDbContext";
@@ -16,7 +16,7 @@ import DevPanel from "./dev/panel";
 
 import * as Logger from "@logger/index";
 
-const log = Logger.makeLogger("frontent/pages/_app");
+const log = Logger.makeLogger("frontend/pages/_app");
 
 const App = ({ Component, pageProps }: AppProps) => {
   const [appState, setAppState] = useState(
@@ -46,7 +46,7 @@ const App = ({ Component, pageProps }: AppProps) => {
   }, [appState]);
 
   const loadConfig = async () => {
-    const c = await cfg.load();
+    const c = await Config.load();
     log.debug(`loaded config`, c);
     setConfigState(c);
   };
@@ -62,7 +62,7 @@ const App = ({ Component, pageProps }: AppProps) => {
     }
     const { dbs: loaders } = configState;
     log.debug(`initializing dbs`, loaders);
-    const dbs = await db.initializeAll(loaders);
+    const dbs = await Database.initializeAll(loaders);
     setDbState(dbs);
   };
 
@@ -83,18 +83,16 @@ const App = ({ Component, pageProps }: AppProps) => {
   }, [configState]);
 
   return (
-    <>
-      {db && (
-        <AppContextProvider value={{ appState, setAppState }}>
-          <ConfigContextProvider value={{ configState, setConfigState }}>
-            <DbContextProvider value={{ dbState, setDbState }}>
-              <DevPanel />
-              <Component {...pageProps} />
-            </DbContextProvider>
-          </ConfigContextProvider>
-        </AppContextProvider>
-      )}
-    </>
+    <AppContextProvider value={{ appState, setAppState }}>
+      <ConfigContextProvider value={{ configState, setConfigState }}>
+        <DbContextProvider value={{ dbState, setDbState }}>
+          <div className="w-full flex">
+            <div className="flex-1">{Database && <Component {...pageProps} />}</div>
+            <DevPanel />
+          </div>
+        </DbContextProvider>
+      </ConfigContextProvider>
+    </AppContextProvider>
   );
 };
 

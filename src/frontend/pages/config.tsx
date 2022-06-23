@@ -1,16 +1,16 @@
 import React, { Fragment } from "react";
-import * as cfgTypes from "@cfg/types";
-import * as cfg from "@cfg/index";
+import * as ConfigTypes from "src/config/types";
+import * as Config from "src/config/index";
 import ConfigEditor from "@frontend/containers/configEditor/index";
 
 const ConfigsEditor = () => {
-  const [configs, setConfigs] = React.useState<cfgTypes.PartialConfig[]>([]);
+  const [configs, setConfigs] = React.useState<ConfigTypes.PartialConfig[]>([]);
 
   // onLoad - when the application loads, load the config
   React.useEffect(() => {
     // only do any of this in the browser:
     if (window !== undefined) {
-      cfg.all().then(setConfigs);
+      Config.all().then(setConfigs);
     }
   }, []);
 

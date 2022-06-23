@@ -1,14 +1,14 @@
-import * as queries from "@db/queries";
-import * as dbTypes from "@db/types";
+import * as Queries from "@db/queries";
+import * as DatabaseTypes from "@db/types";
 import Block from "@frontend/containers/block";
 import React from "react";
 import { useRxQuery } from "rxdb-hooks";
 
-const PageBlocks = (props: { db: dbTypes.LoadedDb; page: dbTypes.Page }) => {
+const PageBlocks = (props: { db: DatabaseTypes.LoadedDb; page: DatabaseTypes.Page }) => {
   const { page, db } = props;
-  const { result: docs } = useRxQuery(queries.pageBlocks(db.instance, page));
+  const { result: docs } = useRxQuery(Queries.pageBlocks(db.instance, page));
 
-  const blocks: dbTypes.Block[] = docs.map((d) => d.get());
+  const blocks: DatabaseTypes.Block[] = docs.map((d) => d.get());
 
   return (
     <>
