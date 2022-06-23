@@ -37,7 +37,7 @@ export const Add = (props: { db: DatabaseTypes.LoadedDb; block: DatabaseTypes.Bl
         configState,
       )(data)
       .then((_) => {
-        Queries.mergeBlock(db.instance, { "document/id": block["document/id"], "block/data_id": data["document/id"] });
+        Queries.mergeBlock(db.instance, { document__id: block.document__id, block__data_id: data.document__id });
       });
   };
 
@@ -54,18 +54,18 @@ export const Component = (props: { db: DatabaseTypes.LoadedDb; block: DatabaseTy
   const { db, block } = props;
 
   // @ts-ignore
-  const { result, isFetching } = useRxQuery(Queries.data(db.instance, block["block/data_id"]));
+  const { result, isFetching } = useRxQuery(Queries.data(db.instance, block.block__data_id));
   // FIXME
   const data = result[0]?.get();
 
   // isFetching will only be for a microsecond
   if (isFetching) return <div>isFetching</div>;
 
-  if (!block["block/data_id"] || !data) return <Add db={db} block={block} />;
+  if (!block.block__data_id || !data) return <Add db={db} block={block} />;
 
-  if (!data["data/body"]) return <div>no url</div>;
+  if (!data.data__body) return <div>no url</div>;
 
-  return <YoutubeEmbed url={data["data/body"]} />;
+  return <YoutubeEmbed url={data.data__body} />;
 };
 
 // the ability to add a youtube link is always available

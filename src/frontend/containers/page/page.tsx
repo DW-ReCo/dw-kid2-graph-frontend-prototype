@@ -10,12 +10,12 @@ const Page = (props: { db: DatabaseTypes.LoadedDb; pageID: string }) => {
 
   const { result: doc } = useRxQuery(Queries.page(db.instance, pageID));
   const page: DatabaseTypes.Page = doc[0]?.get();
-  const blocks = page["page/blocks"] || [];
+  const blocks = page?.page__blocks || [];
 
   const onAddBlock = (b: DatabaseTypes.Block) => {
     Queries.mergePage(db.instance, {
-      "document/id": page["document/id"],
-      "page/blocks": [...blocks, b["document/id"]],
+      document__id: page.document__id,
+      page__blocks: [...blocks, b.document__id],
     });
   };
 
@@ -25,7 +25,7 @@ const Page = (props: { db: DatabaseTypes.LoadedDb; pageID: string }) => {
 
   return (
     <>
-      <h1>{page["page/title"]}</h1>
+      <h1>{page.page__title}</h1>
       <PageBlocks db={db} page={page} />
       <AddBlock db={db} onAdd={onAddBlock} />
     </>

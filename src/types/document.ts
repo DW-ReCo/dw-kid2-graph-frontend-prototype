@@ -10,11 +10,11 @@ export enum DocumentType {
 export type DocumentId = string;
 
 export type DocumentPrototype = {
-  "document/type": DocumentType;
-  "document/id": string;
+  document__type: DocumentType;
+  document__id: string;
 };
 
 // creates a new document
 export const createDocument = () => ({
-  "document/id": uniqueId(),
+  document__id: uniqueId(),
 });

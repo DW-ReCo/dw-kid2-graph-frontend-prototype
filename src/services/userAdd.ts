@@ -21,13 +21,13 @@ const execute: Types.ExecuteFunction<[Types.Data], Types.Data> = (db, cfg) => as
   const finished_at = Utils.now();
 
   const newExecution: Types.ExecutionUserAdded = {
-    "document/id": uniqueId(),
-    "document/type": Types.DocumentType.Execution,
-    "execution/type": Types.ExecutionType.user_added,
-    "execution/started_at": started_at,
-    "execution/finished_at": finished_at,
-    "execution/of_data": [],
-    "execution/to_data": [{ "document/id": validData["document/id"] }],
+    document__id: uniqueId(),
+    document__type: Types.DocumentType.Execution,
+    execution__type: Types.ExecutionType.user_added,
+    execution__started_at: started_at,
+    execution__finished_at: finished_at,
+    execution__of_data: [],
+    execution__to_data: [{ document__id: validData.document__id }],
   };
 
   await Queries.upsertOne(db, newExecution);

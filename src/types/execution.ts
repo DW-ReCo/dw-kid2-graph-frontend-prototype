@@ -14,17 +14,17 @@ export enum ExecutionType {
 }
 
 // TODO for now data link just has the ID in it
-export type DataLink = { "document/id": DocumentId };
+export type DataLink = { document__id: DocumentId };
 
 export type ExecutionPrototype = DocumentPrototype & {
-  "document/type": DocumentType.Execution;
-  "execution/type": ExecutionType;
-  "execution/started_at": Date;
-  "execution/finished_at": Date;
-  "execution/of_data": Array<DataLink>;
-  "execution/to_data": Array<DataLink>;
+  document__type: DocumentType.Execution;
+  execution__type: ExecutionType;
+  execution__started_at: Date;
+  execution__finished_at: Date;
+  execution__of_data: Array<DataLink>;
+  execution__to_data: Array<DataLink>;
 };
-export type ExecutionYoutubeDL = ExecutionPrototype & { "execution/type": ExecutionType.download_youtube_v1 };
-export type ExecutionUserAdded = ExecutionPrototype & { "execution/type": ExecutionType.user_added };
+export type ExecutionYoutubeDL = ExecutionPrototype & { execution__type: ExecutionType.download_youtube_v1 };
+export type ExecutionUserAdded = ExecutionPrototype & { execution__type: ExecutionType.user_added };
 
 export type Execution = ExecutionUserAdded | ExecutionYoutubeDL;

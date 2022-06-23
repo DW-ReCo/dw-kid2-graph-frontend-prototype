@@ -17,10 +17,10 @@ const Pages = (props: { db: Types.LoadedDb; open: (p: Types.Page) => void }) => 
   const addNewPage = () => {
     const id = uniqueId();
     const newPage: Types.Page = {
-      "document/id": id,
-      "document/type": Types.DocumentType.Page,
-      "page/title": `Page ${id}`,
-      "page/blocks": [],
+      document__id: id,
+      document__type: Types.DocumentType.Page,
+      page__title: `Page ${id}`,
+      page__blocks: [],
     };
 
     Queries.upsertOne(db.instance, newPage);

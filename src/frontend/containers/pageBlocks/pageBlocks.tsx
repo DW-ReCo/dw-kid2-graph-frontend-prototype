@@ -13,7 +13,7 @@ const PageBlocks = (props: { db: Types.LoadedDb; page: Types.Page }) => {
   return (
     <>
       {blocks.map((b) => (
-        <Block key={b["document/id"]} db={db} block={b} />
+        <Block key={b.document__id} db={db} block={b} />
       ))}
     </>
   );

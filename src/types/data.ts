@@ -9,30 +9,30 @@ export enum DataType {
 }
 
 export type DataPrototype = DocumentPrototype & {
-  "data/type": DataType;
-  "document/type": DocumentType.Data;
+  document__type: DocumentType.Data;
+  data__type: DataType;
 };
 
 export type DataURL = DataPrototype & {
-  "data/body": URL;
-  "data/type": DataType.url;
+  data__body: URL;
+  data__type: DataType.url;
 };
 
 export type DataYoutubeUrl = DataPrototype & {
-  "data/type": DataType.youtube_url;
-  "data/body": string;
+  data__type: DataType.youtube_url;
+  data__body: string;
 };
 
 export const newDataYoutubeUrl = (url: string): DataYoutubeUrl => ({
   ...Document.createDocument(),
-  "document/type": DocumentType.Data,
-  "data/type": DataType.youtube_url,
-  "data/body": url,
+  document__type: DocumentType.Data,
+  data__type: DataType.youtube_url,
+  data__body: url,
 });
 
 export type DataVideoFileUrl = DataPrototype & {
-  "data/type": "video_file_url";
-  "data/body": {
+  data__type: "video_file_url";
+  data__body: {
     // possibly add format and other data, imported_on, etc
     source: string;
   };

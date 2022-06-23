@@ -6,7 +6,7 @@ import { DocumentPrototype, DocumentType } from "./document";
 //   collections of blocks
 
 export type Page = DocumentPrototype & {
-  "document/type": DocumentType.Page;
-  "page/title": string;
-  "page/blocks": Document.DocumentId[];
+  document__type: DocumentType.Page;
+  page__title: string;
+  page__blocks: Document.DocumentId[];
 };
