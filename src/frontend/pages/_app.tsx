@@ -30,7 +30,7 @@ const App = ({ Component, pageProps }: AppProps) => {
   useEffect(() => {
     const getCircularReplacer = () => {
       const seen = new WeakSet();
-      return (_key, value) => {
+      return (_key: any, value: any) => {
         if (typeof value === "object" && value !== null) {
           if (seen.has(value)) {
             return;

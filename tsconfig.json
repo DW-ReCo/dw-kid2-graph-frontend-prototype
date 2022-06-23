@@ -16,6 +16,7 @@
     "lib": ["dom", "dom.iterable", "esnext"],
     "forceConsistentCasingInFileNames": true,
     "incremental": true,
+    "noImplicitAny": false,
     "resolveJsonModule": true,
     "isolatedModules": true,
     "baseUrl": ".",
@@ -26,6 +27,7 @@
       "@config/*": ["src/config/*"],
       "@utils/*": ["src/utils/*"],
       "@services/*": ["src/services/*"],
+      "@data-types/*": ["src/types/*"],
       "@frontend/*": ["src/frontend/*"]
     }
   },

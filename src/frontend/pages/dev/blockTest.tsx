@@ -2,19 +2,17 @@ import React, { Fragment } from "react";
 import Block from "@frontend/containers/block/index";
 import AddBlock from "@frontend/containers/block/addBlock";
 import { generateTestingDocs1 } from "@db/testing_data";
-import * as DatabaseTypes from "@db/types";
-import * as ConfigTypes from "@config/types";
+import * as Types from "@data-types/index";
 import * as Database from "@db/index";
 import * as Queries from "@db/queries";
-import { LoadedDb } from "@db/types";
 import { useRxQuery } from "rxdb-hooks";
 
-const docs: DatabaseTypes.DbDocument[] = generateTestingDocs1();
+const docs: Types.Document[] = generateTestingDocs1();
 
-const AllBlocks = (props: { db: LoadedDb }) => {
+const AllBlocks = (props: { db: Types.LoadedDb }) => {
   const { db } = props;
   const { result: docs } = useRxQuery(Queries.allBlocks(db.instance));
-  const blocks: DatabaseTypes.Block[] = docs.map((d) => d.get()) as DatabaseTypes.Block[];
+  const blocks: Types.Block[] = docs.map((d) => d.get()) as Types.Block[];
 
   return (
     <>
@@ -26,10 +24,10 @@ const AllBlocks = (props: { db: LoadedDb }) => {
 };
 
 const BlockDev = () => {
-  const [instance, setDb] = React.useState<LoadedDb>();
+  const [instance, setDb] = React.useState<Types.LoadedDb>();
 
   React.useEffect(() => {
-    const loader: ConfigTypes.LocalDbConfig = { name: "local_testing_db", _type: "local_db_config" };
+    const loader: Types.LocalDbConfig = { name: "local_testing_db", _type: "local_db_config" };
     // load the database if it's already not in the state,
     // protects against hot reloading
     instance ||

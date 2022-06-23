@@ -1,6 +1,6 @@
 import * as Note from "./note";
 import * as YoutubeLink from "./youtubeLink";
-import * as DatabaseTypes from "@db/types";
+import * as DatabaseTypes from "@data-types/index";
 import {
   // promiseAsHook,
   useObservable,

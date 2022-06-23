@@ -1,5 +1,5 @@
 import * as Queries from "@db/queries";
-import * as DatabaseTypes from "@db/types";
+import * as DatabaseTypes from "@data-types/index";
 import AddBlock from "@frontend/containers/block/addBlock";
 import PageBlocks from "@frontend/containers/pageBlocks";
 import React from "react";
@@ -10,10 +10,13 @@ const Page = (props: { db: DatabaseTypes.LoadedDb; pageID: string }) => {
 
   const { result: doc } = useRxQuery(Queries.page(db.instance, pageID));
   const page: DatabaseTypes.Page = doc[0]?.get();
-  const blocks = page?.blocks || [];
+  const blocks = page?.page__blocks || [];
 
   const onAddBlock = (b: DatabaseTypes.Block) => {
-    Queries.mergePage(db.instance, { id: page.id, blocks: [...blocks, b.id] });
+    Queries.mergePage(db.instance, {
+      document__id: page.document__id,
+      page__blocks: [...blocks, b.document__id],
+    });
   };
 
   if (!page) {
@@ -22,7 +25,7 @@ const Page = (props: { db: DatabaseTypes.LoadedDb; pageID: string }) => {
 
   return (
     <>
-      <h1>{page.title}</h1>
+      <h1>{page.page__title}</h1>
       <PageBlocks db={db} page={page} />
       <AddBlock db={db} onAdd={onAddBlock} />
     </>

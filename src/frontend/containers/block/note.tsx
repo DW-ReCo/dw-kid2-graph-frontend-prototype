@@ -1,6 +1,6 @@
 import { upsertOne } from "@db/index";
 import * as Queries from "@db/queries";
-import * as DatabaseTypes from "@db/types";
+import * as DatabaseTypes from "@data-types/index";
 import { uniqueId } from "@frontend/utils";
 
 import React from "react";
@@ -12,10 +12,10 @@ import {
 
 export const Component = (props: { db: DatabaseTypes.LoadedDb; block: DatabaseTypes.BlockNote }) => {
   const { db, block } = props;
-  const { body } = block;
+  const { block__body: body } = block;
 
   const updateText = (text: string) => {
-    Queries.mergeBlock(db.instance, { id: block.id, body: text });
+    Queries.mergeBlock(db.instance, { document__id: block.document__id, block__body: text });
   };
 
   return (
@@ -34,10 +34,10 @@ export const isAvailable = (db: DatabaseTypes.LoadedDb): Observable<boolean> => 
 export const add = async (db: DatabaseTypes.LoadedDb) => {
   console.log("adding note");
   const newNote: DatabaseTypes.BlockNote = {
-    id: uniqueId(),
+    document__id: uniqueId(),
     //@ts-ignore
-    document_type: "block",
-    type: "note",
+    document__type: "block",
+    block__type: DatabaseTypes.BlockType.note,
   };
   await upsertOne(db.instance, newNote);
   return newNote;

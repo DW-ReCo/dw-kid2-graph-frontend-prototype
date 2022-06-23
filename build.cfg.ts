@@ -1,4 +1,4 @@
-import * as Types from "@config/types";
+import * as Types from "@data-types/index";
 import { merge } from "lodash/fp";
 
 const customConfig = process.env.CUSTOM_CFG !== undefined ? JSON.parse(process?.env?.CUSTOM_CFG) : {};

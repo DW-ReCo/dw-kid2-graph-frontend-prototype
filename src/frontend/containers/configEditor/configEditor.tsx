@@ -1,5 +1,5 @@
 import React from "react";
-import * as ConfigTypes from "src/config/types";
+import * as ConfigTypes from "@data-types/index";
 import { omit, get } from "lodash/fp";
 import * as Logger from "@logger/index";
 import * as Config from "src/config/index";

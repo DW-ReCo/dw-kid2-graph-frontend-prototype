@@ -1,18 +1,16 @@
 // A service for a user, using the frontent, to directly add
 //  data to the database.
 import { of } from "rxjs";
-import * as Types from "./types";
+import * as Types from "@data-types/index";
 import * as Utils from "@utils/index";
-
-import * as Database from "@db/types";
 
 import * as Queries from "@db/queries";
 import { uniqueId } from "@frontend/utils";
 
 // the user adding service takes one argument,
-type UserAddService = Types.GenericService<[Database.Data], Database.Data>;
+type UserAddService = Types.GenericService<[Types.Data], Types.Data>;
 
-const execute: Types.ExecuteFunction<[Database.Data], Database.Data> = (db, cfg) => async (data) => {
+const execute: Types.ExecuteFunction<[Types.Data], Types.Data> = (db, cfg) => async (data) => {
   // TODO validate data
   const validData = data;
 
@@ -22,14 +20,14 @@ const execute: Types.ExecuteFunction<[Database.Data], Database.Data> = (db, cfg)
 
   const finished_at = Utils.now();
 
-  const newExecution: Database.ExecutionUserAdded = {
-    id: uniqueId(),
-    document_type: Database.DbDocumentType.Execution,
-    type: "user_added",
-    started_at,
-    finished_at,
-    of_data: [],
-    to_data: [{ data_id: validData.id }],
+  const newExecution: Types.ExecutionUserAdded = {
+    document__id: uniqueId(),
+    document__type: Types.DocumentType.Execution,
+    execution__type: Types.ExecutionType.user_added,
+    execution__started_at: started_at,
+    execution__finished_at: finished_at,
+    execution__of_data: [],
+    execution__to_data: [{ document__id: validData.document__id }],
   };
 
   await Queries.upsertOne(db, newExecution);

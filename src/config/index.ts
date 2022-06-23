@@ -1,6 +1,5 @@
 import { mergeAll } from "lodash/fp";
-import * as Types from "./types";
-export * from "./types";
+import * as Types from "@data-types/index";
 import { config as buildConfig } from "../../build.cfg";
 
 /*
