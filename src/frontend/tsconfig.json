@@ -22,6 +22,7 @@
       "@store/*": ["src/store/*"],
       "@config/*": ["src/config/*"],
       "@utils/*": ["src/utils/*"],
+      "@types/*": ["src/types/*"],
       "@frontend/*": ["src/frontend/*"]
     }
   },

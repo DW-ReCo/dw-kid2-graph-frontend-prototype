@@ -1,5 +1,6 @@
-import * as Database from "@db/types";
-import * as Config from "@config/types";
+import { Data } from "./data";
+import { Execution } from "./execution";
+import * as Config from "./config";
 import { RxDatabase } from "rxdb";
 import { Observable } from "rxjs";
 
@@ -11,7 +12,7 @@ type IsAvailable = (db: RxDatabase, cfg: Config.PartialConfig) => Observable<boo
 //   note:  the execution also mutates the db which is passed to it!!!
 //          these returned values are more of a record
 type ProducedData<Return> = {
-  record: Database.Execution;
+  record: Execution;
   created: Return;
 };
 
@@ -30,4 +31,4 @@ export type GenericService<Args extends any[], Return> = {
 };
 
 // A service for the user to directly add data
-export type UserAddService = GenericService<[Database.Data], Database.Data>;
+export type UserAddService = GenericService<[Data], Data>;

@@ -1,3 +1,3 @@
-import { PartialConfig } from "@config/types";
+import { PartialConfig } from "@types";
 
 export default <PartialConfig>{};

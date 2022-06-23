@@ -19,7 +19,7 @@ import * as Config from "../config";
 import * as Logger from "../logger";
 
 import * as Schema from "./schema";
-import * as Types from "./types";
+import * as Types from "@types/index";
 
 const log = Logger.makeLogger("db/index");
 

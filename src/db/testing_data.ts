@@ -1,4 +1,4 @@
-import * as Types from "./types";
+import * as Types from "@types/index";
 import * as Rxdb from "rxdb";
 import * as Database from "./index";
 import { uniqueId } from "@frontend/utils/index";

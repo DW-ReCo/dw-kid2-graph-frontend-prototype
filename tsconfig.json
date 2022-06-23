@@ -26,6 +26,7 @@
       "@config/*": ["src/config/*"],
       "@utils/*": ["src/utils/*"],
       "@services/*": ["src/services/*"],
+      "@types/*": ["src/types/*"],
       "@frontend/*": ["src/frontend/*"]
     }
   },
