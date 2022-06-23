@@ -13,7 +13,7 @@ const BlockSwitch = ({ db, block }: { db: Types.LoadedDb; block: Types.Block }) 
   block.block__type === Types.BlockType.youtube_url_input  ? <YoutubeInput.Component db={db} block={block} /> :
                                                                <NotFoundType block={block} />;
 
-const Block = (props: { db: Types.LoadedDb; block: Types.Block, page: Types.Page }) => {
+const Block = (props: { db: Types.LoadedDb; block: Types.Block; page: Types.Page }) => {
   const { block, db, page } = props;
 
   const blockIndex = page.page__blocks.indexOf(block.document__id);
