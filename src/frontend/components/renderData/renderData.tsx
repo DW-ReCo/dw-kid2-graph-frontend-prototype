@@ -20,3 +20,5 @@ const RenderData = ({ documents, title }: types.RenderDataPropTypes) => {
     </div>
   );
 };
+
+export default RenderData;
