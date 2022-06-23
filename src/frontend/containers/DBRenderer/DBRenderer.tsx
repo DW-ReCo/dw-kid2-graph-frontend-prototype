@@ -3,6 +3,7 @@ import RenderData from "@frontend/components/renderData";
 import * as DatabaseTypes from "@db/types";
 import * as Queries from "@db/queries";
 import { RxQueryResultDoc, useRxQuery } from "rxdb-hooks";
+import RenderDataWrapper from "@frontend/components/renderData/wrapper";
 
 const DBRenderer = (dbL: DatabaseTypes.LoadedDb) => {
   const { instance, name, description } = dbL;
@@ -15,13 +16,15 @@ const DBRenderer = (dbL: DatabaseTypes.LoadedDb) => {
   const { result: allPages }: RxQueryResultDoc<DatabaseTypes.Page> = useRxQuery(Queries.allPages(instance));
 
   return (
-    <div>
+    <div className="w-full">
       <h1>{name}</h1>
       <p>{description}</p>
-      <RenderData title="Blocks" documents={allBlocks} />
-      <RenderData title="Data" documents={allData} />
-      <RenderData title="Executions" documents={allExecutions} />
-      <RenderData title="Pages" documents={allPages} />
+      <RenderDataWrapper>
+        <RenderData title="Blocks" documents={allBlocks} />
+        <RenderData title="Data" documents={allData} />
+        <RenderData title="Executions" documents={allExecutions} />
+        <RenderData title="Pages" documents={allPages} />
+      </RenderDataWrapper>
     </div>
   );
 };
