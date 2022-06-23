@@ -16,7 +16,7 @@ const PageBlocks = (props: { db: DatabaseTypes.LoadedDb; page: DatabaseTypes.Pag
         <>
           {page.blocks.map((blockId) => {
             const block = blocks.filter((block) => block.id === blockId)[0];
-            return <Fragment key={blockId}>{block && <Block db={db} block={block} />}</Fragment>;
+            return <Fragment key={blockId}>{block && <Block db={db} block={block} page={page} />}</Fragment>;
           })}
         </>
       )}
