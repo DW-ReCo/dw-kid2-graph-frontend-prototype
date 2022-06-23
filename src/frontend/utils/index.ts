@@ -49,3 +49,14 @@ export const uniqueId = () => Base58.encode(new Buffer(uuidv4())).substring(0, 8
 //   this will only work with specific url strings, we need a function
 //   that works more generically
 export const extractYoutubeId = (s: string) => s.split("=").slice(-1);
+
+export const moveElementPosition = (arr: Array<string>, fromIndex: number, toIndex: number): Array<string> => {
+  if (toIndex >= arr.length) {
+    let k = toIndex - arr.length + 1;
+    while (k--) {
+      arr.push(undefined);
+    }
+  }
+  arr.splice(toIndex, 0, arr.splice(fromIndex, 1)[0]);
+  return arr;
+};

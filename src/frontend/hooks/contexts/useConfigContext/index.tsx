@@ -1,4 +1,4 @@
-import * as Types from "./types";
+import * as Types from "@data-types/index";
 
 import { createContext, useContext } from "react";
 

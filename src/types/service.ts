@@ -1,12 +1,12 @@
 import { Data } from "./data";
 import { Execution } from "./execution";
-import * as Config from "./config";
+import { PartialConfig } from "./config";
 import { RxDatabase } from "rxdb";
 import { Observable } from "rxjs";
 
 // the service should be able to signal when it is available and when not,
 // based on the database and config that is passed to it.
-type IsAvailable = (db: RxDatabase, cfg: Config.PartialConfig) => Observable<boolean>;
+type IsAvailable = (db: RxDatabase, cfg: PartialConfig) => Observable<boolean>;
 
 // The service, when executed, will always return in the following form:
 //   note:  the execution also mutates the db which is passed to it!!!
@@ -21,7 +21,7 @@ type ProducedData<Return> = {
 //   it's own arguments for this function.  the ProducedData is returned in a promise.
 /* prettier-ignore */
 export type ExecuteFunction<Args extends any[], Return> =
-  (db: RxDatabase, cfg: Config.PartialConfig) =>
+  (db: RxDatabase, cfg: PartialConfig) =>
     (...args: Args) => Promise<ProducedData<Return>>;
 
 // the generic service, which takes the execution arguments.

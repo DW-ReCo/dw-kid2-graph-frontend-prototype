@@ -1,4 +1,4 @@
-import { AppState } from "./types";
+import { AppState } from "@data-types/index";
 
 export default <AppState>{
   isLoading: false,
