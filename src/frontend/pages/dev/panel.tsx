@@ -1,3 +1,5 @@
+// eslint-disable @typescript-eslint/no-unused-vars
+
 import React, { Fragment, useState } from "react";
 import * as Database from "@db/index";
 
@@ -10,17 +12,30 @@ import useDbContext from "@frontend/hooks/contexts/useDbContext";
 
 import Link from "next/link";
 import clsx from "clsx";
+import useAppContext from "@frontend/hooks/contexts/useAppContext";
+
+import RenderStatus from "@frontend/components/devPanel/renderStatus";
 
 const DevPanel = () => {
   // @ts-ignore
   const { dbState: dbs } = useDbContext();
+  const {
+    // @ts-ignore
+    appState: {
+      app: { status: appStatus, activeDatabase, activePage },
+      db: { status: databaseStatus },
+      config: { status: configStatus },
+    },
+    // @ts-ignore
+    setAppState,
+  } = useAppContext();
   // dbContext can be undefined FIXME
 
   const [devPanelState, setDevPanelState] = useState(true);
 
   const firstDb = first(dbs);
 
-  if (!firstDb) return <>No Db</>;
+  if (!firstDb) setAppState((prev) => ({ ...prev, db: { status: { diagnostic: "ERROR", message: "DB_NO_DB" } } }));
 
   const clearDbs = () => dbs.map((d: Types.LoadedDb) => Database.clearDocs(d.instance));
 
@@ -73,12 +88,20 @@ const DevPanel = () => {
                 <h2>🚦 Status</h2>
               </summary>
               <h3>App</h3>
+              <RenderStatus {...appStatus} />
+              <h3>Config</h3>
+              <RenderStatus {...configStatus} />
               <h3>Databases</h3>
-              {dbs.map((d, index) => (
-                <Fragment key={index}>
-                  <span>{d.name} |</span>
-                </Fragment>
-              ))}
+              <RenderStatus {...databaseStatus} />
+
+              <p>active Database: {activeDatabase}</p>
+              <p>active Page: {activePage}</p>
+              <p>loaded Databases:</p>
+              <ul>
+                {dbs.map((d, index) => (
+                  <li key={index}>{d.name}</li>
+                ))}
+              </ul>
             </details>
           </>
         )}
