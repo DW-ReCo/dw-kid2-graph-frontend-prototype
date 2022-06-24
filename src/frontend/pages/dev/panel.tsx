@@ -19,13 +19,15 @@ import RenderStatus from "@frontend/components/devPanel/renderStatus";
 const DevPanel = () => {
   // @ts-ignore
   const { dbState: dbs } = useDbContext();
-
   const {
+    // @ts-ignore
     appState: {
       app: { status: appStatus, activeDatabase, activePage },
       db: { status: databaseStatus },
       config: { status: configStatus },
     },
+    // @ts-ignore
+    setAppState,
   } = useAppContext();
   // dbContext can be undefined FIXME
 
@@ -33,7 +35,7 @@ const DevPanel = () => {
 
   const firstDb = first(dbs);
 
-  if (!firstDb) return <>No Db</>;
+  if (!firstDb) setAppState((prev) => ({ ...prev, db: { status: { diagnostic: "ERROR", message: "DB_NO_DB" } } }));
 
   const clearDbs = () => dbs.map((d: Types.LoadedDb) => Database.clearDocs(d.instance));
 
