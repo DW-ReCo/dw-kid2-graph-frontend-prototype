@@ -11,7 +11,6 @@ import { uniqueId } from "@frontend/utils/index";
 
 // generate testing data
 //   optionally takes a symbol to prefix the ids with, otherwise we will generate a random one
-/* prettier-ignore */
 export const generateTestingDocs1 = (sym?: string) => {
   const symbol = sym || uniqueId();
   const id = (n: string) => symbol + n;
@@ -19,9 +18,7 @@ export const generateTestingDocs1 = (sym?: string) => {
     //
     // data
     //
-    /* prettier-ignore */
     <Types.DataYoutubeUrl>{
-    /* prettier-ignore */
       document__id: id("data1"),
       document__type: Types.DocumentType.Data,
       data__type: "youtube_url",
