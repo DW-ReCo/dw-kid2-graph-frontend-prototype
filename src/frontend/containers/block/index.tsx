@@ -4,6 +4,8 @@ import * as Types from "@data-types/index";
 import React from "react";
 import { moveElementPosition } from "@frontend/utils";
 import * as Queries from "@db/queries";
+import ArrowIcon from "@frontend/assets/icons/arrow";
+import DeleteIcon from "@frontend/assets/icons/delete";
 
 const NotFoundType = ({ block }: { block: Types.Block }) => <>Block type {block.block__type} not found</>;
 
@@ -26,6 +28,10 @@ const Block = (props: { db: Types.LoadedDb; block: Types.Block; page: Types.Page
     Queries.mergePage(db.instance, { document__id: page.document__id, page__blocks: newPageBlocks });
   };
 
+  const handleDelete = (blockId: string): void => {
+    Queries.remove(db.instance, blockId);
+  };
+
   const { document__id: id, document__type: documentType, block__type: blockType } = block;
 
   return (
@@ -33,11 +39,19 @@ const Block = (props: { db: Types.LoadedDb; block: Types.Block; page: Types.Page
       <span className="meta-tag">{id}</span>
       <span className="meta-tag">{documentType}</span>
       <span className="meta-tag">{blockType}</span>
-      {blockIndex !== 0 && blocksLength !== 1 && <button onClick={() => handleIndexUpdate(id, -1)}>up</button>}
-      {blocksLength !== 1 && blocksLength - 1 !== blockIndex && (
-        <button onClick={() => handleIndexUpdate(id, 1)}>down</button>
+      {blockIndex !== 0 && blocksLength !== 1 && (
+        <button onClick={() => handleIndexUpdate(id, -1)}>
+          <ArrowIcon />
+        </button>
       )}
-
+      {blocksLength !== 1 && blocksLength - 1 !== blockIndex && (
+        <button onClick={() => handleIndexUpdate(id, 1)}>
+          <ArrowIcon className="rotate-180" />
+        </button>
+      )}
+      <button onClick={() => handleDelete(id)}>
+        <DeleteIcon />
+      </button>
       <BlockSwitch db={db} block={block} />
     </div>
   );
