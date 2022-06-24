@@ -1,4 +1,5 @@
 import * as Types from "@data-types/index";
+import { STATUS_MESSAGES } from "./statusMessages";
 
 export const now = (): Date => new Date(Date.now());
 
@@ -36,6 +37,7 @@ export const getStatusIcon = (statusCode: Types.diagnostic) => {
   return icon ? icon : statusCode;
 };
 
-export const getStatusMessage = (message: string): string => {
-  return "STATUS MESSAGE";
+export const getStatusMessage = (messageCode: string): string => {
+  const message = STATUS_MESSAGES.filter(({ messageCode: code }) => code === messageCode)[0]?.message;
+  return message ? message : `"${messageCode}" NOT FOUND`;
 };
