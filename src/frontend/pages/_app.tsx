@@ -15,6 +15,7 @@ import "@frontend/styles/globals.css";
 import DevPanel from "./dev/panel";
 
 import * as Logger from "@logger/index";
+import { AppState } from "@data-types/contexts";
 
 const log = Logger.makeLogger("frontend/pages/_app");
 
@@ -48,6 +49,7 @@ const App = ({ Component, pageProps }: AppProps) => {
   const loadConfig = async () => {
     const c = await Config.load();
     log.debug(`loaded config`, c);
+    setAppState((prev: AppState) => ({ ...prev, config: { status: "LOADED", message: "CONFIG_LOADED" } }));
     setConfigState(c);
   };
 
@@ -63,6 +65,8 @@ const App = ({ Component, pageProps }: AppProps) => {
     const { dbs: loaders } = configState;
     log.debug(`initializing dbs`, loaders);
     const dbs = await Database.initializeAll(loaders);
+    setAppState((prev: AppState) => ({ ...prev, db: { status: "LOADED", message: "DB_LOADED" } }));
+
     setDbState(dbs);
   };
 
