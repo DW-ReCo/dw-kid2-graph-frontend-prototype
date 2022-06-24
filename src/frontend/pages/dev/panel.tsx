@@ -94,11 +94,12 @@ const DevPanel = () => {
 
               <p>active Database: {activeDatabase}</p>
               <p>active Page: {activePage}</p>
-              {dbs.map((d, index) => (
-                <Fragment key={index}>
-                  <span>{d.name} |</span>
-                </Fragment>
-              ))}
+              <p>loaded Databases:</p>
+              <ul>
+                {dbs.map((d, index) => (
+                  <li key={index}>{d.name}</li>
+                ))}
+              </ul>
             </details>
           </>
         )}
