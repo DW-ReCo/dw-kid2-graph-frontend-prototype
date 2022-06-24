@@ -28,11 +28,11 @@ export const syntaxHighlight = (json: string): string => {
 export const getStatusIcon = (statusCode: Types.diagnostic) => {
   const STATUS_CODES = [
     { diagnostic: "INITIAL", icon: "🕑" },
-    { diagnostic: "LOADED", icon: "🟢" },
+    { diagnostic: "OK", icon: "🟢" },
     { diagnostic: "LOADING", icon: "🟡" },
     { diagnostic: "ERROR", icon: "🔴" },
   ];
-  console.log(statusCode);
+
   const icon = STATUS_CODES.filter(({ diagnostic }) => diagnostic === statusCode)[0]?.icon;
   return icon ? icon : statusCode;
 };

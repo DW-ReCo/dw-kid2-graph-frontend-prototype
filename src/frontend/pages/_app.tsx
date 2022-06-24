@@ -51,7 +51,7 @@ const App = ({ Component, pageProps }: AppProps) => {
     log.debug(`loaded config`, c);
     setAppState((prev: AppState) => ({
       ...prev,
-      config: { status: { diagnostic: "LOADED", message: "CONFIG_LOADED" } },
+      config: { status: { diagnostic: "OK", message: "CONFIG_OK" } },
     }));
     setConfigState(c);
   };
@@ -68,7 +68,7 @@ const App = ({ Component, pageProps }: AppProps) => {
     const { dbs: loaders } = configState;
     log.debug(`initializing dbs`, loaders);
     const dbs = await Database.initializeAll(loaders);
-    setAppState((prev: AppState) => ({ ...prev, db: { status: { diagnostic: "LOADED", message: "DB_LOADED" } } }));
+    setAppState((prev: AppState) => ({ ...prev, db: { status: { diagnostic: "OK", message: "DB_OK" } } }));
 
     setDbState(dbs);
   };
