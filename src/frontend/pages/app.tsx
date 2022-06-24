@@ -8,7 +8,9 @@ import useDbContext, { getActiveDb } from "@frontend/hooks/contexts/useDbContext
 const ApplicationContainer = () => {
   const {
     // @ts-ignore
-    appState: { activeDb, activePage },
+    appState: {
+      app: { activeDb, activePage },
+    },
     // @ts-ignore
     setAppState,
   } = useAppContext();
@@ -19,8 +21,8 @@ const ApplicationContainer = () => {
   // dbcontext can be undefined FIXME
 
   const openPage = (d: Types.LoadedDb) => (p: Types.Page) => {
-    setAppState((prev) => ({ ...prev, activePage: p.document__id }));
-    setAppState((prev) => ({ ...prev, activeDb: d.name }));
+    setAppState((prev) => ({ ...prev, app: { ...prev.app, activePage: p.document__id } }));
+    setAppState((prev) => ({ ...prev, app: { ...prev.app, activeDb: d.name } }));
   };
 
   const activeDbInstance = getActiveDb(activeDb, dbs);

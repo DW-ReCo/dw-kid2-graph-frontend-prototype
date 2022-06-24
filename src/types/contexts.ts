@@ -1,12 +1,29 @@
 import { LoadedDb } from "@data-types/index";
 import { PartialConfig } from "@data-types/index";
 
+type diagnostic = "INITIAL" | "OK" | "ERROR" | "LOADING";
+
 export type AppState = {
-  isLoading: boolean;
-  activeDb?: string;
-  activePage?: string;
-  dbInitialized: boolean;
-  configLoaded: boolean;
+  app: {
+    status: {
+      diagnostic: diagnostic;
+      message: string;
+    };
+    activeDb?: string;
+    activePage?: string;
+  };
+  db: {
+    status: {
+      diagnostic: diagnostic;
+      message: string;
+    };
+  };
+  config: {
+    status: {
+      diagnostic: diagnostic;
+      message: string;
+    };
+  };
 };
 
 export type AppContext = {
