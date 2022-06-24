@@ -6,7 +6,7 @@ export default <AppState>{
       diagnostic: "INITIAL",
       message: "APP_INITIAL",
     },
-    activeDb: "",
+    activeDatabase: "",
     activePage: "",
   },
   db: {

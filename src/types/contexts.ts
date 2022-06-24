@@ -9,7 +9,7 @@ export type AppState = {
       diagnostic: diagnostic;
       message: string;
     };
-    activeDb?: string;
+    activeDatabase?: string;
     activePage?: string;
   };
   db: {

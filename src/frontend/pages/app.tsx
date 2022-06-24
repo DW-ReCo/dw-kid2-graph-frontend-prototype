@@ -3,13 +3,13 @@ import * as Types from "@data-types/index";
 import Page from "@frontend/containers/page";
 import Pages from "@frontend/containers/pages";
 import useAppContext from "@frontend/hooks/contexts/useAppContext";
-import useDbContext, { getActiveDb } from "@frontend/hooks/contexts/useDbContext";
+import useDbContext, { getactiveDatabase } from "@frontend/hooks/contexts/useDbContext";
 
 const ApplicationContainer = () => {
   const {
     // @ts-ignore
     appState: {
-      app: { activeDb, activePage },
+      app: { activeDatabase, activePage },
     },
     // @ts-ignore
     setAppState,
@@ -22,10 +22,10 @@ const ApplicationContainer = () => {
 
   const openPage = (d: Types.LoadedDb) => (p: Types.Page) => {
     setAppState((prev) => ({ ...prev, app: { ...prev.app, activePage: p.document__id } }));
-    setAppState((prev) => ({ ...prev, app: { ...prev.app, activeDb: d.name } }));
+    setAppState((prev) => ({ ...prev, app: { ...prev.app, activeDatabase: d.name } }));
   };
 
-  const activeDbInstance = getActiveDb(activeDb, dbs);
+  const activeDatabaseInstance = getactiveDatabase(activeDatabase, dbs);
 
   return (
     <div>
@@ -36,7 +36,11 @@ const ApplicationContainer = () => {
           </Fragment>
         ))}
       </div>
-      <div>{activePage && activeDb && activeDbInstance && <Page db={activeDbInstance} pageID={activePage} />}</div>
+      <div>
+        {activePage && activeDatabase && activeDatabaseInstance && (
+          <Page db={activeDatabaseInstance} pageID={activePage} />
+        )}
+      </div>
     </div>
   );
 };
