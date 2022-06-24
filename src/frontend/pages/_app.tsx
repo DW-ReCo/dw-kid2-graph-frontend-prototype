@@ -89,6 +89,14 @@ const App = ({ Component, pageProps }: AppProps) => {
     }
   }, [configState]);
 
+  useEffect(() => {
+    if (window !== undefined) {
+      appState.config.status.diagnostic === "OK" &&
+        appState.db.status.diagnostic === "OK" &&
+        setAppState((prev) => ({ ...prev, app: { ...prev.app, status: { diagnostic: "OK", message: "APP_OK" } } }));
+    }
+  }, [appState.config, appState.db]);
+
   return (
     <AppContextProvider value={{ appState, setAppState }}>
       <ConfigContextProvider value={{ configState, setConfigState }}>
