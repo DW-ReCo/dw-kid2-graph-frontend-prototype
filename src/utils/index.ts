@@ -1,3 +1,5 @@
+import * as Types from "@data-types/index";
+
 export const now = (): Date => new Date(Date.now());
 
 export const syntaxHighlight = (json: string): string => {
@@ -20,4 +22,20 @@ export const syntaxHighlight = (json: string): string => {
       return '<span class="' + cls + '">' + match + "</span>";
     },
   );
+};
+
+export const getStatusIcon = (statusCode: Types.diagnostic) => {
+  const STATUS_CODES = [
+    { diagnostic: "INITIAL", icon: "🕑" },
+    { diagnostic: "LOADED", icon: "🟢" },
+    { diagnostic: "LOADING", icon: "🟡" },
+    { diagnostic: "ERROR", icon: "🔴" },
+  ];
+  console.log(statusCode);
+  const icon = STATUS_CODES.filter(({ diagnostic }) => diagnostic === statusCode)[0]?.icon;
+  return icon ? icon : statusCode;
+};
+
+export const getStatusMessage = (message: string): string => {
+  return "STATUS MESSAGE";
 };

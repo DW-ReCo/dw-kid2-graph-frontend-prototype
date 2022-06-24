@@ -14,11 +14,19 @@ import Link from "next/link";
 import clsx from "clsx";
 import useAppContext from "@frontend/hooks/contexts/useAppContext";
 
+import RenderStatus from "@frontend/components/devPanel/renderStatus";
+
 const DevPanel = () => {
   // @ts-ignore
   const { dbState: dbs } = useDbContext();
 
-  const { appState } = useAppContext();
+  const {
+    appState: {
+      app: { status: appStatus, activeDatabase, activePage },
+      db: { status: databaseStatus },
+      config: { status: configStatus },
+    },
+  } = useAppContext();
   // dbContext can be undefined FIXME
 
   const [devPanelState, setDevPanelState] = useState(true);
@@ -36,16 +44,6 @@ const DevPanel = () => {
     { label: "Application prototype", href: "/app" },
     { label: "Config editor", href: "/config" },
   ];
-
-  const getStatusIcon = (statusCode: Types.diagnostic) => {
-    const STATUS_CODES = [
-      { diagnostic: "INITIAL", icon: "🕑" },
-      { diagnostic: "OK", icon: "🟢" },
-      { diagnostic: "LOADING", icon: "🟡" },
-      { diagnostic: "ERROR", icon: "🔴" },
-    ];
-    return STATUS_CODES.filter(({ diagnostic }) => diagnostic === statusCode)[0].icon;
-  };
 
   return (
     <div className={clsx("flex-end bg-orange-100 min-h-screen p-2 ml-2", devPanelState ? "w-72" : "w-5")}>
@@ -88,8 +86,14 @@ const DevPanel = () => {
                 <h2>🚦 Status</h2>
               </summary>
               <h3>App</h3>
-              <pre>{JSON.stringify(appState, null, 2)}</pre>
+              <RenderStatus {...appStatus} />
+              <h3>Config</h3>
+              <RenderStatus {...configStatus} />
               <h3>Databases</h3>
+              <RenderStatus {...databaseStatus} />
+
+              <p>active Database: {activeDatabase}</p>
+              <p>active Page: {activePage}</p>
               {dbs.map((d, index) => (
                 <Fragment key={index}>
                   <span>{d.name} |</span>
