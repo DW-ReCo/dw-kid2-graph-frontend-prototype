@@ -3,26 +3,22 @@ import { PartialConfig } from "@data-types/index";
 
 export type diagnostic = "INITIAL" | "OK" | "ERROR" | "LOADING";
 
+export type status = {
+  diagnostic: diagnostic;
+  message: string;
+};
+
 export type AppState = {
   app: {
-    status: {
-      diagnostic: diagnostic;
-      message: string;
-    };
+    status: status;
     activeDatabase?: string;
     activePage?: string;
   };
   db: {
-    status: {
-      diagnostic: diagnostic;
-      message: string;
-    };
+    status: status;
   };
   config: {
-    status: {
-      diagnostic: diagnostic;
-      message: string;
-    };
+    status: status;
   };
 };
 
