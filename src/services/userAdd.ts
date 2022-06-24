@@ -8,9 +8,9 @@ import * as Queries from "@db/queries";
 import { uniqueId } from "@frontend/utils";
 
 // the user adding service takes one argument,
-type UserAddService = Types.GenericService<[Types.Data], Types.Data>;
+type UserAddService = Types.GenericService<[Types.Data], [Types.Data]>;
 
-const execute: Types.ExecuteFunction<[Types.Data], Types.Data> = (db, cfg) => async (data) => {
+const execute: Types.ExecuteFunction<[Types.Data], [Types.Data]> = (db, cfg) => async (data) => {
   // TODO validate data
   const validData = data;
 
@@ -27,12 +27,12 @@ const execute: Types.ExecuteFunction<[Types.Data], Types.Data> = (db, cfg) => as
     execution__started_at: started_at,
     execution__finished_at: finished_at,
     execution__of_data: [],
-    execution__to_data: [{ document__id: validData.document__id }],
+    execution__to_data: [validData],
   };
 
   await Queries.upsertOne(db, newExecution);
 
-  return { record: newExecution, created: validData };
+  return { record: newExecution, created: [validData] };
 };
 
 const service: UserAddService = {

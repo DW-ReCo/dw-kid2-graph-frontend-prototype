@@ -14,7 +14,7 @@ export type DataPrototype = DocumentPrototype & {
 };
 
 export type DataURL = DataPrototype & {
-  data__body: URL;
+  data__body: string; // url
   data__type: DataType.url;
 };
 

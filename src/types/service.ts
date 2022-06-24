@@ -25,10 +25,15 @@ export type ExecuteFunction<Args extends any[], Return> =
     (...args: Args) => Promise<ProducedData<Return>>;
 
 // the generic service, which takes the execution arguments.
-export type GenericService<Args extends any[], Return> = {
+export type GenericService<Args extends any[], Return extends any[]> = {
   isAvailable: IsAvailable;
   execute: ExecuteFunction<Args, Return>;
 };
+// A type function to extract the args from a service:
+export type ExtractArgs<S> = S extends GenericService<infer X, infer Y> ? X : never;
+// A type function to extract the return value from the service:
+export type ExtractReturn<S> = S extends GenericService<infer X, infer Y> ? Y : never;
 
-// A service for the user to directly add data
-export type UserAddService = GenericService<[Data], Data>;
+export type UserAddService = GenericService<[Data], [Data]>;
+
+export type YoutubeDlService = GenericService<[Data], [Data]>;

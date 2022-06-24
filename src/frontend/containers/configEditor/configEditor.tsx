@@ -39,9 +39,7 @@ const ConfigEditor = (props: { config: ConfigTypes.PartialConfig }) => {
       </h3>
       <JSONEditor
         placeholder={editableConfig}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
-          isEditable && setValue(JSON.stringify(e.target.value))
-        }
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => isEditable && setValue(JSON.stringify(e.target.value))}
         viewOnly={!isEditable}
         height="100%"
       />
