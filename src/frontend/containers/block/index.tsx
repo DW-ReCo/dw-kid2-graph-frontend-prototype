@@ -35,7 +35,7 @@ const Block = (props: { db: Types.LoadedDb; block: Types.Block; page: Types.Page
   const { document__id: id, document__type: documentType, block__type: blockType } = block;
 
   return (
-    <div className="block">
+    <div className="app-block">
       <span className="meta-tag">{id}</span>
       <span className="meta-tag">{documentType}</span>
       <span className="meta-tag">{blockType}</span>

@@ -18,7 +18,7 @@ const AddBlock = (props: { db: DatabaseTypes.LoadedDb; onAdd?: (block: DatabaseT
   );
 
   return (
-    <div className="block">
+    <div className="app-block">
       {maybeAddNote}
       {maybeAddYoutube}
     </div>
