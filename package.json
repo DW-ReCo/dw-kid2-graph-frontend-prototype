@@ -7,7 +7,7 @@
     "dev": "concurrently \"npm run server\" \"npm run dev:next\"",
     "dev:next": "next dev ./src/frontend",
     "clean": "rm -rf ./next ./src/frontend/.next src/frontend/out",
-    "build": "npm run clean && next build ./src/frontend",
+    "build": "npm run clean && npm run lint && next build ./src/frontend",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
     "lint": "next lint ./src/frontend",
