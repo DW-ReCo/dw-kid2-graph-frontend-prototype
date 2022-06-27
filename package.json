@@ -22,7 +22,7 @@
   },
   "lint-staged": {
     "**/*.{js,jsx,ts,tsx}": [
-      "npx tsc --noEmit",
+      "npx tsc-files --noEmit",
       "npx prettier --write",
       "npx eslint --fix"
     ]
@@ -79,6 +79,7 @@
     "postcss": "^8.4.14",
     "prettier": "^2.7.1",
     "tailwindcss": "^3.1.3",
+    "tsc-files": "^1.1.3",
     "typescript": "^4.6.4"
   }
 }
