@@ -88,7 +88,7 @@ const App = ({ Component, pageProps }: AppProps) => {
       <ConfigContextProvider value={{ configState, setConfigState }}>
         <DbContextProvider value={{ dbState, setDbState }}>
           <div className="w-full flex">
-            <div className="flex-1">{Database && <Component {...pageProps} />}</div>
+            <div className="flex-1 flex">{Database && <Component {...pageProps} />}</div>
             {typeof window !== "undefined" && <DevPanel />}
           </div>
         </DbContextProvider>

@@ -28,20 +28,22 @@ const ApplicationContainer = () => {
   const activeDatabaseInstance = getactiveDatabase(activeDatabase, dbs);
 
   return (
-    <div>
-      <div style={{ width: "100%", backgroundColor: "beige" }}>
+    <>
+      <div style={{ width: "20rem", backgroundColor: "beige" }} className="p-2">
+        <h1>Databases</h1>
         {dbs.map((d, index) => (
           <Fragment key={index}>
             <Pages db={d} open={openPage(d)} />
+            {index + 1 < dbs.length && <hr />}
           </Fragment>
         ))}
       </div>
-      <div>
+      <div className="p-2 flex-1 mx-auto">
         {activePage && activeDatabase && activeDatabaseInstance && (
           <Page db={activeDatabaseInstance} pageID={activePage} />
         )}
       </div>
-    </div>
+    </>
   );
 };
 
