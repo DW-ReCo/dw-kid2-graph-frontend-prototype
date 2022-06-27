@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "concurrently \"npm run server\" \"npm run dev:next\"",
     "dev:next": "next dev ./src/frontend",
-    "build": "next build ./src/frontend",
+    "clean": "rm -rf ./next ./src/frontend/.next src/frontend/out",
+    "build": "npm run clean && next build ./src/frontend",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
     "lint": "next lint ./src/frontend",
