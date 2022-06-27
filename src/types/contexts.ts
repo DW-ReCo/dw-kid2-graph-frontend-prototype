@@ -1,7 +1,7 @@
 import { LoadedDb } from "@data-types/index";
 import { PartialConfig } from "@data-types/index";
 
-export type diagnostic = "INITIAL" | "OK" | "ERROR" | "LOADING";
+export type diagnostic = "INITIAL" | "OK" | "ERROR" | "LOADING" | "WARNING" | "UNKNOWN";
 
 export type status = {
   diagnostic: diagnostic;
@@ -10,15 +10,9 @@ export type status = {
 
 export type AppState = {
   app: {
-    status: status;
     activeDatabase?: string;
     activePage?: string;
-  };
-  db: {
-    status: status;
-  };
-  config: {
-    status: status;
+    showDevPanel?: boolean;
   };
 };
 

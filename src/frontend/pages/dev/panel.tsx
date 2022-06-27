@@ -15,27 +15,27 @@ import clsx from "clsx";
 import useAppContext from "@frontend/hooks/contexts/useAppContext";
 
 import RenderStatus from "@frontend/components/devPanel/renderStatus";
+import useStatus from "@frontend/hooks/useStatus";
+import useConfigContext from "@frontend/hooks/contexts/useConfigContext";
 
 const DevPanel = () => {
   // @ts-ignore
   const { dbState: dbs } = useDbContext();
+
   const {
-    // @ts-ignore
     appState: {
-      app: { status: appStatus, activeDatabase, activePage },
-      db: { status: databaseStatus },
-      config: { status: configStatus },
+      app: { activeDatabase, activePage, showDevPanel },
     },
-    // @ts-ignore
     setAppState,
   } = useAppContext();
-  // dbContext can be undefined FIXME
 
-  const [devPanelState, setDevPanelState] = useState(true);
+  const { setConfigState } = useConfigContext();
+
+  const status = useStatus();
 
   const firstDb = first(dbs);
 
-  if (!firstDb) setAppState((prev) => ({ ...prev, db: { status: { diagnostic: "ERROR", message: "DB_NO_DB" } } }));
+  if (!firstDb) return <></>;
 
   const clearDbs = () => dbs.map((d: Types.LoadedDb) => Database.clearDocs(d.instance));
 
@@ -48,15 +48,15 @@ const DevPanel = () => {
   ];
 
   return (
-    <div className={clsx("flex-end bg-orange-100 min-h-screen p-2 ml-2", devPanelState ? "w-72" : "w-5")}>
+    <div className={clsx("flex-end bg-orange-100 min-h-screen p-2 ml-2", showDevPanel ? "w-72" : "w-5")}>
       <button
-        className={clsx("button-dev-panel-toggle", !devPanelState && "rotate-180")}
-        onClick={() => setDevPanelState(!devPanelState)}
+        className={clsx("button-dev-panel-toggle", !showDevPanel && "rotate-180")}
+        onClick={() => setAppState((prev) => ({ ...prev, app: { ...prev.app, showDevPanel: !showDevPanel } }))}
       >
         ▶
       </button>
       <div>
-        {devPanelState && (
+        {showDevPanel && (
           <>
             <details open>
               <summary>
@@ -88,11 +88,11 @@ const DevPanel = () => {
                 <h2>🚦 Status</h2>
               </summary>
               <h3>App</h3>
-              <RenderStatus {...appStatus} />
+              <RenderStatus status={status.app.status} />
               <h3>Config</h3>
-              <RenderStatus {...configStatus} />
+              <RenderStatus status={status.config.status} />
               <h3>Databases</h3>
-              <RenderStatus {...databaseStatus} />
+              <RenderStatus status={status.db.status} />
 
               <p>active Database: {activeDatabase}</p>
               <p>active Page: {activePage}</p>
