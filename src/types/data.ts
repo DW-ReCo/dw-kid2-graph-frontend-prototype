@@ -4,7 +4,7 @@ import { DocumentPrototype, DocumentType } from "./document";
 export enum DataType {
   url = "url",
   youtube_url = "youtube_url",
-  youtube_api_result = "youtuve_api_result_v1",
+  youtube_downloaded = "youtube_downloaded",
   video_file_url = "video_file_url_v1",
 }
 
@@ -38,4 +38,12 @@ export type DataVideoFileUrl = DataPrototype & {
   };
 };
 
-export type Data = DataVideoFileUrl | DataYoutubeUrl | DataURL;
+// This is the data that the YoutubeDownload Service Produces
+export type DataYoutubeDownloaded = DataPrototype & {
+  data__type: DataType.youtube_downloaded;
+  data__body__downloaded_at: string;
+  data__body__video_link: string;
+  data__body__meta_link: string;
+};
+
+export type Data = DataVideoFileUrl | DataYoutubeUrl | DataURL | DataYoutubeDownloaded;

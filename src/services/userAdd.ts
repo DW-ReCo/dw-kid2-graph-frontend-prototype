@@ -32,7 +32,7 @@ const execute: Types.ExecuteFunction<[Types.Data], [Types.Data]> = (db, cfg) => 
 
   await Queries.upsertOne(db, newExecution);
 
-  return { record: newExecution, created: [validData] };
+  return newExecution;
 };
 
 const service: UserAddService = {

@@ -8,12 +8,19 @@ export type ServerDbConfig = { _type: "server_db_config"; name: string; location
 
 export type DbConfig = LocalDbConfig | ServerDbConfig;
 
+export type YoutubeDownloaderConfig = {
+  api_url: string;
+  user: string;
+  password: string;
+};
+
 export type PartialConfig = {
   _type: "kid2_config";
   runtime_loads?: ConfigLoader[];
   dbs?: DbConfig[];
   twitter?: { sample_api_key?: string };
   from_loader?: ConfigLoader;
+  youtube_downloader?: YoutubeDownloaderConfig;
 };
 
 // BuildConfig requires the runtime loads set

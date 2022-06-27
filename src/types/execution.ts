@@ -1,6 +1,6 @@
 import * as Document from "./document";
 import { DocumentPrototype, DocumentType, DocumentId } from "./document";
-import { GenericService, UserAddService, YoutubeDlService, ExtractArgs, ExtractReturn } from "./service";
+import { GenericService, UserAddService, YoutubeDownloadService, ExtractArgs, ExtractReturn } from "./service";
 import { Data, DataType } from "./data";
 
 // Excecution... Operation? Completion? Enactment? Realizarion?

@@ -1,6 +1,5 @@
 crickets.
 
-currently only available as type definitions.
+documentation on types currently only available as type definitions.
 
-- [database document types](../src/db/types)
-- [config options types](../src/cfg/types)
+- [all types at ../src/types](../src/types)
