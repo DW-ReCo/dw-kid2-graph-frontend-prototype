@@ -16,6 +16,11 @@ const initialConfig: Types.BuildConfig = {
     // this config should be loaded at runtime
     { _type: "local_storage_loader", key: "kid2_local_config" },
   ],
+  youtube_downloader: {
+    api_url: "http://localhost:8081",
+    user: "dw",
+    password: "onehundredyearsofsolitude",
+  },
   dbs: [
     // add in two database types to demonstrate that pages can come from multiple dbs
     { _type: "local_db_config", name: "local_db_1", description: "Your first database" },

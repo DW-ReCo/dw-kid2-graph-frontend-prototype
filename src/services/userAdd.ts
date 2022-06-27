@@ -37,6 +37,8 @@ const execute: Types.ExecuteFunction<[Types.Data], [Types.Data]> = (db, cfg) => 
 
 const service: UserAddService = {
   // the user adding service is always available
+  name: "User Added Service",
+  description: "the user may directly add data to the database",
   isAvailable: (..._) => of(true),
   execute,
 };

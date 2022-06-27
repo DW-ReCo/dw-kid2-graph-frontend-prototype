@@ -1,6 +1,6 @@
 // A service for a user, using the frontent, to directly add
 //  data to the database.
-import { of, from } from "rxjs";
+import { of, from, map, combineLatest } from "rxjs";
 import * as Types from "@data-types/index";
 import * as Utils from "@utils/index";
 
@@ -13,22 +13,44 @@ import * as Logger from "@logger/index";
 const log = Logger.makeLogger(`services/downloadYoutube`);
 
 const isAvailable = (db: RxDatabase, cfg: Types.PartialConfig) => {
+  //
+  log.debug(`isAvailable`);
+  log.debug(cfg);
+
   if (!cfg.youtube_downloader?.api_url) return of(false);
 
   const { api_url, user, password } = cfg.youtube_downloader;
 
+  log.debug(api_url);
+
   const headers = new Headers();
   headers.set("Authorization", "Basic " + btoa(user + ":" + password));
 
-  const check = fetch(`${api_url}/ping`, { method: "GET", headers })
+  const checkApi = fetch(`${api_url}/ping`, { method: "GET", headers })
     .then((r) => r.json())
-    .then((x) => {
-      console.log("oooooooooooooooooooooo");
-      console.log(x);
-      return x;
-    });
+    .catch((e) => {
+      log.error(e);
+      return false;
+    })
+    .then((x) => x?.message == "ok lets go");
 
-  return from(check);
+  const dataAvailable = db.docs
+    .find({
+      selector: {
+        data__type: Types.DataType.youtube_url,
+      },
+    })
+    .$.pipe(
+      map((x) => {
+        return x.length > 0;
+      }),
+    );
+
+  const combined = combineLatest(from(checkApi), dataAvailable, (a, b) => a && b);
+
+  return combined;
+
+  // return from(checkApi);
 };
 
 /* prettier-ignore */
@@ -39,7 +61,7 @@ const execute: Types.ExecuteFunction<[Types.DataYoutubeUrl], [Types.DataYoutubeD
       const validData = data;
       const url = data.data__body;
 
-      if (!cfg.youtube_downloader) { log.throw(`using youtube service without youtube config`); return; }
+      if (!cfg.youtube_downloader) { throw Error(`wrong`) }
 
       const { api_url, user, password } = cfg.youtube_downloader;
 
@@ -59,10 +81,10 @@ const execute: Types.ExecuteFunction<[Types.DataYoutubeUrl], [Types.DataYoutubeD
 
       const finished_at = Utils.now();
 
-      const newExecution: Types.ExecutionUserAdded = {
+      const newExecution: Types.ExecutionYoutubeDL = {
         document__id: uniqueId(),
         document__type: Types.DocumentType.Execution,
-        execution__type: Types.ExecutionType.user_added,
+        execution__type: Types.ExecutionType.download_youtube_v1,
         execution__started_at: started_at,
         execution__finished_at: finished_at,
         execution__of_data: [validData],
@@ -76,7 +98,9 @@ const execute: Types.ExecuteFunction<[Types.DataYoutubeUrl], [Types.DataYoutubeD
 
 const service: Types.YoutubeDownloadService = {
   // the user adding service is always available
-  isAvailable: (..._) => of(true),
+  name: "youtube downloading service",
+  description: "downloads a youtube video to our servers",
+  isAvailable: isAvailable,
   execute,
 };
 

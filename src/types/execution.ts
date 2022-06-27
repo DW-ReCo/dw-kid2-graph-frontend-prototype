@@ -27,7 +27,7 @@ export type GenericExecution<GenericService> = DocumentPrototype & {
 
 /* prettier-ignore */
 export type ExecutionYoutubeDL =
-  GenericExecution<YoutubeDlService> & { execution__type: ExecutionType.download_youtube_v1 };
+  GenericExecution<YoutubeDownloadService> & { execution__type: ExecutionType.download_youtube_v1 };
 
 /* prettier-ignore */
 export type ExecutionUserAdded =
