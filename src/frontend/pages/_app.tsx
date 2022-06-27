@@ -15,7 +15,6 @@ import "@frontend/styles/globals.css";
 import DevPanel from "./dev/panel";
 
 import * as Logger from "@logger/index";
-import { AppState } from "@data-types/contexts";
 
 const log = Logger.makeLogger("frontend/pages/_app");
 
@@ -49,10 +48,7 @@ const App = ({ Component, pageProps }: AppProps) => {
   const loadConfig = async () => {
     const c = await Config.load();
     log.debug(`loaded config`, c);
-    setAppState((prev: AppState) => ({
-      ...prev,
-      config: { status: { diagnostic: "OK", message: "CONFIG_OK" } },
-    }));
+
     setConfigState(c);
   };
 
@@ -68,8 +64,6 @@ const App = ({ Component, pageProps }: AppProps) => {
     const { dbs: loaders } = configState;
     log.debug(`initializing dbs`, loaders);
     const dbs = await Database.initializeAll(loaders);
-    setAppState((prev: AppState) => ({ ...prev, db: { status: { diagnostic: "OK", message: "DB_OK" } } }));
-
     setDbState(dbs);
   };
 
@@ -89,21 +83,13 @@ const App = ({ Component, pageProps }: AppProps) => {
     }
   }, [configState]);
 
-  useEffect(() => {
-    if (window !== undefined) {
-      appState.config.status.diagnostic === "OK" &&
-        appState.db.status.diagnostic === "OK" &&
-        setAppState((prev) => ({ ...prev, app: { ...prev.app, status: { diagnostic: "OK", message: "APP_OK" } } }));
-    }
-  }, [appState.config, appState.db]);
-
   return (
     <AppContextProvider value={{ appState, setAppState }}>
       <ConfigContextProvider value={{ configState, setConfigState }}>
         <DbContextProvider value={{ dbState, setDbState }}>
           <div className="w-full flex">
             <div className="flex-1">{Database && <Component {...pageProps} />}</div>
-            <DevPanel />
+            {typeof window !== "undefined" && <DevPanel />}
           </div>
         </DbContextProvider>
       </ConfigContextProvider>
