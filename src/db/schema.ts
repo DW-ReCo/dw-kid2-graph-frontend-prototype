@@ -10,6 +10,7 @@ export const collectionSchema = {
       properties: {
         document__id: { type: "string", maxLength: 100 },
         document__type: { type: "string", maxLength: 100 },
+        data__type: { optional: true, type: "string" },
       },
     },
   },

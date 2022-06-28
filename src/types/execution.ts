@@ -1,6 +1,6 @@
 import * as Document from "./document";
 import { DocumentPrototype, DocumentType, DocumentId } from "./document";
-import { GenericService, UserAddService, YoutubeDlService, ExtractArgs, ExtractReturn } from "./service";
+import { GenericService, UserAddService, YoutubeDownloadService, ExtractArgs, ExtractReturn } from "./service";
 import { Data, DataType } from "./data";
 
 // Excecution... Operation? Completion? Enactment? Realizarion?
@@ -27,7 +27,7 @@ export type GenericExecution<GenericService> = DocumentPrototype & {
 
 /* prettier-ignore */
 export type ExecutionYoutubeDL =
-  GenericExecution<YoutubeDlService> & { execution__type: ExecutionType.download_youtube_v1 };
+  GenericExecution<YoutubeDownloadService> & { execution__type: ExecutionType.download_youtube_v1 };
 
 /* prettier-ignore */
 export type ExecutionUserAdded =

@@ -3,6 +3,8 @@
 import React, { Fragment, useState } from "react";
 import * as Database from "@db/index";
 
+import services from "@services/index";
+
 import * as Types from "@data-types/index";
 
 import { addTestingData } from "../../../db/testing_data";
@@ -17,19 +19,36 @@ import useAppContext from "@frontend/hooks/contexts/useAppContext";
 import RenderStatus from "@frontend/components/devPanel/renderStatus";
 import useStatus from "@frontend/hooks/useStatus";
 import useConfigContext from "@frontend/hooks/contexts/useConfigContext";
+import { useObservable } from "@frontend/utils";
+import { getStatusIcon } from "@utils/index";
+
+const ServiceStatus = (props: { db: Types.LoadedDb; config: Types.PartialConfig; service: Types.Service }) => {
+  const { service, db, config } = props;
+
+  const isAvailable = useObservable(service.isAvailable(db.instance, config));
+
+  return (
+    <div>
+      {service.name} - {isAvailable ? getStatusIcon("OK") : getStatusIcon("ERROR")}
+    </div>
+  );
+};
 
 const DevPanel = () => {
   // @ts-ignore
   const { dbState: dbs } = useDbContext();
 
   const {
+    // @ts-ignore could be undefined FIXME
     appState: {
       app: { activeDatabase, activePage, showDevPanel },
     },
+    // @ts-ignore could be undefined FIXME
     setAppState,
   } = useAppContext();
 
-  const { setConfigState } = useConfigContext();
+  // @ts-ignore could be undefined FIXME
+  const { setConfigState, configState } = useConfigContext();
 
   const status = useStatus();
 
@@ -102,6 +121,16 @@ const DevPanel = () => {
                   <li key={index}>{d.name}</li>
                 ))}
               </ul>
+            </details>
+            <details open>
+              {dbs.map((d) => (
+                <div key={d.name}>
+                  <h5>{d.name}</h5>
+                  {services.map((s) => (
+                    <ServiceStatus key={s.name} db={d} config={configState} service={s} />
+                  ))}
+                </div>
+              ))}
             </details>
           </>
         )}

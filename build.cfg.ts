@@ -1,7 +1,12 @@
 import * as Types from "@data-types/index";
-import { merge } from "lodash/fp";
+import { mergeAll } from "lodash/fp";
+import customConfig from "./custom.cfg.json";
 
-const customConfig = process.env.CUSTOM_CFG !== undefined ? JSON.parse(process?.env?.CUSTOM_CFG) : {};
+/* prettier-ignore */
+const envConfig =
+  process.env.CUSTOM_CFG !== undefined
+  ? JSON.parse(process?.env?.CUSTOM_CFG)
+  : {};
 
 // this is the config the app is built with, not the config which is loaded
 //  at runtime.
@@ -27,4 +32,4 @@ const initialConfig: Types.BuildConfig = {
 
 // TODO: consider if a deep merge should be used here.
 // In the build we might want to overwrite these
-export const config: Types.BuildConfig = merge(initialConfig, customConfig);
+export const config: Types.BuildConfig = mergeAll([initialConfig, customConfig, envConfig]);

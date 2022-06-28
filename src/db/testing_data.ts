@@ -28,7 +28,7 @@ export const generateTestingDocs1 = (sym?: string) => {
       document__id: id("data2"),
       document__type: "data" as Types.DocumentType,
       data__type: "youtube_url",
-      data__body: "https://www.youtube.com/watch?v=uImk2RgCq_U&t=33s",
+      data__body: "https://www.youtube.com/watch?v=uImk2RgCq_U",
     },
     <Types.DataVideoFileUrl>{
       document__id: id("data3"),
@@ -96,13 +96,6 @@ export const generateTestingDocs1 = (sym?: string) => {
       block__type: Types.BlockType.youtube_url_input,
       block__state: "open",
       block__data_id: id("data2"),
-    },
-    <Types.BlockDownloadedVideo>{
-      document__id: id("block5"),
-      document__type: "block" as const,
-      block__type: Types.BlockType.downloaded_video,
-      block__state: "open",
-      block__data_id: id("data3"),
     },
     //
     // pages
