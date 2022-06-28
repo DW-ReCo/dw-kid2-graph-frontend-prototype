@@ -29,7 +29,7 @@ const Page = (props: { db: DatabaseTypes.LoadedDb; pageID: string }) => {
   }
 
   return (
-    <div className="max-w-[60rem] mx-auto">
+    <div className="max-w-[60rem] mx-auto py-5">
       <div className="flex">
         <h1>
           <input value={page.page__title} onChange={(e) => updatePageTitle(e.target.value)} />

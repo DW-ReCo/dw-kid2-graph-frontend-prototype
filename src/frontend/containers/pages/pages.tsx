@@ -4,6 +4,7 @@ import * as Types from "@data-types/index";
 import * as Queries from "@db/queries";
 import PageListItem from "@frontend/components/pageListItem";
 import { uniqueId } from "@frontend/utils";
+import PlusIcon from "@frontend/assets/icons/plus";
 
 const Pages = (props: { db: Types.LoadedDb; open: (p: Types.Page) => void }) => {
   const { db, open } = props;
@@ -33,16 +34,19 @@ const Pages = (props: { db: Types.LoadedDb; open: (p: Types.Page) => void }) => 
     ));
 
   return (
-    <div className="ml-2 mt-2 mb-6">
-      <h2>📓 {db.description}</h2>
+    <div className="ml-2 mt-2 mb-6 ">
+      <div className="flex flex-row items-center">
+        <span className="uppercase font-bold text-sm text-slate-600 flex-1">📓 {db.description}</span>
 
-      <div className="ml-4 my-2">
-        <div className="flex gap-2">
-          <h3>📑 Pages</h3>
-          <button className="m-0 p-1" onClick={addNewPage}>
-            + page
-          </button>
-        </div>
+        <button
+          className="m-0 p-1 bg-transparent hover:bg-transparent hover:underline self-end text-transparent hover:text-[#a19f9a]"
+          onClick={addNewPage}
+        >
+          <PlusIcon />
+        </button>
+      </div>
+      <div className="ml-2 my-2">
+        <div className="flex gap-2"></div>
         <ul className="ml-3 flex gap-2 flex-wrap">{pages(allPages)}</ul>
       </div>
     </div>
