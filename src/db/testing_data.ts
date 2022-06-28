@@ -97,13 +97,6 @@ export const generateTestingDocs1 = (sym?: string) => {
       block__state: "open",
       block__data_id: id("data2"),
     },
-    <Types.BlockDownloadedVideo>{
-      document__id: id("block5"),
-      document__type: "block" as const,
-      block__type: Types.BlockType.downloaded_video,
-      block__state: "open",
-      block__data_id: id("data3"),
-    },
     //
     // pages
     //

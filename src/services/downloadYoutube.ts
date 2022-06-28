@@ -14,8 +14,7 @@ const log = Logger.makeLogger(`services/downloadYoutube`);
 
 const isAvailable = (db: RxDatabase, cfg: Types.PartialConfig) => {
   //
-  log.debug(`isAvailable`);
-  log.debug(cfg);
+  log.debug(`checking if youtube service is available`);
 
   if (!cfg.youtube_downloader?.api_url) return of(false);
 
@@ -46,7 +45,11 @@ const isAvailable = (db: RxDatabase, cfg: Types.PartialConfig) => {
       }),
     );
 
-  const combined = combineLatest(from(checkApi), dataAvailable, (a, b) => a && b);
+  const combined = combineLatest(from(checkApi), dataAvailable, (a, b) => {
+    log.debug("api available:", a);
+    log.debug("data available:", b);
+    return a && b;
+  });
 
   return combined;
 
@@ -71,13 +74,24 @@ const execute: Types.ExecuteFunction<[Types.DataYoutubeUrl], [Types.DataYoutubeD
       const headers = new Headers();
       headers.set('Authorization', 'Basic ' + btoa(user + ":" + password));
 
+      headers.set('Content-Type', 'application/json');
+
       const started_at = Utils.now();
 
-      const result: Types.DataYoutubeDownloaded =
-        await fetch(`${api_url}/download`, {method: 'POST', headers})
+      // TODO validate the result
+      const apiResult: Types.DataYoutubeDownloaded["data__body"] =
+        await fetch(`${api_url}/download`, {method: 'POST', headers, body: JSON.stringify({"url": data.data__body})})
         .then(r => r.json())
 
-      log.debug(`received`, result)
+      log.debug(`received`, apiResult)
+
+      const to_data: Types.DataYoutubeDownloaded = {
+        ...Types.createDocument(),
+        document__type: Types.DocumentType.Data,
+        data__type: Types.DataType.youtube_downloaded,
+        data__body:apiResult
+      }
+
 
       const finished_at = Utils.now();
 
@@ -88,7 +102,7 @@ const execute: Types.ExecuteFunction<[Types.DataYoutubeUrl], [Types.DataYoutubeD
         execution__started_at: started_at,
         execution__finished_at: finished_at,
         execution__of_data: [validData],
-        execution__to_data: [result],
+        execution__to_data: [to_data],
       };
 
       await Queries.upsertOne(db, newExecution);

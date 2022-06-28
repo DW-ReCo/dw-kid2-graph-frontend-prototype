@@ -41,9 +41,7 @@ export type DataVideoFileUrl = DataPrototype & {
 // This is the data that the YoutubeDownload Service Produces
 export type DataYoutubeDownloaded = DataPrototype & {
   data__type: DataType.youtube_downloaded;
-  data__body__downloaded_at: string;
-  data__body__video_link: string;
-  data__body__meta_link: string;
+  data__body: { downloaded_at: string; video_link: string; meta_link: string };
 };
 
 export type Data = DataVideoFileUrl | DataYoutubeUrl | DataURL | DataYoutubeDownloaded;

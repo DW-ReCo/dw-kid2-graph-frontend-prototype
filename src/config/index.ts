@@ -47,17 +47,11 @@ const fromLoader: (l: Types.ConfigLoader) => Promise<Types.PartialConfig> = asyn
 export const all: () => Promise<Types.PartialConfig[]> = async () => {
   const { runtime_loads } = buildConfig;
 
-  console.log("aaaaaaaaaaa");
-  console.log(buildConfig);
-
   const getLoader = (loader: Types.ConfigLoader) =>
     fromLoader(loader).then((config) => ({ ...config, from_loader: loader }));
 
   // turn the runtime loads into PartialConfigs
   const configs = await Promise.all(runtime_loads.map(getLoader));
-
-  console.log("ooooooooo");
-  console.log(configs);
 
   return [buildConfig, ...configs];
 };

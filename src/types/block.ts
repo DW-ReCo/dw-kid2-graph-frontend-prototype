@@ -1,6 +1,8 @@
 import * as Document from "./document";
 import { DocumentPrototype, DocumentType } from "./document";
 import * as Database from "./database";
+import * as Executions from "./execution";
+import * as Data from "./data";
 
 // Blocks
 //
@@ -35,11 +37,12 @@ export const newBlockYoutubeInput = (): BlockYoutubeInput => ({
   block__state: "open" as const,
 });
 
-export type BlockDownloadedVideo = BlockPrototype & {
+export type BlockYoutubeDownload = BlockPrototype & {
   block__type: BlockType.downloaded_video;
-  block__data_id: Document.DocumentId;
+  block__chosen_video?: Data.DataYoutubeUrl;
+  block__youtube_download_execution?: Executions.ExecutionYoutubeDL;
 };
 
-export type Block = BlockNote | BlockYoutubeInput | BlockDownloadedVideo;
+export type Block = BlockNote | BlockYoutubeInput | BlockYoutubeDownload;
 
 export const isBlock = (doc: Database.Document): doc is Block => doc.document__type === DocumentType.Block;
