@@ -31,12 +31,10 @@ const BlockDev = () => {
     // load the database if it's already not in the state,
     // protects against hot reloading
     instance ||
-      Database.initializeOne(loader)
-        .then((d) => ({ ...loader, instance: d }))
-        .then((d) => {
-          Database.upsertDocs(d.instance, docs);
-          setDb(d);
-        });
+      Database.initializeOne(loader).then((d) => {
+        Database.upsertDocs(d.instance, docs);
+        setDb(d);
+      });
   }, []);
 
   return (

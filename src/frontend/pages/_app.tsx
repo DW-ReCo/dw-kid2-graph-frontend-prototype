@@ -63,7 +63,13 @@ const App = ({ Component, pageProps }: AppProps) => {
     }
     const { dbs: loaders } = configState;
     log.debug(`initializing dbs`, loaders);
-    const dbs = await Database.initializeAll(loaders);
+    const dbs = await Promise.all(
+      loaders.map((loader) => {
+        const existingDb = dbState.find((d) => d.name === loader.name);
+        return existingDb ? Promise.resolve(existingDb) : Database.initializeOne(loader);
+      }),
+    );
+    //const dbs = await Database.initializeAll(loaders);
     setDbState(dbs);
   };
 

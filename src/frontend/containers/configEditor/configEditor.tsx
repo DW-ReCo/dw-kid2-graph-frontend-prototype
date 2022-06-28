@@ -3,19 +3,20 @@ import * as ConfigTypes from "@data-types/index";
 import { omit, get } from "lodash/fp";
 import * as Logger from "@logger/index";
 import * as Config from "src/config/index";
-// @ts-ignore
-import JSONEditor from "react-json-editor-ajrm";
+import useConfigContext from "@frontend/hooks/contexts/useConfigContext";
 
 const log = Logger.makeLogger("frontent/pages/config");
 
 const ConfigEditor = (props: { config: ConfigTypes.PartialConfig }) => {
   const { config } = props;
   const { from_loader: loader } = config;
+  // @ts-ignore FIXME
+  const { setConfigState } = useConfigContext();
 
   const editableLoaders = ["local_storage_loader"];
   const isEditable = loader && editableLoaders.includes(loader._type);
   const editableConfig = omit(["from_loader"], config);
-  const [editableValue, setValue] = React.useState<string>(JSON.stringify(editableConfig));
+  const [editableValue, setValue] = React.useState<string>(JSON.stringify(editableConfig, null, 2));
 
   const saveConfig = () => {
     const c = editableValue;
@@ -25,7 +26,7 @@ const ConfigEditor = (props: { config: ConfigTypes.PartialConfig }) => {
       // TODO verify valid config
       // TODO remove AS
       Config.toLocalStorage(loader as ConfigTypes.LocalStorageConfigLoader, cc);
-      // TODO then reload app config!!!!
+      Config.load().then((c) => setConfigState(c));
       console.log(cc);
     } catch (e) {
       alert(`something went wrong ${e}`);
@@ -37,13 +38,16 @@ const ConfigEditor = (props: { config: ConfigTypes.PartialConfig }) => {
       <h3>
         {(loader && loader._type) || "Build Config"} - {get("key", loader)}
       </h3>
-      <JSONEditor
-        placeholder={editableConfig}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) => isEditable && setValue(JSON.stringify(e.target.value))}
-        viewOnly={!isEditable}
-        height="100%"
-      />
-      <button onClick={saveConfig}>Save</button>
+      <textarea
+        rows={20}
+        cols={200}
+        onChange={(e) => isEditable && setValue(e.target.value)}
+        className="font-mono"
+        disabled={!isEditable}
+      >
+        {editableValue}
+      </textarea>
+      {isEditable && <button onClick={saveConfig}>Save</button>}
       <hr />
     </div>
   );

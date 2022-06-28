@@ -107,7 +107,7 @@ const initializeServerDb = async (db: Rxdb.RxDatabase, cfg: Types.ServerDbConfig
   return await addCollections(db);
 };
 
-export const initializeOne = async (dbLoader: Types.DbConfig): Promise<Rxdb.RxDatabase> => {
+export const initializeOne = async (dbLoader: Types.DbConfig): Promise<Types.LoadedDb> => {
   // remove any old version od the database
   await Rxdb.removeRxDatabase(dbLoader.name, Pouchdb.getRxStoragePouch("memory"));
 
@@ -116,12 +116,12 @@ export const initializeOne = async (dbLoader: Types.DbConfig): Promise<Rxdb.RxDa
   const t = dbLoader._type;
 
   return t == "local_db_config"
-    ? initializeLocalDb(db, dbLoader)
+    ? initializeLocalDb(db, dbLoader).then((d) => ({ ...dbLoader, instance: d }))
     : t == "server_db_config"
-    ? initializeServerDb(db, dbLoader)
+    ? initializeServerDb(db, dbLoader).then((d) => ({ ...dbLoader, instance: d }))
     : log.throw(`type ${t} is not a valid database type`);
 };
 
 export const initializeAll = async (loaders: Types.DbConfig[]): Promise<Array<Types.LoadedDb>> => {
-  return Promise.all(loaders.map((loader) => initializeOne(loader).then((db) => ({ ...loader, instance: db }))));
+  return Promise.all(loaders.map((loader) => initializeOne(loader)));
 };
