@@ -23,13 +23,14 @@ const DevPanel = () => {
   const { dbState: dbs } = useDbContext();
 
   const {
+    // @ts-ignore
     appState: {
+      // @ts-ignore
       app: { activeDatabase, activePage, showDevPanel },
     },
+    // @ts-ignore
     setAppState,
   } = useAppContext();
-
-  const { setConfigState } = useConfigContext();
 
   const status = useStatus();
 
@@ -48,7 +49,12 @@ const DevPanel = () => {
   ];
 
   return (
-    <div className={clsx("flex-end bg-orange-100 min-h-screen p-2 ml-2", showDevPanel ? "w-72" : "w-5")}>
+    <div
+      className={clsx(
+        "flex-end bg-orange-100 min-h-screen p-2 ml-2 sticky max-h-screen top-0 right-0",
+        showDevPanel ? "w-72" : "w-5",
+      )}
+    >
       <button
         className={clsx("button-dev-panel-toggle", !showDevPanel && "rotate-180")}
         onClick={() => setAppState((prev) => ({ ...prev, app: { ...prev.app, showDevPanel: !showDevPanel } }))}

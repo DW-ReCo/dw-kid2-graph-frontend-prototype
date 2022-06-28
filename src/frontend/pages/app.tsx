@@ -29,7 +29,7 @@ const ApplicationContainer = () => {
 
   return (
     <>
-      <div style={{ width: "20rem", backgroundColor: "#f7f6f3" }} className="p-2">
+      <div style={{ width: "20rem", backgroundColor: "#f7f6f3" }} className="p-2 sticky top-0 left-0 max-h-screen">
         {dbs.map((d, index) => (
           <Fragment key={index}>
             <Pages db={d} open={openPage(d)} />
@@ -37,7 +37,7 @@ const ApplicationContainer = () => {
           </Fragment>
         ))}
       </div>
-      <div className="p-2 flex-1 mx-auto">
+      <div className="p-2 flex-1 mx-auto overflow-scroll">
         {activePage && activeDatabase && activeDatabaseInstance && (
           <Page db={activeDatabaseInstance} pageID={activePage} />
         )}
