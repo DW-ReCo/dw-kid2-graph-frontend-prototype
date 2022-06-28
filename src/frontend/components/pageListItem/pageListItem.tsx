@@ -1,28 +1,38 @@
 import React from "react";
 import * as DatabaseTypes from "@data-types/index";
+import clsx from "clsx";
 
 import * as Queries from "@db/queries";
-import OpenIcon from "@frontend/assets/icons/open";
 import DeleteIcon from "@frontend/assets/icons/delete";
+import useAppContext from "@frontend/hooks/contexts/useAppContext";
 
 const PageListItem = (props: { db: DatabaseTypes.LoadedDb; page: DatabaseTypes.Page; open: () => void }) => {
   const { page, open, db } = props;
 
-  const updatePageTitle = (newTitle: string) => {
-    Queries.mergePage(db.instance, { document__id: page.document__id, page__title: newTitle });
-  };
+  const {
+    // @ts-ignore
+    appState: {
+      // @ts-ignore
+      app: { activePage },
+    },
+  } = useAppContext();
 
   const remove = (db: DatabaseTypes.LoadedDb, id: string) => Queries.remove(db.instance, id);
 
   return (
     <li className="inline-flex flex-nowrap">
-      <input onChange={(e) => updatePageTitle(e.target.value)} value={page.page__title} className="w-[9rem] p-1" />
-      <button onClick={open} className="text-black p-0 bg-transparent hover:bg-transparent hover:text-slate-500">
-        <OpenIcon />
+      <button
+        onClick={open}
+        className={clsx(
+          "w-[9rem] p-0 text-[#72706b] m-0 text-left bg-transparent hover:bg-transparent hover:underline",
+          activePage === page.document__id && "underline",
+        )}
+      >
+        {page.page__title}
       </button>
       <button
         onClick={() => remove(db, page.document__id)}
-        className="text-black p-0 bg-transparent hover:bg-transparent hover:text-slate-500"
+        className="text-black p-0 bg-transparent hover:bg-transparent hover:text-slate-500 m-1"
       >
         <DeleteIcon />
       </button>

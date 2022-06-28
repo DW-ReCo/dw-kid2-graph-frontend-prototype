@@ -4,6 +4,7 @@ import AddBlock from "@frontend/containers/block/addBlock";
 import PageBlocks from "@frontend/containers/pageBlocks";
 import React from "react";
 import { useRxQuery } from "rxdb-hooks";
+import EditIcon from "@frontend/assets/icons/edit";
 
 const Page = (props: { db: DatabaseTypes.LoadedDb; pageID: string }) => {
   const { pageID, db } = props;
@@ -19,16 +20,29 @@ const Page = (props: { db: DatabaseTypes.LoadedDb; pageID: string }) => {
     });
   };
 
+  const updatePageTitle = (newTitle: string) => {
+    Queries.mergePage(db.instance, { document__id: page.document__id, page__title: newTitle });
+  };
+
   if (!page) {
-    return <h4>Page Not Found</h4>;
+    return (
+      <div className="max-w-[60rem] mx-auto py-5">
+        <h1>Page Not Found</h1>
+      </div>
+    );
   }
 
   return (
-    <>
-      <h1>{page.page__title}</h1>
+    <div className="max-w-[60rem] mx-auto py-5">
+      <div className="flex">
+        <h1>
+          <input value={page.page__title} onChange={(e) => updatePageTitle(e.target.value)} />
+        </h1>
+        <EditIcon />
+      </div>
       <PageBlocks db={db} page={page} />
       <AddBlock db={db} onAdd={onAddBlock} />
-    </>
+    </div>
   );
 };
 

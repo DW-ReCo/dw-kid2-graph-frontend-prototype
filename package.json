@@ -22,7 +22,7 @@
   },
   "lint-staged": {
     "**/*.{js,jsx,ts,tsx}": [
-      "npx tsc --noEmit",
+      "npx tsc-files --noEmit",
       "npx prettier --write",
       "npx eslint --fix"
     ]

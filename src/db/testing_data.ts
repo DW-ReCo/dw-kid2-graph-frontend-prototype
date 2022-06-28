@@ -110,7 +110,7 @@ export const generateTestingDocs1 = (sym?: string) => {
 };
 
 export const addTestingData = async (instance: Rxdb.RxDatabase) => {
-  const docs = generateTestingDocs1("same");
+  const docs = generateTestingDocs1();
   await Database.upsertDocs(instance, docs);
   return docs;
 };
