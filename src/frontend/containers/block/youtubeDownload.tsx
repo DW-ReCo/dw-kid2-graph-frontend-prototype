@@ -92,8 +92,6 @@ export const Component = (props: { db: Types.LoadedDb; block: Types.BlockYoutube
       {vid.meta_link}
     </div>
   );
-
-  return <>{JSON.stringify(block)}</>;
 };
 
 // downloading a youtube link is only availavle when the service is
