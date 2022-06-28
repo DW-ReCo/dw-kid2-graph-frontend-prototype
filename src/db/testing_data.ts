@@ -28,7 +28,7 @@ export const generateTestingDocs1 = (sym?: string) => {
       document__id: id("data2"),
       document__type: "data" as Types.DocumentType,
       data__type: "youtube_url",
-      data__body: "https://www.youtube.com/watch?v=uImk2RgCq_U&t=33s",
+      data__body: "https://www.youtube.com/watch?v=uImk2RgCq_U",
     },
     <Types.DataVideoFileUrl>{
       document__id: id("data3"),
