@@ -1,5 +1,7 @@
 import * as Note from "./note";
 import * as YoutubeInput from "./youtubeLink";
+import * as DownloadYoutube from "./youtubeDownload";
+
 import * as Types from "@data-types/index";
 import React from "react";
 import { moveElementPosition } from "@frontend/utils";
@@ -14,7 +16,8 @@ const NotFoundType = ({ block }: { block: Types.Block }) => <>Block type {block.
 const BlockSwitch = ({ db, block }: { db: Types.LoadedDb; block: Types.Block }) =>
   block.block__type === Types.BlockType.note               ? <Note.Component db={db} block={block} /> :
   block.block__type === Types.BlockType.youtube_url_input  ? <YoutubeInput.Component db={db} block={block} /> :
-                                                               <NotFoundType block={block} />;
+  block.block__type === Types.BlockType.downloaded_video   ?  <DownloadYoutube.Component db={db} block={block} /> :
+  <NotFoundType block={block} />;
 
 const Block = (props: { db: Types.LoadedDb; block: Types.Block; page: Types.Page }) => {
   const { block, db, page } = props;

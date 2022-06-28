@@ -3,9 +3,9 @@ import useDbContext from "./contexts/useDbContext";
 import useConfigContext from "./contexts/useConfigContext";
 
 const useStatus = () => {
-  // @ts-ignore
+  // @ts-ignore could be undefined FIXME
   const { dbState } = useDbContext();
-  // @ts-ignore
+  // @ts-ignore could be undefined FIXME
   const { configState } = useConfigContext();
 
   const getConfigStatus = (): Types.status => {

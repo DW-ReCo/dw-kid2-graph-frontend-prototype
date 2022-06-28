@@ -32,11 +32,13 @@ const execute: Types.ExecuteFunction<[Types.Data], [Types.Data]> = (db, cfg) => 
 
   await Queries.upsertOne(db, newExecution);
 
-  return { record: newExecution, created: [validData] };
+  return newExecution;
 };
 
 const service: UserAddService = {
   // the user adding service is always available
+  name: "User Added Service",
+  description: "the user may directly add data to the database",
   isAvailable: (..._) => of(true),
   execute,
 };
