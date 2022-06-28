@@ -25,7 +25,11 @@ const Page = (props: { db: DatabaseTypes.LoadedDb; pageID: string }) => {
   };
 
   if (!page) {
-    return <h4>Page Not Found</h4>;
+    return (
+      <div className="max-w-[60rem] mx-auto py-5">
+        <h1>Page Not Found</h1>
+      </div>
+    );
   }
 
   return (
