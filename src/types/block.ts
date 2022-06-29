@@ -1,6 +1,6 @@
 import * as Document from "./document";
 import * as Database from "./database";
-import * as Executions from "./execution-record";
+import * as Record from "./execution-record";
 import * as Data from "./data-node";
 
 // Blocks
@@ -39,7 +39,7 @@ export const newBlockYoutubeInput = (): YoutubeInput => ({
 export type YoutubeDownload = Prototype & {
   block__type: Type.downloaded_video;
   block__chosen_video?: Data.DataYoutubeUrl;
-  block__youtube_download_execution?: Executions.ExecutionYoutubeDL;
+  block__youtube_download_execution?: Record.YoutubeDL;
 };
 
 export type Block = Note | YoutubeInput | YoutubeDownload;

@@ -7,7 +7,7 @@ import { Data, DataType } from "./data-node";
 //   these are records of actions our system has taken
 //
 
-export enum ExecutionType {
+export enum Type {
   download_youtube_v1,
   user_added,
 }
@@ -15,9 +15,9 @@ export enum ExecutionType {
 // TODO for now data link just has the ID in it
 export type DataLink = { document__id: Document.Id };
 
-export type GenericExecution<GenericService> = Document.Prototype & {
-  document__type: Document.Type.Execution;
-  record__type: ExecutionType;
+export type Generic<GenericService> = Document.Prototype & {
+  document__type: Document.Type.Record;
+  record__type: Type;
   record__started_at: Date;
   record__finished_at: Date;
   record__of_data: ExtractArgs<GenericService> | [];
@@ -25,14 +25,14 @@ export type GenericExecution<GenericService> = Document.Prototype & {
 };
 
 /* prettier-ignore */
-export type ExecutionYoutubeDL =
-  GenericExecution<YoutubeDownloadService> & { record__type: ExecutionType.download_youtube_v1 };
+export type YoutubeDL =
+  Generic<YoutubeDownloadService> & { record__type: Type.download_youtube_v1 };
 
 /* prettier-ignore */
-export type ExecutionUserAdded =
-  GenericExecution<UserAddService> & { record__type: ExecutionType.user_added };
+export type UserAdded =
+  Generic<UserAddService> & { record__type: Type.user_added };
 
-export type Execution = ExecutionUserAdded | ExecutionYoutubeDL;
+export type Record = UserAdded | YoutubeDL;
 
 // here is how these things can be used:
 //
@@ -41,13 +41,13 @@ type TestService = GenericService<[string], [string]>;
 
 // we can then make an execution for that service:
 //
-type TestExecution = GenericExecution<TestService>;
+type TestRecord = Generic<TestService>;
 
 // then we can make an execution test:
-const testExecution: TestExecution = {
+const testExecution: TestRecord = {
   document__id: "testId",
-  document__type: Document.Type.Execution,
-  record__type: ExecutionType.user_added,
+  document__type: Document.Type.Record,
+  record__type: Type.user_added,
   record__started_at: new Date(Date.now()),
   record__finished_at: new Date(Date.now()),
   // this fails, because UserAddService has a different Arg type
@@ -60,10 +60,10 @@ const testExecution: TestExecution = {
 };
 
 /* prettier-ignore */
-const realTestExecution: ExecutionUserAdded = {
+const realTestRecord: UserAdded = {
   document__id: "testId",
-  document__type: Document.Type.Execution,
-  record__type: ExecutionType.user_added,
+  document__type: Document.Type.Record,
+  record__type: Type.user_added,
   record__started_at: new Date(Date.now()),
   record__finished_at: new Date(Date.now()),
   // this fails, because UserAddService has a different Arg type

@@ -1,5 +1,5 @@
 import { Data, DataYoutubeDownloaded, DataYoutubeUrl } from "./data-node";
-import { GenericExecution } from "./execution-record";
+import * as Record from "./execution-record";
 import { PartialConfig } from "./config";
 import { RxDatabase } from "rxdb";
 import { Observable } from "rxjs";
@@ -11,7 +11,7 @@ import { Observable } from "rxjs";
 export type ExecuteFunction<Args extends any[], Return extends any[]> =
   (db: RxDatabase, config: PartialConfig) =>
     (...args: Args) =>
-      Promise<GenericExecution<GenericService<Args, Return>>>;
+      Promise<Record.Generic<GenericService<Args, Return>>>;
 
 // the generic service, which takes the execution arguments.
 export type GenericService<Args extends any[], Return extends any[]> = {

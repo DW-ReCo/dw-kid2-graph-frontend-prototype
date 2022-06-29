@@ -3,7 +3,7 @@ import { uniqueId } from "@frontend/utils";
 //   So here are the document types
 export enum Type {
   Data = "data",
-  Execution = "execution",
+  Record = "record",
   Block = "block",
   Page = "page",
 }
