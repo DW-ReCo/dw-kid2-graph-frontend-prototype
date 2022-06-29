@@ -1,5 +1,4 @@
 import * as Document from "./document";
-import { DocumentPrototype, DocumentType } from "./document";
 import * as Database from "./database";
 import * as Executions from "./execution-record";
 import * as Data from "./data-node";
@@ -14,8 +13,8 @@ export enum BlockType {
   downloaded_video,
 }
 
-export type BlockPrototype = DocumentPrototype & {
-  document__type: DocumentType.Block;
+export type BlockPrototype = Document.Prototype & {
+  document__type: Document.Type.Block;
   block__state: "open" | "closed";
   block__type: BlockType;
 };
@@ -27,12 +26,12 @@ export type BlockNote = BlockPrototype & {
 
 export type BlockYoutubeInput = BlockPrototype & {
   block__type: BlockType.youtube_url_input;
-  block__data_id?: Document.DocumentId;
+  block__data_id?: Document.Id;
 };
 
 export const newBlockYoutubeInput = (): BlockYoutubeInput => ({
   ...Document.createDocument(),
-  document__type: DocumentType.Block,
+  document__type: Document.Type.Block,
   block__type: BlockType.youtube_url_input,
   block__state: "open" as const,
 });
@@ -45,4 +44,4 @@ export type BlockYoutubeDownload = BlockPrototype & {
 
 export type Block = BlockNote | BlockYoutubeInput | BlockYoutubeDownload;
 
-export const isBlock = (doc: Database.Document): doc is Block => doc.document__type === DocumentType.Block;
+export const isBlock = (doc: Database.Document): doc is Block => doc.document__type === Document.Type.Block;
