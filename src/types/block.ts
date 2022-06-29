@@ -7,41 +7,41 @@ import * as Data from "./data-node";
 //
 //  our systems lingua franca of frontend elements
 
-export enum BlockType {
+export enum Type {
   note,
   youtube_url_input,
   downloaded_video,
 }
 
-export type BlockPrototype = Document.Prototype & {
+export type Prototype = Document.Prototype & {
   document__type: Document.Type.Block;
   block__state: "open" | "closed";
-  block__type: BlockType;
+  block__type: Type;
 };
 
-export type BlockNote = BlockPrototype & {
-  block__type: BlockType.note;
+export type Note = Prototype & {
+  block__type: Type.note;
   block__body: string;
 };
 
-export type BlockYoutubeInput = BlockPrototype & {
-  block__type: BlockType.youtube_url_input;
+export type YoutubeInput = Prototype & {
+  block__type: Type.youtube_url_input;
   block__data_id?: Document.Id;
 };
 
-export const newBlockYoutubeInput = (): BlockYoutubeInput => ({
+export const newBlockYoutubeInput = (): YoutubeInput => ({
   ...Document.createDocument(),
   document__type: Document.Type.Block,
-  block__type: BlockType.youtube_url_input,
+  block__type: Type.youtube_url_input,
   block__state: "open" as const,
 });
 
-export type BlockYoutubeDownload = BlockPrototype & {
-  block__type: BlockType.downloaded_video;
+export type YoutubeDownload = Prototype & {
+  block__type: Type.downloaded_video;
   block__chosen_video?: Data.DataYoutubeUrl;
   block__youtube_download_execution?: Executions.ExecutionYoutubeDL;
 };
 
-export type Block = BlockNote | BlockYoutubeInput | BlockYoutubeDownload;
+export type Block = Note | YoutubeInput | YoutubeDownload;
 
 export const isBlock = (doc: Database.Document): doc is Block => doc.document__type === Document.Type.Block;
