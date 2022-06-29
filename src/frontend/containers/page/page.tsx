@@ -1,4 +1,4 @@
-import * as Queries from "@db/queries";
+import * as Queries from "src/database/queries";
 import * as DatabaseTypes from "@data-types/index";
 import AddBlock from "@frontend/containers/block/addBlock";
 import PageBlocks from "@frontend/containers/pageBlocks";

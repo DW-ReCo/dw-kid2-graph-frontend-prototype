@@ -4,7 +4,7 @@ import { of } from "rxjs";
 import * as Types from "@data-types/index";
 import * as Utils from "@utils/index";
 
-import * as Queries from "@db/queries";
+import * as Queries from "src/database/queries";
 import { uniqueId } from "@frontend/utils";
 
 // the user adding service takes one argument,

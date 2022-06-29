@@ -1,5 +1,5 @@
-import { upsertOne } from "@db/index";
-import * as Queries from "@db/queries";
+import { upsertOne } from "src/database/index";
+import * as Queries from "src/database/queries";
 import * as DatabaseTypes from "@data-types/index";
 import { uniqueId } from "@frontend/utils";
 

@@ -5,7 +5,7 @@ import * as DownloadYoutube from "./youtubeDownload";
 import * as Types from "@data-types/index";
 import React from "react";
 import { moveElementPosition } from "@frontend/utils";
-import * as Queries from "@db/queries";
+import * as Queries from "src/database/queries";
 import ArrowIcon from "@frontend/assets/icons/arrow";
 import DeleteIcon from "@frontend/assets/icons/delete";
 import { without } from "lodash";

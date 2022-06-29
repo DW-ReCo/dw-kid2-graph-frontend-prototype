@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import { useRxQuery } from "rxdb-hooks";
 import * as Types from "@data-types/index";
-import * as Queries from "@db/queries";
+import * as Queries from "src/database/queries";
 import PageListItem from "@frontend/components/pageListItem";
 import { uniqueId } from "@frontend/utils";
 import PlusIcon from "@frontend/assets/icons/plus";
@@ -37,7 +37,6 @@ const Pages = (props: { db: Types.LoadedDb; open: (p: Types.Page) => void }) => 
     <div className="ml-2 mt-2 mb-6 ">
       <div className="flex flex-row items-center">
         <span className="uppercase font-bold text-sm text-slate-600 flex-1">📓 {db.description}</span>
-
         <button
           className="m-0 p-1 bg-transparent hover:bg-transparent hover:underline self-end text-transparent hover:text-[#a19f9a]"
           onClick={addNewPage}

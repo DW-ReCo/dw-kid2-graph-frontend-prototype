@@ -1,7 +1,7 @@
 import React from "react";
-import { upsertOne } from "@db/index";
+import { upsertOne } from "src/database/index";
 import * as Types from "@data-types/index";
-import * as Queries from "@db/queries";
+import * as Queries from "src/database/queries";
 import useConfigContext from "@frontend/hooks/contexts/useConfigContext";
 import * as Logger from "@logger/index";
 import DownloadService from "@services/downloadYoutube";

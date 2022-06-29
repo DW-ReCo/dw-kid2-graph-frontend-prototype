@@ -1,10 +1,9 @@
 import React, { Fragment } from "react";
-import Block from "@frontend/containers/block/index";
 import AddBlock from "@frontend/containers/block/addBlock";
-import { generateTestingDocs1 } from "@db/testing_data";
+import { generateTestingDocs1 } from "src/database/testing_data";
 import * as Types from "@data-types/index";
-import * as Database from "@db/index";
-import * as Queries from "@db/queries";
+import * as Database from "src/database/index";
+import * as Queries from "src/database/queries";
 import { useRxQuery } from "rxdb-hooks";
 
 const docs: Types.Document[] = generateTestingDocs1();

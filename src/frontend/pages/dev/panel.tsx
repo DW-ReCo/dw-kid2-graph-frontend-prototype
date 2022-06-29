@@ -1,13 +1,13 @@
 // eslint-disable @typescript-eslint/no-unused-vars
 
 import React, { Fragment, useState } from "react";
-import * as Database from "@db/index";
+import * as Database from "src/database/index";
 
 import services from "@services/index";
 
 import * as Types from "@data-types/index";
 
-import { addTestingData } from "../../../db/testing_data";
+import { addTestingData } from "src/database/testing_data";
 
 import { first } from "lodash/fp";
 import useDbContext from "@frontend/hooks/contexts/useDbContext";
