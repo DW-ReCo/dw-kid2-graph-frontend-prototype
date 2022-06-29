@@ -1,5 +1,4 @@
 import * as Document from "./document";
-import { DocumentPrototype, DocumentType, DocumentId } from "./document";
 import { GenericService, UserAddService, YoutubeDownloadService, ExtractArgs, ExtractReturn } from "./service";
 import { Data, DataType } from "./data-node";
 
@@ -14,10 +13,10 @@ export enum ExecutionType {
 }
 
 // TODO for now data link just has the ID in it
-export type DataLink = { document__id: DocumentId };
+export type DataLink = { document__id: Document.Id };
 
-export type GenericExecution<GenericService> = DocumentPrototype & {
-  document__type: DocumentType.Execution;
+export type GenericExecution<GenericService> = Document.Prototype & {
+  document__type: Document.Type.Execution;
   record__type: ExecutionType;
   record__started_at: Date;
   record__finished_at: Date;
@@ -47,7 +46,7 @@ type TestExecution = GenericExecution<TestService>;
 // then we can make an execution test:
 const testExecution: TestExecution = {
   document__id: "testId",
-  document__type: DocumentType.Execution,
+  document__type: Document.Type.Execution,
   record__type: ExecutionType.user_added,
   record__started_at: new Date(Date.now()),
   record__finished_at: new Date(Date.now()),
@@ -63,7 +62,7 @@ const testExecution: TestExecution = {
 /* prettier-ignore */
 const realTestExecution: ExecutionUserAdded = {
   document__id: "testId",
-  document__type: DocumentType.Execution,
+  document__type: Document.Type.Execution,
   record__type: ExecutionType.user_added,
   record__started_at: new Date(Date.now()),
   record__finished_at: new Date(Date.now()),
@@ -75,11 +74,11 @@ const realTestExecution: ExecutionUserAdded = {
   // this one will pass though, as it's the correct type
   /* prettier-ignore */
   record__of_data: [{ document__id: "testdata1",
-                         document__type: DocumentType.Data,
+                         document__type: Document.Type.Data,
                          data__type: DataType.url,
                          data__body: "" }],
   record__to_data: [{ document__id: "resultingdata",
-                         document__type: DocumentType.Data,
+                         document__type: Document.Type.Data,
                          data__type: DataType.url,
                          data__body: "" }]
 }

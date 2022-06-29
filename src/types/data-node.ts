@@ -1,5 +1,4 @@
 import * as Document from "./document";
-import { DocumentPrototype, DocumentType } from "./document";
 
 export enum DataType {
   url = "url",
@@ -8,8 +7,8 @@ export enum DataType {
   video_file_url = "video_file_url_v1",
 }
 
-export type DataPrototype = DocumentPrototype & {
-  document__type: DocumentType.Data;
+export type DataPrototype = Document.Prototype & {
+  document__type: Document.Type.Data;
   data__type: DataType;
 };
 
@@ -25,7 +24,7 @@ export type DataYoutubeUrl = DataPrototype & {
 
 export const newDataYoutubeUrl = (url: string): DataYoutubeUrl => ({
   ...Document.createDocument(),
-  document__type: DocumentType.Data,
+  document__type: Document.Type.Data,
   data__type: DataType.youtube_url,
   data__body: url,
 });
