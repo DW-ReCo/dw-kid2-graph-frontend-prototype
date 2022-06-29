@@ -1,4 +1,4 @@
-import { Data, DataYoutubeDownloaded, DataYoutubeUrl } from "./data";
+import { Data, DataYoutubeDownloaded, DataYoutubeUrl } from "./data-node";
 import { GenericExecution } from "./execution-record";
 import { PartialConfig } from "./config";
 import { RxDatabase } from "rxdb";
