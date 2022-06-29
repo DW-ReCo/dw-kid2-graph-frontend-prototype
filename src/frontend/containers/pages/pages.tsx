@@ -6,7 +6,7 @@ import PageListItem from "@frontend/components/pageListItem";
 import { uniqueId } from "@frontend/utils";
 import PlusIcon from "@frontend/assets/icons/plus";
 
-const Pages = (props: { db: Types.Database.LoadedDb; open: (p: Types.Page.Page) => void }) => {
+const Pages = (props: { db: Types.Database.LoadedDatabase; open: (p: Types.Page.Page) => void }) => {
   const { db, open } = props;
 
   const { result: allDocs } = useRxQuery(Queries.allPages(db.instance));

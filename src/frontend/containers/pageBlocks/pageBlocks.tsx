@@ -4,7 +4,7 @@ import Block from "@frontend/containers/block";
 import React, { Fragment } from "react";
 import { useRxQuery } from "rxdb-hooks";
 
-const PageBlocks = (props: { db: Types.Database.LoadedDb; page: Types.Page.Page }) => {
+const PageBlocks = (props: { db: Types.Database.LoadedDatabase; page: Types.Page.Page }) => {
   const { page, db } = props;
   const { result: docs } = useRxQuery(Queries.pageBlocks(db.instance, page));
 

@@ -13,13 +13,13 @@ import { without } from "lodash";
 const NotFoundType = ({ block }: { block: Types.Block.Block }) => <>Block type {block.block__type} not found</>;
 
 /* prettier-ignore */
-const BlockSwitch = ({ db, block }: { db: Types.Database.LoadedDb; block: Types.Block.Block }) =>
+const BlockSwitch = ({ db, block }: { db: Types.Database.LoadedDatabase; block: Types.Block.Block }) =>
   block.block__type === Types.Block.Type.note               ? <Note.Component db={db} block={block} /> :
   block.block__type === Types.Block.Type.youtube_url_input  ? <YoutubeInput.Component db={db} block={block} /> :
   block.block__type === Types.Block.Type.downloaded_video   ?  <DownloadYoutube.Component db={db} block={block} /> :
   <NotFoundType block={block} />;
 
-const Block = (props: { db: Types.Database.LoadedDb; block: Types.Block.Block; page: Types.Page.Page }) => {
+const Block = (props: { db: Types.Database.LoadedDatabase; block: Types.Block.Block; page: Types.Page.Page }) => {
   const { block, db, page } = props;
 
   const blockIndex = page.page__blocks.indexOf(block.document__id);

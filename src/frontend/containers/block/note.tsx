@@ -10,7 +10,7 @@ import {
   /// delay
 } from "rxjs";
 
-export const Component = (props: { db: Types.Database.LoadedDb; block: Types.Block.Note }) => {
+export const Component = (props: { db: Types.Database.LoadedDatabase; block: Types.Block.Note }) => {
   const { db, block } = props;
   const { block__body: body } = block;
 
@@ -26,12 +26,12 @@ export const Component = (props: { db: Types.Database.LoadedDb; block: Types.Blo
 };
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-// export const isAvailable = (db: DatabaseTypes.LoadedDb): Promise<boolean> => Promise.resolve(true);
+// export const isAvailable = (db: DatabaseTypes.LoadedDatabase): Promise<boolean> => Promise.resolve(true);
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const isAvailable = (db: Types.Database.LoadedDb): Observable<boolean> => of(true); // .pipe(concatMap((x) => of(x).pipe(delay(1000))));
+export const isAvailable = (db: Types.Database.LoadedDatabase): Observable<boolean> => of(true); // .pipe(concatMap((x) => of(x).pipe(delay(1000))));
 
-export const add = async (db: Types.Database.LoadedDb) => {
+export const add = async (db: Types.Database.LoadedDatabase) => {
   console.log("adding note");
   const newNote: Types.Block.Note = {
     document__id: uniqueId(),

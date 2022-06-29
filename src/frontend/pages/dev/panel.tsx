@@ -23,7 +23,7 @@ import { useObservable } from "@frontend/utils";
 import { getStatusIcon } from "@utils/index";
 
 const ServiceStatus = (props: {
-  db: Types.Database.LoadedDb;
+  db: Types.Database.LoadedDatabase;
   config: Types.Config.PartialConfig;
   service: Types.Service.Service;
 }) => {
@@ -61,9 +61,9 @@ const DevPanel = () => {
 
   if (!firstDb) return <></>;
 
-  const clearDbs = () => dbs.map((d: Types.Database.LoadedDb) => Database.clearDocs(d.instance));
+  const clearDbs = () => dbs.map((d: Types.Database.LoadedDatabase) => Database.clearDocs(d.instance));
 
-  const addTestingDataDbs = () => dbs.map((d: Types.Database.LoadedDb) => addTestingData(d.instance));
+  const addTestingDataDbs = () => dbs.map((d: Types.Database.LoadedDatabase) => addTestingData(d.instance));
 
   const LINKS = [
     { label: "Database view", href: "/db" },

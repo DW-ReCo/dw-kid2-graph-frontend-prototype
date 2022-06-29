@@ -109,7 +109,7 @@ const initializeServerDb = async (db: Rxdb.RxDatabase, config: Types.Config.Serv
   return await addCollections(db);
 };
 
-export const initializeOne = async (dbLoader: Types.Config.DatabaseConfig): Promise<Types.Database.LoadedDb> => {
+export const initializeOne = async (dbLoader: Types.Config.DatabaseConfig): Promise<Types.Database.LoadedDatabase> => {
   // remove any old version od the database
   await Rxdb.removeRxDatabase(dbLoader.name, Pouchdb.getRxStoragePouch("memory"));
 
@@ -126,6 +126,6 @@ export const initializeOne = async (dbLoader: Types.Config.DatabaseConfig): Prom
 
 export const initializeAll = async (
   loaders: Types.Config.DatabaseConfig[],
-): Promise<Array<Types.Database.LoadedDb>> => {
+): Promise<Array<Types.Database.LoadedDatabase>> => {
   return Promise.all(loaders.map((loader) => initializeOne(loader)));
 };

@@ -5,7 +5,7 @@ import * as Queries from "@database/queries";
 import { RxQueryResultDoc, useRxQuery } from "rxdb-hooks";
 import RenderDataWrapper from "@frontend/components/renderData/wrapper";
 
-const DBRenderer = (dbL: Types.Database.LoadedDb) => {
+const DBRenderer = (dbL: Types.Database.LoadedDatabase) => {
   const { instance, name, description } = dbL;
 
   const { result: allBlocks }: RxQueryResultDoc<Types.Block.Block> = useRxQuery(Queries.allBlocks(instance));

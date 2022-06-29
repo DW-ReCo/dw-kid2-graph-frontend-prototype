@@ -6,7 +6,7 @@ import React from "react";
 import { useRxQuery } from "rxdb-hooks";
 import EditIcon from "@frontend/assets/icons/edit";
 
-const Page = (props: { db: Types.Database.LoadedDb; pageID: string }) => {
+const Page = (props: { db: Types.Database.LoadedDatabase; pageID: string }) => {
   const { pageID, db } = props;
 
   const { result: doc } = useRxQuery(Queries.page(db.instance, pageID));

@@ -21,8 +21,8 @@ export type App = {
 };
 
 export type Database = {
-  dbState: Database.LoadedDb[];
-  setDbState?: React.Dispatch<React.SetStateAction<Database.LoadedDb[]>>;
+  dbState: Database.LoadedDatabase[];
+  setDbState?: React.Dispatch<React.SetStateAction<Database.LoadedDatabase[]>>;
 };
 
 export type Config = {

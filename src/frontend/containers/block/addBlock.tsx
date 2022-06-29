@@ -10,7 +10,7 @@ import {
 } from "@frontend/utils";
 import React from "react";
 
-const AddBlock = (props: { db: Types.Database.LoadedDb; onAdd?: (block: Types.Block.Block) => void }) => {
+const AddBlock = (props: { db: Types.Database.LoadedDatabase; onAdd?: (block: Types.Block.Block) => void }) => {
   const { db, onAdd = (_) => {} } = props;
 
   // @ts-ignore could be undefined FIXME

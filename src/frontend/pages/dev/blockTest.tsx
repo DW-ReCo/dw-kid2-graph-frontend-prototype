@@ -8,7 +8,7 @@ import { useRxQuery } from "rxdb-hooks";
 
 const docs: Types.Document.Prototype[] = generateTestingDocs1();
 
-const AllBlocks = (props: { db: Types.Database.LoadedDb }) => {
+const AllBlocks = (props: { db: Types.Database.LoadedDatabase }) => {
   const { db } = props;
   const { result: docs } = useRxQuery(Queries.allBlocks(db.instance));
   const blocks: Types.Block.Block[] = docs.map((d) => d.get()) as Types.Block.Block[];
@@ -23,7 +23,7 @@ const AllBlocks = (props: { db: Types.Database.LoadedDb }) => {
 };
 
 const BlockDev = () => {
-  const [instance, setDb] = React.useState<Types.Database.LoadedDb>();
+  const [instance, setDb] = React.useState<Types.Database.LoadedDatabase>();
 
   React.useEffect(() => {
     const loader: Types.Config.LocalDatabaseConfig = { name: "local_testing_db", _type: "local_db_config" };

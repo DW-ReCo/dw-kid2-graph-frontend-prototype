@@ -15,7 +15,7 @@ import {
 
 const log = Logger.makeLogger("frontend/containers/block/youtubeLink");
 
-export const Add = (props: { db: Types.Database.LoadedDb; block: Types.Block.YoutubeInput }) => {
+export const Add = (props: { db: Types.Database.LoadedDatabase; block: Types.Block.YoutubeInput }) => {
   const { db, block } = props;
 
   // @ts-ignore
@@ -49,7 +49,7 @@ export const Add = (props: { db: Types.Database.LoadedDb; block: Types.Block.You
   );
 };
 
-export const Component = (props: { db: Types.Database.LoadedDb; block: Types.Block.YoutubeInput }) => {
+export const Component = (props: { db: Types.Database.LoadedDatabase; block: Types.Block.YoutubeInput }) => {
   const { db, block } = props;
 
   // @ts-ignore
@@ -68,9 +68,9 @@ export const Component = (props: { db: Types.Database.LoadedDb; block: Types.Blo
 };
 
 // the ability to add a youtube link is always available
-export const isAvailable = (db: Types.Database.LoadedDb): Observable<boolean> => of(true);
+export const isAvailable = (db: Types.Database.LoadedDatabase): Observable<boolean> => of(true);
 /* prettier-ignore */
-/* export const isAvailable = (db: dbTypes.LoadedDb): Observable<boolean> =>
+/* export const isAvailable = (db: dbTypes.LoadedDatabase): Observable<boolean> =>
  *   queries.allData(databaseDatabaseTypes.instance).$
  *          .pipe(map(docs => {
  *            return docs
@@ -79,7 +79,7 @@ export const isAvailable = (db: Types.Database.LoadedDb): Observable<boolean> =>
  *          }))
  *  */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const add = async (db: Types.Database.LoadedDb) => {
+export const add = async (db: Types.Database.LoadedDatabase) => {
   log.debug("adding block");
   const newBlock: Types.Block.YoutubeInput = Types.Block.newBlockYoutubeInput();
   await upsertOne(db.instance, newBlock);

@@ -20,7 +20,7 @@ const ApplicationContainer = () => {
   const { dbState: dbs } = useDbContext();
   // dbcontext can be undefined FIXME
 
-  const openPage = (d: Types.Database.LoadedDb) => (p: Types.Page.Page) => {
+  const openPage = (d: Types.Database.LoadedDatabase) => (p: Types.Page.Page) => {
     setAppState((prev) => ({ ...prev, app: { ...prev.app, activePage: p.document__id } }));
     setAppState((prev) => ({ ...prev, app: { ...prev.app, activeDatabase: d.name } }));
   };

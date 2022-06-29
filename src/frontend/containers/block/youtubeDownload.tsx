@@ -10,7 +10,7 @@ import { Observable } from "rxjs";
 
 const log = Logger.makeLogger("frontend/containers/block/youtubeDownload");
 
-const ChooseVideo = (props: { db: Types.Database.LoadedDb; choose: (link: Types.Data.YoutubeUrl) => void }) => {
+const ChooseVideo = (props: { db: Types.Database.LoadedDatabase; choose: (link: Types.Data.YoutubeUrl) => void }) => {
   const { db, choose } = props;
 
   const { result } = useRxQuery(
@@ -34,7 +34,7 @@ const ChooseVideo = (props: { db: Types.Database.LoadedDb; choose: (link: Types.
   );
 };
 
-const DownloadVideo = (props: { db: Types.Database.LoadedDb; block: Types.Block.YoutubeDownload }) => {
+const DownloadVideo = (props: { db: Types.Database.LoadedDatabase; block: Types.Block.YoutubeDownload }) => {
   const { db, block } = props;
   const { block__chosen_video: chosen, block__youtube_download_record: execution } = block;
 
@@ -64,7 +64,7 @@ const DownloadVideo = (props: { db: Types.Database.LoadedDb; block: Types.Block.
   return <>downloading...</>;
 };
 
-export const Component = (props: { db: Types.Database.LoadedDb; block: Types.Block.YoutubeDownload }) => {
+export const Component = (props: { db: Types.Database.LoadedDatabase; block: Types.Block.YoutubeDownload }) => {
   const { db, block } = props;
   const { block__chosen_video: chosen, block__youtube_download_record: execution } = block;
 
@@ -91,12 +91,14 @@ export const Component = (props: { db: Types.Database.LoadedDb; block: Types.Blo
 };
 
 // downloading a youtube link is only availavle when the service is
-export const isAvailable = (db: Types.Database.LoadedDb, config: Types.Config.PartialConfig): Observable<boolean> =>
-  DownloadService.isAvailable(db.instance, config);
+export const isAvailable = (
+  db: Types.Database.LoadedDatabase,
+  config: Types.Config.PartialConfig,
+): Observable<boolean> => DownloadService.isAvailable(db.instance, config);
 
 // adds a block to the database, initializing with existing data if this
 // has already been chosen
-export const add = async (db: Types.Database.LoadedDb, existingData?: Types.Data.YoutubeUrl) => {
+export const add = async (db: Types.Database.LoadedDatabase, existingData?: Types.Data.YoutubeUrl) => {
   log.debug("adding block youtubedownload");
   const newBlock: Types.Block.YoutubeDownload = {
     ...Types.Document.createDocument(),

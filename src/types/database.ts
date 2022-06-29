@@ -8,4 +8,4 @@ import { Data } from "./data-node";
 
 export type Document = Page | Block | Record | Data;
 
-export type LoadedDb = DatabaseConfig & { instance: Rxdb.RxDatabase };
+export type LoadedDatabase = DatabaseConfig & { instance: Rxdb.RxDatabase };
