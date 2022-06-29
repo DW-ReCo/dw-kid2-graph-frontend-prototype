@@ -1,5 +1,5 @@
 import { Data, DataYoutubeDownloaded, DataYoutubeUrl } from "./data";
-import { GenericExecution } from "./execution";
+import { GenericExecution } from "./execution-record";
 import { PartialConfig } from "./config";
 import { RxDatabase } from "rxdb";
 import { Observable } from "rxjs";

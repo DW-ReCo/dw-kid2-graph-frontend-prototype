@@ -3,7 +3,7 @@ import * as Rxdb from "rxdb";
 
 import { Page } from "./page";
 import { Block } from "./block";
-import { Execution } from "./execution";
+import { Execution } from "./execution-record";
 import { Data } from "./data";
 
 export type Document = Page | Block | Execution | Data;
