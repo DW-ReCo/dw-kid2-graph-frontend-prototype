@@ -1,35 +1,35 @@
 import * as Document from "./document";
 
-export enum DataType {
+export enum Type {
   url = "url",
   youtube_url = "youtube_url",
   youtube_downloaded = "youtube_downloaded",
   video_file_url = "video_file_url_v1",
 }
 
-export type DataPrototype = Document.Prototype & {
+export type Prototype = Document.Prototype & {
   document__type: Document.Type.Data;
-  data__type: DataType;
+  data__type: Type;
 };
 
-export type DataURL = DataPrototype & {
+export type URL = Prototype & {
   data__body: string; // url
-  data__type: DataType.url;
+  data__type: Type.url;
 };
 
-export type DataYoutubeUrl = DataPrototype & {
-  data__type: DataType.youtube_url;
+export type YoutubeUrl = Prototype & {
+  data__type: Type.youtube_url;
   data__body: string;
 };
 
-export const newDataYoutubeUrl = (url: string): DataYoutubeUrl => ({
+export const newDataYoutubeUrl = (url: string): YoutubeUrl => ({
   ...Document.createDocument(),
   document__type: Document.Type.Data,
-  data__type: DataType.youtube_url,
+  data__type: Type.youtube_url,
   data__body: url,
 });
 
-export type DataVideoFileUrl = DataPrototype & {
+export type VideoFileUrl = Prototype & {
   data__type: "video_file_url";
   data__body: {
     // possibly add format and other data, imported_on, etc
@@ -38,9 +38,9 @@ export type DataVideoFileUrl = DataPrototype & {
 };
 
 // This is the data that the YoutubeDownload Service Produces
-export type DataYoutubeDownloaded = DataPrototype & {
-  data__type: DataType.youtube_downloaded;
+export type YoutubeDownloaded = Prototype & {
+  data__type: Type.youtube_downloaded;
   data__body: { downloaded_at: string; video_link: string; meta_link: string };
 };
 
-export type Data = DataVideoFileUrl | DataYoutubeUrl | DataURL | DataYoutubeDownloaded;
+export type Data = VideoFileUrl | YoutubeUrl | URL | YoutubeDownloaded;

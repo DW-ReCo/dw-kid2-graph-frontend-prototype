@@ -38,7 +38,7 @@ export const newBlockYoutubeInput = (): YoutubeInput => ({
 
 export type YoutubeDownload = Prototype & {
   block__type: Type.downloaded_video;
-  block__chosen_video?: Data.DataYoutubeUrl;
+  block__chosen_video?: Data.YoutubeUrl;
   block__youtube_download_execution?: Record.YoutubeDL;
 };
 
