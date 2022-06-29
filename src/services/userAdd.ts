@@ -23,11 +23,11 @@ const execute: Types.ExecuteFunction<[Types.Data], [Types.Data]> = (db, config) 
   const newExecution: Types.ExecutionUserAdded = {
     document__id: uniqueId(),
     document__type: Types.DocumentType.Execution,
-    execution__type: Types.ExecutionType.user_added,
-    execution__started_at: started_at,
-    execution__finished_at: finished_at,
-    execution__of_data: [],
-    execution__to_data: [validData],
+    record__type: Types.ExecutionType.user_added,
+    record__started_at: started_at,
+    record__finished_at: finished_at,
+    record__of_data: [],
+    record__to_data: [validData],
   };
 
   await Queries.upsertOne(db, newExecution);

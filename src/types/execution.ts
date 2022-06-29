@@ -18,20 +18,20 @@ export type DataLink = { document__id: DocumentId };
 
 export type GenericExecution<GenericService> = DocumentPrototype & {
   document__type: DocumentType.Execution;
-  execution__type: ExecutionType;
-  execution__started_at: Date;
-  execution__finished_at: Date;
-  execution__of_data: ExtractArgs<GenericService> | [];
-  execution__to_data: ExtractReturn<GenericService>;
+  record__type: ExecutionType;
+  record__started_at: Date;
+  record__finished_at: Date;
+  record__of_data: ExtractArgs<GenericService> | [];
+  record__to_data: ExtractReturn<GenericService>;
 };
 
 /* prettier-ignore */
 export type ExecutionYoutubeDL =
-  GenericExecution<YoutubeDownloadService> & { execution__type: ExecutionType.download_youtube_v1 };
+  GenericExecution<YoutubeDownloadService> & { record__type: ExecutionType.download_youtube_v1 };
 
 /* prettier-ignore */
 export type ExecutionUserAdded =
-  GenericExecution<UserAddService> & { execution__type: ExecutionType.user_added };
+  GenericExecution<UserAddService> & { record__type: ExecutionType.user_added };
 
 export type Execution = ExecutionUserAdded | ExecutionYoutubeDL;
 
@@ -48,37 +48,37 @@ type TestExecution = GenericExecution<TestService>;
 const testExecution: TestExecution = {
   document__id: "testId",
   document__type: DocumentType.Execution,
-  execution__type: ExecutionType.user_added,
-  execution__started_at: new Date(Date.now()),
-  execution__finished_at: new Date(Date.now()),
+  record__type: ExecutionType.user_added,
+  record__started_at: new Date(Date.now()),
+  record__finished_at: new Date(Date.now()),
   // this fails, because UserAddService has a different Arg type
-  // execution__of_data: 4,
+  // record__of_data: 4,
   // this fails, because UserReturnService has a different Return type
-  // execution__to_data: 5,
+  // record__to_data: 5,
   // this one will pass though, as it's the correct type
-  execution__of_data: ["i am a string"],
-  execution__to_data: ["i am a result"],
+  record__of_data: ["i am a string"],
+  record__to_data: ["i am a result"],
 };
 
 /* prettier-ignore */
 const realTestExecution: ExecutionUserAdded = {
   document__id: "testId",
   document__type: DocumentType.Execution,
-  execution__type: ExecutionType.user_added,
-  execution__started_at: new Date(Date.now()),
-  execution__finished_at: new Date(Date.now()),
+  record__type: ExecutionType.user_added,
+  record__started_at: new Date(Date.now()),
+  record__finished_at: new Date(Date.now()),
   // this fails, because UserAddService has a different Arg type
-  // execution__of_data: 4,
+  // record__of_data: 4,
   // this fails, because UserReturnService has a different Return type
-  // execution__to_data: 5,
+  // record__to_data: 5,
   //
   // this one will pass though, as it's the correct type
   /* prettier-ignore */
-  execution__of_data: [{ document__id: "testdata1",
+  record__of_data: [{ document__id: "testdata1",
                          document__type: DocumentType.Data,
                          data__type: DataType.url,
                          data__body: "" }],
-  execution__to_data: [{ document__id: "resultingdata",
+  record__to_data: [{ document__id: "resultingdata",
                          document__type: DocumentType.Data,
                          data__type: DataType.url,
                          data__body: "" }]

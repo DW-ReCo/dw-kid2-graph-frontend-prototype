@@ -10,9 +10,7 @@ const DBRenderer = (dbL: DatabaseTypes.LoadedDb) => {
 
   const { result: allBlocks }: RxQueryResultDoc<DatabaseTypes.Block> = useRxQuery(Queries.allBlocks(instance));
   const { result: allData }: RxQueryResultDoc<DatabaseTypes.Data> = useRxQuery(Queries.allData(instance));
-  const { result: allExecutions }: RxQueryResultDoc<DatabaseTypes.Execution> = useRxQuery(
-    Queries.allExecutions(instance),
-  );
+  const { result: AllRecords }: RxQueryResultDoc<DatabaseTypes.Execution> = useRxQuery(Queries.AllRecords(instance));
   const { result: allPages }: RxQueryResultDoc<DatabaseTypes.Page> = useRxQuery(Queries.allPages(instance));
 
   return (
@@ -22,7 +20,7 @@ const DBRenderer = (dbL: DatabaseTypes.LoadedDb) => {
       <RenderDataWrapper>
         <RenderData title="Blocks" documents={allBlocks} />
         <RenderData title="Data" documents={allData} />
-        <RenderData title="Executions" documents={allExecutions} />
+        <RenderData title="Execution Records" documents={AllRecords} />
         <RenderData title="Pages" documents={allPages} />
       </RenderDataWrapper>
     </div>

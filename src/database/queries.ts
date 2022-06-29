@@ -8,7 +8,7 @@ export const allBlocks = (db: RxDatabase): RxQuery => db.docs.find().where("docu
 
 export const allPages = (db: RxDatabase): RxQuery => db.docs.find().where("document__type").equals("page");
 
-export const allExecutions = (db: RxDatabase): RxQuery => db.docs.find().where("document__type").equals("execution");
+export const AllRecords = (db: RxDatabase): RxQuery => db.docs.find().where("document__type").equals("execution");
 
 export const allData = (db: RxDatabase): RxQuery => db.docs.find().where("document__type").equals("data");
 

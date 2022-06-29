@@ -82,7 +82,7 @@ export const Component = (props: { db: Types.LoadedDb; block: Types.BlockYoutube
 
   if (!execution) return <DownloadVideo db={db} block={block} />;
 
-  const vid = execution.execution__to_data[0].data__body;
+  const vid = execution.record__to_data[0].data__body;
 
   return (
     <div>

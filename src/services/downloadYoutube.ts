@@ -98,11 +98,11 @@ const execute: Types.ExecuteFunction<[Types.DataYoutubeUrl], [Types.DataYoutubeD
       const newExecution: Types.ExecutionYoutubeDL = {
         document__id: uniqueId(),
         document__type: Types.DocumentType.Execution,
-        execution__type: Types.ExecutionType.download_youtube_v1,
-        execution__started_at: started_at,
-        execution__finished_at: finished_at,
-        execution__of_data: [validData],
-        execution__to_data: [to_data],
+        record__type: Types.ExecutionType.download_youtube_v1,
+        record__started_at: started_at,
+        record__finished_at: finished_at,
+        record__of_data: [validData],
+        record__to_data: [to_data],
       };
 
       await Queries.upsertOne(db, newExecution);
