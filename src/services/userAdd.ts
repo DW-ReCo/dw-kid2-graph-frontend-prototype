@@ -10,7 +10,7 @@ import { uniqueId } from "@frontend/utils";
 // the user adding service takes one argument,
 type UserAddService = Types.GenericService<[Types.Data], [Types.Data]>;
 
-const execute: Types.ExecuteFunction<[Types.Data], [Types.Data]> = (db, cfg) => async (data) => {
+const execute: Types.ExecuteFunction<[Types.Data], [Types.Data]> = (db, config) => async (data) => {
   // TODO validate data
   const validData = data;
 

@@ -95,8 +95,8 @@ export const Component = (props: { db: Types.LoadedDb; block: Types.BlockYoutube
 };
 
 // downloading a youtube link is only availavle when the service is
-export const isAvailable = (db: Types.LoadedDb, cfg: Types.PartialConfig): Observable<boolean> =>
-  DownloadService.isAvailable(db.instance, cfg);
+export const isAvailable = (db: Types.LoadedDb, config: Types.PartialConfig): Observable<boolean> =>
+  DownloadService.isAvailable(db.instance, config);
 
 // adds a block to the database, initializing with existing data if this
 // has already been chosen

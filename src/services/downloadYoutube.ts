@@ -12,13 +12,13 @@ import * as Logger from "@logger/index";
 
 const log = Logger.makeLogger(`services/downloadYoutube`);
 
-const isAvailable = (db: RxDatabase, cfg: Types.PartialConfig) => {
+const isAvailable = (db: RxDatabase, config: Types.PartialConfig) => {
   //
   log.debug(`checking if youtube service is available`);
 
-  if (!cfg.youtube_downloader?.api_url) return of(false);
+  if (!config.youtube_downloader?.api_url) return of(false);
 
-  const { api_url, user, password } = cfg.youtube_downloader;
+  const { api_url, user, password } = config.youtube_downloader;
 
   log.debug(api_url);
 
@@ -58,15 +58,15 @@ const isAvailable = (db: RxDatabase, cfg: Types.PartialConfig) => {
 
 /* prettier-ignore */
 const execute: Types.ExecuteFunction<[Types.DataYoutubeUrl], [Types.DataYoutubeDownloaded]> =
-  (db, cfg) =>
+  (db, config) =>
     async (data) => {
       // TODO validate data
       const validData = data;
       const url = data.data__body;
 
-      if (!cfg.youtube_downloader) { throw Error(`wrong`) }
+      if (!config.youtube_downloader) { throw Error(`wrong`) }
 
-      const { api_url, user, password } = cfg.youtube_downloader;
+      const { api_url, user, password } = config.youtube_downloader;
 
       log.debug(`attempting to fetch ${url} from ${api_url}`)
 

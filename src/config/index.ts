@@ -1,6 +1,6 @@
 import { mergeAll } from "lodash/fp";
 import * as Types from "@data-types/index";
-import { config as buildConfig } from "../../build.cfg";
+import { config as buildConfig } from "../../build.config";
 
 /*
  *  The config delivering module,
@@ -16,7 +16,7 @@ import { config as buildConfig } from "../../build.cfg";
 const fromLocalStorage: (l: Types.LocalStorageConfigLoader) => Promise<Types.PartialConfig> = ({ key }) => {
   const storedConfigStr: string | null = window.localStorage.getItem(key);
   if (!storedConfigStr) {
-    console.warn(`[cfg] no local config found at ${key}`);
+    console.warn(`[config] no local config found at ${key}`);
     return Promise.resolve(Types.emptyConfig);
   }
   const storedConfig: Types.PartialConfig = JSON.parse(storedConfigStr);

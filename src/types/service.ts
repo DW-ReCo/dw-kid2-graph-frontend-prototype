@@ -9,7 +9,7 @@ import { Observable } from "rxjs";
 //   it's own arguments for this function.  the ProducedData is returned in a promise.
 /* prettier-ignore */
 export type ExecuteFunction<Args extends any[], Return extends any[]> =
-  (db: RxDatabase, cfg: PartialConfig) =>
+  (db: RxDatabase, config: PartialConfig) =>
     (...args: Args) =>
       Promise<GenericExecution<GenericService<Args, Return>>>;
 
@@ -17,7 +17,7 @@ export type ExecuteFunction<Args extends any[], Return extends any[]> =
 export type GenericService<Args extends any[], Return extends any[]> = {
   name: string;
   description: string;
-  isAvailable: (db: RxDatabase, cfg: PartialConfig) => Observable<boolean>;
+  isAvailable: (db: RxDatabase, config: PartialConfig) => Observable<boolean>;
   execute: ExecuteFunction<Args, Return>;
 };
 // A type function to extract the args from a service:

@@ -72,10 +72,10 @@ export const clearDocs = async (db: Rxdb.RxDatabase): Promise<Rxdb.RxDatabase> =
   return db;
 };
 
-const makeDb = async (cfg: Types.DbConfig) => {
+const makeDb = async (config: Types.DbConfig) => {
   //  Pouchdb.addPouchPlugin(MemoryAdapter);
   return Rxdb.createRxDatabase({
-    name: cfg.name, // database name
+    name: config.name, // database name
     // storage: Pouchdb.getRxStoragePouch("idb"), // RxStorage, idb = IndexedDB, currently waiting for issue #26
     // storage: Pouchdb.getRxStoragePouch("memory"), // RxStorage, idb = IndexedDB, currently waiting for issue #26
     storage: getRxStorageMemory(),
@@ -85,13 +85,13 @@ const makeDb = async (cfg: Types.DbConfig) => {
 };
 
 // TODO!
-const initializeLocalDb = async (db: Rxdb.RxDatabase, cfg: Types.LocalDbConfig): Promise<Rxdb.RxDatabase> => {
-  log.debug(`initializing local db with`, cfg.name);
+const initializeLocalDb = async (db: Rxdb.RxDatabase, config: Types.LocalDbConfig): Promise<Rxdb.RxDatabase> => {
+  log.debug(`initializing local db with`, config.name);
   return await addCollections(db);
 };
 
-const initializeServerDb = async (db: Rxdb.RxDatabase, cfg: Types.ServerDbConfig) => {
-  log.debug(`initializing server with`, cfg.name, cfg.location);
+const initializeServerDb = async (db: Rxdb.RxDatabase, config: Types.ServerDbConfig) => {
+  log.debug(`initializing server with`, config.name, config.location);
 
   if (window !== undefined) {
     // add synchronization to all collections

@@ -1,11 +1,11 @@
 import * as Types from "@data-types/index";
 import { mergeAll } from "lodash/fp";
-import customConfig from "./custom.cfg.json";
+import customConfig from "./custom.config.json";
 
 /* prettier-ignore */
 const envConfig =
-  process.env.CUSTOM_CFG !== undefined
-  ? JSON.parse(process?.env?.CUSTOM_CFG)
+  process.env.CUSTOM_config !== undefined
+  ? JSON.parse(process?.env?.CUSTOM_config)
   : {};
 
 // this is the config the app is built with, not the config which is loaded
