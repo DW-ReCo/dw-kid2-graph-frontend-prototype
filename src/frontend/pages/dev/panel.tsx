@@ -10,7 +10,7 @@ import * as Types from "@data-types/index";
 import { addTestingData } from "@database/testing_data";
 
 import { first } from "lodash/fp";
-import useDbContext from "@frontend/hooks/contexts/useDbContext";
+import useDatabaseContext from "@frontend/hooks/contexts/useDatabaseContext";
 
 import Link from "next/link";
 import clsx from "clsx";
@@ -40,7 +40,7 @@ const ServiceStatus = (props: {
 
 const DevPanel = () => {
   // @ts-ignore
-  const { dbState: dbs } = useDbContext();
+  const { dbState: dbs } = useDatabaseContext();
 
   const {
     // @ts-ignore could be undefined FIXME

@@ -1,10 +1,10 @@
 import * as Types from "@data-types/index";
-import useDbContext from "./contexts/useDbContext";
+import useDatabaseContext from "./contexts/useDatabaseContext";
 import useConfigContext from "./contexts/useConfigContext";
 
 const useStatus = () => {
   // @ts-ignore could be undefined FIXME
-  const { dbState } = useDbContext();
+  const { dbState } = useDatabaseContext();
   // @ts-ignore could be undefined FIXME
   const { configState } = useConfigContext();
 
