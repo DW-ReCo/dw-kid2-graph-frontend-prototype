@@ -1,10 +1,9 @@
-import { LoadedDb } from "@data-types/index";
-import { PartialConfig } from "@data-types/index";
+import { Config, Database } from "@data-types/index";
 
-export type diagnostic = "INITIAL" | "OK" | "ERROR" | "LOADING" | "WARNING" | "UNKNOWN";
+export type Diagnostic = "INITIAL" | "OK" | "ERROR" | "LOADING" | "WARNING" | "UNKNOWN";
 
-export type status = {
-  diagnostic: diagnostic;
+export type Status = {
+  diagnostic: Diagnostic;
   message: string;
 };
 
@@ -21,12 +20,12 @@ export type AppContext = {
   setAppState?: React.Dispatch<React.SetStateAction<AppState>>;
 };
 
-export type DbContext = {
-  dbState: LoadedDb[];
-  setDbState?: React.Dispatch<React.SetStateAction<LoadedDb[]>>;
+export type Database = {
+  dbState: Database.LoadedDb[];
+  setDbState?: React.Dispatch<React.SetStateAction<Database.LoadedDb[]>>;
 };
 
-export type ConfigContext = {
-  configState: PartialConfig;
-  setConfigState?: React.Dispatch<React.SetStateAction<PartialConfig>>;
+export type Config = {
+  configState: Config.PartialConfig;
+  setConfigState?: React.Dispatch<React.SetStateAction<Config.PartialConfig>>;
 };
