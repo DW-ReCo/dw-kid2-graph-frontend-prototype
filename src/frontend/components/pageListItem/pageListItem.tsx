@@ -2,11 +2,12 @@ import React from "react";
 import * as DatabaseTypes from "@data-types/index";
 import clsx from "clsx";
 
+import * as Types from "@data-types/index";
 import * as Queries from "@database/queries";
 import DeleteIcon from "@frontend/assets/icons/delete";
 import useAppContext from "@frontend/hooks/contexts/useAppContext";
 
-const PageListItem = (props: { db: DatabaseTypes.LoadedDb; page: DatabaseTypes.Page; open: () => void }) => {
+const PageListItem = (props: { db: Types.Database.LoadedDb; page: Types.Page.Page; open: () => void }) => {
   const { page, open, db } = props;
 
   const {
@@ -17,7 +18,7 @@ const PageListItem = (props: { db: DatabaseTypes.LoadedDb; page: DatabaseTypes.P
     },
   } = useAppContext();
 
-  const remove = (db: DatabaseTypes.LoadedDb, id: string) => Queries.remove(db.instance, id);
+  const remove = (db: Types.Database.LoadedDb, id: string) => Queries.remove(db.instance, id);
 
   return (
     <li className="inline-flex flex-nowrap">

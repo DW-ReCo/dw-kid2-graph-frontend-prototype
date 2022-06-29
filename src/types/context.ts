@@ -15,7 +15,7 @@ export type AppState = {
   };
 };
 
-export type AppContext = {
+export type App = {
   appState: AppState;
   setAppState?: React.Dispatch<React.SetStateAction<AppState>>;
 };

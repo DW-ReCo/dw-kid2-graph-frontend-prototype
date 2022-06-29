@@ -1,6 +1,6 @@
-import { AppState } from "@data-types/index";
+import * as Types from "@data-types/index";
 
-export default <AppState>{
+export default <Types.Context.AppState>{
   app: {
     activeDatabase: "",
     activePage: "",

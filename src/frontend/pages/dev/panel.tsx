@@ -1,6 +1,6 @@
 // eslint-disable @typescript-eslint/no-unused-vars
 
-import React, { Fragment, useState } from "react";
+import React from "react";
 import * as Database from "@database/index";
 
 import services from "@services/index";
@@ -22,7 +22,11 @@ import useConfigContext from "@frontend/hooks/contexts/useConfigContext";
 import { useObservable } from "@frontend/utils";
 import { getStatusIcon } from "@utils/index";
 
-const ServiceStatus = (props: { db: Types.LoadedDb; config: Types.PartialConfig; service: Types.Service }) => {
+const ServiceStatus = (props: {
+  db: Types.Database.LoadedDb;
+  config: Types.Config.PartialConfig;
+  service: Types.Service.Service;
+}) => {
   const { service, db, config } = props;
 
   const isAvailable = useObservable(service.isAvailable(db.instance, config));
@@ -57,9 +61,9 @@ const DevPanel = () => {
 
   if (!firstDb) return <></>;
 
-  const clearDbs = () => dbs.map((d: Types.LoadedDb) => Database.clearDocs(d.instance));
+  const clearDbs = () => dbs.map((d: Types.Database.LoadedDb) => Database.clearDocs(d.instance));
 
-  const addTestingDataDbs = () => dbs.map((d: Types.LoadedDb) => addTestingData(d.instance));
+  const addTestingDataDbs = () => dbs.map((d: Types.Database.LoadedDb) => addTestingData(d.instance));
 
   const LINKS = [
     { label: "Database view", href: "/db" },

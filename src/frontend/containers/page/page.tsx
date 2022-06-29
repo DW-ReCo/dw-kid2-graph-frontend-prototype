@@ -1,19 +1,19 @@
 import * as Queries from "@database/queries";
-import * as DatabaseTypes from "@data-types/index";
+import * as Types from "@data-types/index";
 import AddBlock from "@frontend/containers/block/addBlock";
 import PageBlocks from "@frontend/containers/pageBlocks";
 import React from "react";
 import { useRxQuery } from "rxdb-hooks";
 import EditIcon from "@frontend/assets/icons/edit";
 
-const Page = (props: { db: DatabaseTypes.LoadedDb; pageID: string }) => {
+const Page = (props: { db: Types.Database.LoadedDb; pageID: string }) => {
   const { pageID, db } = props;
 
   const { result: doc } = useRxQuery(Queries.page(db.instance, pageID));
-  const page: DatabaseTypes.Page = doc[0]?.get();
+  const page: Types.Page.Page = doc[0]?.get();
   const blocks = page?.page__blocks || [];
 
-  const onAddBlock = (b: DatabaseTypes.Block) => {
+  const onAddBlock = (b: Types.Block.Block) => {
     Queries.mergePage(db.instance, {
       document__id: page.document__id,
       page__blocks: [...blocks, b.document__id],

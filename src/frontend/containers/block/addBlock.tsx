@@ -3,14 +3,14 @@ import * as Note from "./note";
 import * as YoutubeLink from "./youtubeLink";
 import * as DownloadYoutube from "./youtubeDownload";
 
-import * as DatabaseTypes from "@data-types/index";
+import * as Types from "@data-types/index";
 import {
   // promiseAsHook,
   useObservable,
 } from "@frontend/utils";
 import React from "react";
 
-const AddBlock = (props: { db: DatabaseTypes.LoadedDb; onAdd?: (block: DatabaseTypes.Block) => void }) => {
+const AddBlock = (props: { db: Types.Database.LoadedDb; onAdd?: (block: Types.Block.Block) => void }) => {
   const { db, onAdd = (_) => {} } = props;
 
   // @ts-ignore could be undefined FIXME

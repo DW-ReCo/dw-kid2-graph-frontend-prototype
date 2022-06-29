@@ -1,6 +1,6 @@
 import { upsertOne } from "@database/index";
 import * as Queries from "@database/queries";
-import * as DatabaseTypes from "@data-types/index";
+import * as Types from "@data-types/index";
 import { uniqueId } from "@frontend/utils";
 
 import React from "react";
@@ -10,7 +10,7 @@ import {
   /// delay
 } from "rxjs";
 
-export const Component = (props: { db: DatabaseTypes.LoadedDb; block: DatabaseTypes.BlockNote }) => {
+export const Component = (props: { db: Types.Database.LoadedDb; block: Types.Block.Note }) => {
   const { db, block } = props;
   const { block__body: body } = block;
 
@@ -29,15 +29,15 @@ export const Component = (props: { db: DatabaseTypes.LoadedDb; block: DatabaseTy
 // export const isAvailable = (db: DatabaseTypes.LoadedDb): Promise<boolean> => Promise.resolve(true);
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const isAvailable = (db: DatabaseTypes.LoadedDb): Observable<boolean> => of(true); // .pipe(concatMap((x) => of(x).pipe(delay(1000))));
+export const isAvailable = (db: Types.Database.LoadedDb): Observable<boolean> => of(true); // .pipe(concatMap((x) => of(x).pipe(delay(1000))));
 
-export const add = async (db: DatabaseTypes.LoadedDb) => {
+export const add = async (db: Types.Database.LoadedDb) => {
   console.log("adding note");
-  const newNote: DatabaseTypes.BlockNote = {
+  const newNote: Types.Block.Note = {
     document__id: uniqueId(),
     //@ts-ignore
     document__type: "block",
-    block__type: DatabaseTypes.BlockType.note,
+    block__type: Types.Block.Type.note,
   };
   await upsertOne(db.instance, newNote);
   return newNote;

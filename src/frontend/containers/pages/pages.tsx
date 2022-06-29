@@ -6,27 +6,27 @@ import PageListItem from "@frontend/components/pageListItem";
 import { uniqueId } from "@frontend/utils";
 import PlusIcon from "@frontend/assets/icons/plus";
 
-const Pages = (props: { db: Types.LoadedDb; open: (p: Types.Page) => void }) => {
+const Pages = (props: { db: Types.Database.LoadedDb; open: (p: Types.Page.Page) => void }) => {
   const { db, open } = props;
 
   const { result: allDocs } = useRxQuery(Queries.allPages(db.instance));
   // something like this will have to be run after every query:
   // this gets out the data, that can be passed to react.  you can also call remove, etc
   // on these RxDocumentConstructors, so it might be helpful to keep them that way for longer
-  const allPages: Types.Page[] = allDocs.map((d) => d.get());
+  const allPages: Types.Page.Page[] = allDocs.map((d) => d.get());
 
   const addNewPage = () => {
     const id = uniqueId();
-    const newPage: Types.Page = {
+    const newPage: Types.Page.Page = {
       document__id: id,
-      document__type: Types.DocumentType.Page,
+      document__type: Types.Document.Type.Page,
       page__title: `Page ${id}`,
       page__blocks: [],
     };
 
     Queries.upsertOne(db.instance, newPage);
   };
-  const pages = (ps: Types.Page[]) =>
+  const pages = (ps: Types.Page.Page[]) =>
     ps.map((p, index) => (
       <Fragment key={index}>
         <PageListItem db={db} page={p} open={() => open(p)} />

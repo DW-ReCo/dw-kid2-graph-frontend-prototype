@@ -6,12 +6,12 @@ import * as Database from "@database/index";
 import * as Queries from "@database/queries";
 import { useRxQuery } from "rxdb-hooks";
 
-const docs: Types.Document[] = generateTestingDocs1();
+const docs: Types.Document.Prototype[] = generateTestingDocs1();
 
-const AllBlocks = (props: { db: Types.LoadedDb }) => {
+const AllBlocks = (props: { db: Types.Database.LoadedDb }) => {
   const { db } = props;
   const { result: docs } = useRxQuery(Queries.allBlocks(db.instance));
-  const blocks: Types.Block[] = docs.map((d) => d.get()) as Types.Block[];
+  const blocks: Types.Block.Block[] = docs.map((d) => d.get()) as Types.Block.Block[];
 
   return (
     <>
@@ -23,10 +23,10 @@ const AllBlocks = (props: { db: Types.LoadedDb }) => {
 };
 
 const BlockDev = () => {
-  const [instance, setDb] = React.useState<Types.LoadedDb>();
+  const [instance, setDb] = React.useState<Types.Database.LoadedDb>();
 
   React.useEffect(() => {
-    const loader: Types.LocalDbConfig = { name: "local_testing_db", _type: "local_db_config" };
+    const loader: Types.Config.LocalDatabaseConfig = { name: "local_testing_db", _type: "local_db_config" };
     // load the database if it's already not in the state,
     // protects against hot reloading
     instance ||

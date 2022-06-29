@@ -1,10 +1,6 @@
 import React from "react";
 
-interface Props {
-  width?: number;
-}
-
-const OpenIcon = ({ width = 18 }: Props) => (
+const OpenIcon = ({ width = 18 }: { width?: number }) => (
   <svg xmlns="http://www.w3.org/2000/svg" x="0" y="0" viewBox="0 0 384.97 384.97" width={width}>
     <g>
       <path

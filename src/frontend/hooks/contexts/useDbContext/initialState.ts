@@ -1,3 +1,3 @@
-import { LoadedDb } from "@data-types/index";
+import * as Types from "@data-types/index";
 
-export default <LoadedDb[]>[];
+export default <Types.Database.LoadedDb[]>[];

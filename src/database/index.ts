@@ -15,7 +15,6 @@ import { getRxStorageMemory } from "rxdb/plugins/memory";
 
 import * as Queries from "./queries";
 
-import * as Config from "../config";
 import * as Logger from "../logger";
 
 import * as Schema from "./schema";
@@ -72,7 +71,7 @@ export const clearDocs = async (db: Rxdb.RxDatabase): Promise<Rxdb.RxDatabase> =
   return db;
 };
 
-const makeDb = async (config: Types.DbConfig) => {
+const makeDb = async (config: Types.Config.DatabaseConfig) => {
   //  Pouchdb.addPouchPlugin(MemoryAdapter);
   return Rxdb.createRxDatabase({
     name: config.name, // database name
@@ -85,12 +84,15 @@ const makeDb = async (config: Types.DbConfig) => {
 };
 
 // TODO!
-const initializeLocalDb = async (db: Rxdb.RxDatabase, config: Types.LocalDbConfig): Promise<Rxdb.RxDatabase> => {
+const initializeLocalDb = async (
+  db: Rxdb.RxDatabase,
+  config: Types.Config.LocalDatabaseConfig,
+): Promise<Rxdb.RxDatabase> => {
   log.debug(`initializing local db with`, config.name);
   return await addCollections(db);
 };
 
-const initializeServerDb = async (db: Rxdb.RxDatabase, config: Types.ServerDbConfig) => {
+const initializeServerDb = async (db: Rxdb.RxDatabase, config: Types.Config.ServerDatabaseConfig) => {
   log.debug(`initializing server with`, config.name, config.location);
 
   if (window !== undefined) {
@@ -107,7 +109,7 @@ const initializeServerDb = async (db: Rxdb.RxDatabase, config: Types.ServerDbCon
   return await addCollections(db);
 };
 
-export const initializeOne = async (dbLoader: Types.DbConfig): Promise<Types.LoadedDb> => {
+export const initializeOne = async (dbLoader: Types.Config.DatabaseConfig): Promise<Types.Database.LoadedDb> => {
   // remove any old version od the database
   await Rxdb.removeRxDatabase(dbLoader.name, Pouchdb.getRxStoragePouch("memory"));
 
@@ -122,6 +124,8 @@ export const initializeOne = async (dbLoader: Types.DbConfig): Promise<Types.Loa
     : log.throw(`type ${t} is not a valid database type`);
 };
 
-export const initializeAll = async (loaders: Types.DbConfig[]): Promise<Array<Types.LoadedDb>> => {
+export const initializeAll = async (
+  loaders: Types.Config.DatabaseConfig[],
+): Promise<Array<Types.Database.LoadedDb>> => {
   return Promise.all(loaders.map((loader) => initializeOne(loader)));
 };

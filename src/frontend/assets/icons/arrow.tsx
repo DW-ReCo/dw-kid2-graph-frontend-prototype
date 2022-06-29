@@ -1,11 +1,6 @@
 import React from "react";
 
-interface Props {
-  width?: number;
-  className?: string;
-}
-
-const ArrowIcon = ({ width = 18, className = "" }: Props) => (
+const ArrowIcon = ({ width = 18, className = "" }: { width?: number; className?: string }) => (
   <svg xmlns="http://www.w3.org/2000/svg" width={width} fill="none" viewBox="0 0 48 48" className={className}>
     <path fill="#fff" fillOpacity="0.01" d="M0 0H48V48H0z" />
     <path
