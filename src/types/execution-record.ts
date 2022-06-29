@@ -1,6 +1,6 @@
 import * as Document from "./document";
-import { GenericService, UserAddService, YoutubeDownloadService, ExtractArgs, ExtractReturn } from "./service";
-import { Data, DataType } from "./data-node";
+import * as Data from "./data-node";
+import { Service } from ".";
 
 // Excecution... Operation? Completion? Enactment? Realizarion?
 //
@@ -20,24 +20,24 @@ export type Generic<GenericService> = Document.Prototype & {
   record__type: Type;
   record__started_at: Date;
   record__finished_at: Date;
-  record__of_data: ExtractArgs<GenericService> | [];
-  record__to_data: ExtractReturn<GenericService>;
+  record__of_data: Service.ExtractArgs<GenericService> | [];
+  record__to_data: Service.ExtractReturn<GenericService>;
 };
 
 /* prettier-ignore */
 export type YoutubeDL =
-  Generic<YoutubeDownloadService> & { record__type: Type.download_youtube_v1 };
+  Generic<Service.YoutubeDownload> & { record__type: Type.download_youtube_v1 };
 
 /* prettier-ignore */
 export type UserAdded =
-  Generic<UserAddService> & { record__type: Type.user_added };
+  Generic<Service.UserAdd> & { record__type: Type.user_added };
 
 export type Record = UserAdded | YoutubeDL;
 
 // here is how these things can be used:
 //
 //  if you created a service, which takes [string] and returns [string]
-type TestService = GenericService<[string], [string]>;
+type TestService = Service.Generic<[string], [string]>;
 
 // we can then make an execution for that service:
 //
@@ -50,7 +50,7 @@ const testExecution: TestRecord = {
   record__type: Type.user_added,
   record__started_at: new Date(Date.now()),
   record__finished_at: new Date(Date.now()),
-  // this fails, because UserAddService has a different Arg type
+  // this fails, because UserAdd has a different Arg type
   // record__of_data: 4,
   // this fails, because UserReturnService has a different Return type
   // record__to_data: 5,
@@ -66,7 +66,7 @@ const realTestRecord: UserAdded = {
   record__type: Type.user_added,
   record__started_at: new Date(Date.now()),
   record__finished_at: new Date(Date.now()),
-  // this fails, because UserAddService has a different Arg type
+  // this fails, because UserAdd has a different Arg type
   // record__of_data: 4,
   // this fails, because UserReturnService has a different Return type
   // record__to_data: 5,
@@ -75,10 +75,10 @@ const realTestRecord: UserAdded = {
   /* prettier-ignore */
   record__of_data: [{ document__id: "testdata1",
                          document__type: Document.Type.Data,
-                         data__type: DataType.url,
+                         data__type: Data.Type.url,
                          data__body: "" }],
   record__to_data: [{ document__id: "resultingdata",
                          document__type: Document.Type.Data,
-                         data__type: DataType.url,
+                         data__type: Data.Type.url,
                          data__body: "" }]
 }
