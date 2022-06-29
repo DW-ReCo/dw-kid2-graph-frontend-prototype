@@ -8,7 +8,7 @@ export const { Provider } = context;
 
 const useDbContext = () => useContext(context);
 
-export const getactiveDatabase = (
+export const getActiveDatabase = (
   dbName: string,
   dbs: Types.Database.LoadedDatabase[],
 ): Types.Database.LoadedDatabase => dbs.filter((db) => db.name === dbName)[0];

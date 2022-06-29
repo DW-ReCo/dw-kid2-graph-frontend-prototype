@@ -3,7 +3,7 @@ import * as Types from "@data-types/index";
 import Page from "@frontend/containers/page";
 import Pages from "@frontend/containers/pages";
 import useAppContext from "@frontend/hooks/contexts/useAppContext";
-import useDbContext, { getactiveDatabase } from "@frontend/hooks/contexts/useDbContext";
+import useDbContext, { getActiveDatabase } from "@frontend/hooks/contexts/useDbContext";
 
 const ApplicationContainer = () => {
   const {
@@ -25,7 +25,7 @@ const ApplicationContainer = () => {
     setAppState((prev) => ({ ...prev, app: { ...prev.app, activeDatabase: d.name } }));
   };
 
-  const activeDatabaseInstance = getactiveDatabase(activeDatabase, dbs);
+  const activeDatabaseInstance = getActiveDatabase(activeDatabase, dbs);
 
   return (
     <>
