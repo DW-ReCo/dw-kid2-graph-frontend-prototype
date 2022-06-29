@@ -1,4 +1,4 @@
-import { DbConfig } from "./config";
+import { DatabaseConfig } from "./config";
 import * as Rxdb from "rxdb";
 
 import { Page } from "./page";
@@ -8,4 +8,4 @@ import { Data } from "./data-node";
 
 export type Document = Page | Block | Execution | Data;
 
-export type LoadedDb = DbConfig & { instance: Rxdb.RxDatabase };
+export type LoadedDb = DatabaseConfig & { instance: Rxdb.RxDatabase };

@@ -3,10 +3,10 @@ export type ServerConfigLoader = { _type: "server_loader"; endpoint: string; use
 
 export type ConfigLoader = LocalStorageConfigLoader | ServerConfigLoader;
 
-export type LocalDbConfig = { _type: "local_db_config"; name: string; description?: string };
-export type ServerDbConfig = { _type: "server_db_config"; name: string; location: string; description?: string };
+export type LocalDatabaseConfig = { _type: "local_db_config"; name: string; description?: string };
+export type ServerDatabaseConfig = { _type: "server_db_config"; name: string; location: string; description?: string };
 
-export type DbConfig = LocalDbConfig | ServerDbConfig;
+export type DatabaseConfig = LocalDatabaseConfig | ServerDatabaseConfig;
 
 export type YoutubeDownloaderConfig = {
   api_url: string;
@@ -17,7 +17,7 @@ export type YoutubeDownloaderConfig = {
 export type PartialConfig = {
   _type: "kid2_config";
   runtime_loads?: ConfigLoader[];
-  dbs?: DbConfig[];
+  dbs?: DatabaseConfig[];
   twitter?: { sample_api_key?: string };
   from_loader?: ConfigLoader;
   youtube_downloader?: YoutubeDownloaderConfig;
