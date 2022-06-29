@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import * as Database from "src/database/index";
+import * as Database from "@database/index";
 import { AppProps } from "next/app";
 import * as Config from "src/config/index";
 import { Provider as AppContextProvider } from "@frontend/hooks/contexts/useAppContext";

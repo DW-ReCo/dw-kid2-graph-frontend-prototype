@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import { useRxQuery } from "rxdb-hooks";
 import * as Types from "@data-types/index";
-import * as Queries from "src/database/queries";
+import * as Queries from "@database/queries";
 import PageListItem from "@frontend/components/pageListItem";
 import { uniqueId } from "@frontend/utils";
 import PlusIcon from "@frontend/assets/icons/plus";

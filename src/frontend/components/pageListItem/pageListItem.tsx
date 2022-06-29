@@ -2,7 +2,7 @@ import React from "react";
 import * as DatabaseTypes from "@data-types/index";
 import clsx from "clsx";
 
-import * as Queries from "src/database/queries";
+import * as Queries from "@database/queries";
 import DeleteIcon from "@frontend/assets/icons/delete";
 import useAppContext from "@frontend/hooks/contexts/useAppContext";
 

@@ -1,7 +1,7 @@
 import React from "react";
 import RenderData from "@frontend/components/renderData";
 import * as DatabaseTypes from "@data-types/index";
-import * as Queries from "src/database/queries";
+import * as Queries from "@database/queries";
 import { RxQueryResultDoc, useRxQuery } from "rxdb-hooks";
 import RenderDataWrapper from "@frontend/components/renderData/wrapper";
 

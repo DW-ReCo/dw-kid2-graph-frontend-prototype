@@ -1,4 +1,4 @@
-import * as Queries from "src/database/queries";
+import * as Queries from "@database/queries";
 import * as Types from "@data-types/index";
 import Block from "@frontend/containers/block";
 import React, { Fragment } from "react";

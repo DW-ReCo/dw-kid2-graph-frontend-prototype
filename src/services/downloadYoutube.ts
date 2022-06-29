@@ -4,7 +4,7 @@ import { of, from, map, combineLatest } from "rxjs";
 import * as Types from "@data-types/index";
 import * as Utils from "@utils/index";
 
-import * as Queries from "src/database/queries";
+import * as Queries from "@database/queries";
 import { uniqueId } from "@frontend/utils";
 import { RxDatabase } from "rxdb";
 
