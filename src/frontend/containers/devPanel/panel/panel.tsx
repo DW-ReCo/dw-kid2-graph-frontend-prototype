@@ -1,27 +1,26 @@
 // eslint-disable @typescript-eslint/no-unused-vars
-
+import clsx from "clsx";
+import { first } from "lodash/fp";
+import Link from "next/link";
 import React from "react";
-import * as Database from "@db/index";
-
-import services from "@services/index";
 
 import * as Types from "@data-types/index";
 
-import { addTestingData } from "../../../../db/testing_data";
+import * as Database from "@db/index";
 
-import { first } from "lodash/fp";
-import useDbContext from "@frontend/hooks/contexts/useDbContext";
-
-import Link from "next/link";
-import clsx from "clsx";
-import useAppContext from "@frontend/hooks/contexts/useAppContext";
-
-import RenderStatus from "@frontend/components/devPanel/renderStatus";
-import useStatus from "@frontend/hooks/useStatus";
-import useConfigContext from "@frontend/hooks/contexts/useConfigContext";
-import { useObservable } from "@frontend/utils";
-import { getStatusIcon } from "@utils/index";
 import TriangleIcon from "@frontend/assets/icons/triangle";
+import RenderStatus from "@frontend/components/devPanel/renderStatus";
+import useAppContext from "@frontend/hooks/contexts/useAppContext";
+import useConfigContext from "@frontend/hooks/contexts/useConfigContext";
+import useDbContext from "@frontend/hooks/contexts/useDbContext";
+import useStatus from "@frontend/hooks/useStatus";
+import { useObservable } from "@frontend/utils";
+
+import services from "@services/index";
+
+import { getStatusIcon } from "@utils/index";
+
+import { addTestingData } from "../../../../db/testing_data";
 
 const ServiceStatus = (props: { db: Types.LoadedDb; config: Types.PartialConfig; service: Types.Service }) => {
   const { service, db, config } = props;

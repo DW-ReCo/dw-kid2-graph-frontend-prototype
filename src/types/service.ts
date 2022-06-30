@@ -1,8 +1,9 @@
-import { Data, DataYoutubeDownloaded, DataYoutubeUrl } from "./data";
-import { GenericExecution } from "./execution";
-import { PartialConfig } from "./config";
 import { RxDatabase } from "rxdb";
 import { Observable } from "rxjs";
+
+import { PartialConfig } from "./config";
+import { Data, DataYoutubeDownloaded, DataYoutubeUrl } from "./data";
+import { GenericExecution } from "./execution";
 
 // The execution function is a closure which takes the pair of db, config,
 //   and then has a function which mutates the db.  Each service determines

@@ -1,8 +1,11 @@
 import React from "react";
-import RenderData from "@frontend/components/databaseView/renderData";
-import * as DatabaseTypes from "@data-types/index";
-import * as Queries from "@db/queries";
 import { RxQueryResultDoc, useRxQuery } from "rxdb-hooks";
+
+import * as DatabaseTypes from "@data-types/index";
+
+import * as Queries from "@db/queries";
+
+import RenderData from "@frontend/components/databaseView/renderData";
 import RenderDataWrapper from "@frontend/components/databaseView/renderData/wrapper";
 
 const DBRenderer = (dbL: DatabaseTypes.LoadedDb) => {

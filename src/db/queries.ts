@@ -1,6 +1,8 @@
-import * as Types from "@data-types/index";
-import * as Logger from "../logger";
 import { RxDatabase, RxQuery } from "rxdb";
+
+import * as Types from "@data-types/index";
+
+import * as Logger from "../logger";
 
 const log = Logger.makeLogger("db/queries");
 

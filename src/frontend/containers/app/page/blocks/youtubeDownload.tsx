@@ -1,12 +1,17 @@
 import React, { useEffect } from "react";
-import { upsertOne } from "@db/index";
-import * as Types from "@data-types/index";
-import * as Queries from "@db/queries";
-import useConfigContext from "@frontend/hooks/contexts/useConfigContext";
-import * as Logger from "@logger/index";
-import DownloadService from "@services/downloadYoutube";
 import { useRxQuery } from "rxdb-hooks";
 import { Observable } from "rxjs";
+
+import * as Types from "@data-types/index";
+
+import { upsertOne } from "@db/index";
+import * as Queries from "@db/queries";
+
+import useConfigContext from "@frontend/hooks/contexts/useConfigContext";
+
+import * as Logger from "@logger/index";
+
+import DownloadService from "@services/downloadYoutube";
 
 const log = Logger.makeLogger("frontend/containers/block/youtubeDownload");
 

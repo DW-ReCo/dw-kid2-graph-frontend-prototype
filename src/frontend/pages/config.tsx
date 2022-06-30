@@ -1,6 +1,8 @@
 import React, { Fragment, useEffect, useState } from "react";
-import * as ConfigTypes from "@data-types/index";
 import * as Config from "src/config/index";
+
+import * as ConfigTypes from "@data-types/index";
+
 import ConfigEditor from "@frontend/containers/config/configEditor/index";
 
 const ConfigsEditor = () => {

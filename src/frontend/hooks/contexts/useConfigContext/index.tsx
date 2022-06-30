@@ -1,6 +1,6 @@
-import * as Types from "@data-types/index";
-
 import { createContext, useContext } from "react";
+
+import * as Types from "@data-types/index";
 
 const context = createContext<Types.ConfigContext | undefined>(undefined);
 

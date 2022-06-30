@@ -1,20 +1,20 @@
-import React, { useState, useEffect } from "react";
-import * as Database from "@db/index";
 import { AppProps } from "next/app";
+import React, { useEffect, useState } from "react";
 import * as Config from "src/config/index";
+
+import * as Database from "@db/index";
+
 import { Provider as AppContextProvider } from "@frontend/hooks/contexts/useAppContext";
-import { Provider as ConfigContextProvider } from "@frontend/hooks/contexts/useConfigContext";
-import { Provider as DatabaseContextProvider } from "@frontend/hooks/contexts/useDbContext";
-
 import { default as appContextInitialState } from "@frontend/hooks/contexts/useAppContext/initialState";
-import { default as dbContextInitialState } from "@frontend/hooks/contexts/useDbContext/initialState";
+import { Provider as ConfigContextProvider } from "@frontend/hooks/contexts/useConfigContext";
 import { default as configContextInitialState } from "@frontend/hooks/contexts/useConfigContext/initialState";
-
+import { Provider as DatabaseContextProvider } from "@frontend/hooks/contexts/useDbContext";
+import { default as dbContextInitialState } from "@frontend/hooks/contexts/useDbContext/initialState";
 import "@frontend/styles/globals.css";
 
-import DevPanel from "../containers/devPanel/panel/panel";
-
 import * as Logger from "@logger/index";
+
+import DevPanel from "../containers/devPanel/panel/panel";
 
 const log = Logger.makeLogger("frontend/pages/_app");
 

@@ -1,6 +1,7 @@
 import * as Types from "@data-types/contexts";
-import useDbContext from "./contexts/useDbContext";
+
 import useConfigContext from "./contexts/useConfigContext";
+import useDbContext from "./contexts/useDbContext";
 
 const useStatus = () => {
   // @ts-ignore could be undefined FIXME

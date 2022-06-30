@@ -1,13 +1,18 @@
-import { upsertOne } from "@db/index";
-import * as Queries from "@db/queries";
-import * as DatabaseTypes from "@data-types/index";
-import YoutubeEmbed from "@frontend/components/app/page/blocks/youTube/youtubeEmbed";
-import useConfigContext from "@frontend/hooks/contexts/useConfigContext";
-import * as Logger from "@logger/index";
-import userAddService from "@services/userAdd";
 import React, { useState } from "react";
 import { useRxQuery } from "rxdb-hooks";
 import { Observable, of } from "rxjs";
+
+import * as DatabaseTypes from "@data-types/index";
+
+import { upsertOne } from "@db/index";
+import * as Queries from "@db/queries";
+
+import YoutubeEmbed from "@frontend/components/app/page/blocks/youTube/youtubeEmbed";
+import useConfigContext from "@frontend/hooks/contexts/useConfigContext";
+
+import * as Logger from "@logger/index";
+
+import userAddService from "@services/userAdd";
 
 const log = Logger.makeLogger("frontend/containers/block/youtubeLink");
 

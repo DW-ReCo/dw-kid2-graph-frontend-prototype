@@ -1,14 +1,17 @@
 // A service for a user, using the frontent, to directly add
 //  data to the database.
-import { of, from, map, combineLatest } from "rxjs";
+import { RxDatabase } from "rxdb";
+import { combineLatest, from, map, of } from "rxjs";
+
 import * as Types from "@data-types/index";
-import * as Utils from "@utils/index";
 
 import * as Queries from "@db/queries";
+
 import { uniqueId } from "@frontend/utils";
-import { RxDatabase } from "rxdb";
 
 import * as Logger from "@logger/index";
+
+import * as Utils from "@utils/index";
 
 const log = Logger.makeLogger(`services/downloadYoutube`);
 

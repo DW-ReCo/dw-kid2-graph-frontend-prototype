@@ -1,5 +1,7 @@
-import * as Types from "@data-types/index";
 import { mergeAll } from "lodash/fp";
+
+import * as Types from "@data-types/index";
+
 import customConfig from "./custom.cfg.json";
 
 /* prettier-ignore */

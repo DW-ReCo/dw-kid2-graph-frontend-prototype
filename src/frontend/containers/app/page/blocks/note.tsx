@@ -1,10 +1,12 @@
-import { upsertOne } from "@db/index";
-import * as Queries from "@db/queries";
-import * as DatabaseTypes from "@data-types/index";
-import { uniqueId } from "@frontend/utils";
-
 import React from "react";
 import { Observable, of } from "rxjs";
+
+import * as DatabaseTypes from "@data-types/index";
+
+import { upsertOne } from "@db/index";
+import * as Queries from "@db/queries";
+
+import { uniqueId } from "@frontend/utils";
 
 export const Component = (props: { db: DatabaseTypes.LoadedDb; block: DatabaseTypes.BlockNote }) => {
   const { db, block } = props;

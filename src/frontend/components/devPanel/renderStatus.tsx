@@ -1,6 +1,8 @@
 import React from "react";
-import { getStatusIcon, getStatusMessage } from "@utils/index";
+
 import * as Types from "@data-types/index";
+
+import { getStatusIcon, getStatusMessage } from "@utils/index";
 
 const RenderStatus = ({ status }: { status: Types.status }) => (
   <div className="block">

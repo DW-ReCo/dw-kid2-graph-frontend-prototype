@@ -1,8 +1,11 @@
-import * as Queries from "@db/queries";
-import * as Types from "@data-types/index";
-import Block from "@frontend/containers/app/page/block";
 import React, { Fragment } from "react";
 import { useRxQuery } from "rxdb-hooks";
+
+import * as Types from "@data-types/index";
+
+import * as Queries from "@db/queries";
+
+import Block from "@frontend/containers/app/page/block";
 
 const PageBlocks = (props: { db: Types.LoadedDb; page: Types.Page }) => {
   const { page, db } = props;

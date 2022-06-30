@@ -1,8 +1,8 @@
+import * as Data from "./data";
+import * as Database from "./database";
 import * as Document from "./document";
 import { DocumentPrototype, DocumentType } from "./document";
-import * as Database from "./database";
 import * as Executions from "./execution";
-import * as Data from "./data";
 
 // Blocks
 //
