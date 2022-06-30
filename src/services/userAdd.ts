@@ -1,11 +1,14 @@
 // A service for a user, using the frontent, to directly add
 //  data to the database.
 import { of } from "rxjs";
+
 import * as Types from "@data-types/index";
-import * as Utils from "@utils/index";
 
 import * as Queries from "@database/queries";
+
 import { uniqueId } from "@frontend/utils";
+
+import * as Utils from "@utils/index";
 
 // the user adding service takes one argument,
 type UserAddService = Types.Service.Generic<[Types.Data.Data], [Types.Data.Data]>;

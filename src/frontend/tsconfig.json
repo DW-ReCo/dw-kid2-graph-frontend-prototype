@@ -23,7 +23,7 @@
       "@frontend/*": ["src/frontend/*"],
       "@logger/*": ["src/logger/*"],
       "@services/*": ["src/services/*"],
-      "@utils/*": ["src/utils/*"],
+      "@utils/*": ["src/utils/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

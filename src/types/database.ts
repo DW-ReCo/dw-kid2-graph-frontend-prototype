@@ -1,10 +1,10 @@
-import { DatabaseConfig } from "./config";
 import * as Rxdb from "rxdb";
 
-import { Page } from "./page";
 import { Block } from "./block";
-import { Record } from "./execution-record";
+import { DatabaseConfig } from "./config";
 import { Data } from "./data-node";
+import { Record } from "./execution-record";
+import { Page } from "./page";
 
 export type Document = Page | Block | Record | Data;
 

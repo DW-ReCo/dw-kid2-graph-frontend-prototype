@@ -1,8 +1,9 @@
-import * as Data from "./data-node";
-import * as Record from "./execution-record";
-import { PartialConfig } from "./config";
 import { RxDatabase } from "rxdb";
 import { Observable } from "rxjs";
+
+import { PartialConfig } from "./config";
+import * as Data from "./data-node";
+import * as Record from "./execution-record";
 
 // The execution function is a closure which takes the pair of db, config,
 //   and then has a function which mutates the db.  Each service determines

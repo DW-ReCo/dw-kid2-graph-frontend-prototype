@@ -1,6 +1,7 @@
+import React from "react";
+
 import DatabaseRenderer from "@frontend/containers/databaseView/databaseRenderer/index";
 import useDatabaseContext from "@frontend/hooks/contexts/useDatabaseContext";
-import React from "react";
 
 const DBPage = () => {
   // @ts-ignore

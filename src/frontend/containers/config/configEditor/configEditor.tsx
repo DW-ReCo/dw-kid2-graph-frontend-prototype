@@ -1,9 +1,13 @@
-import * as Types from "@data-types/index";
-import useConfigContext from "@frontend/hooks/contexts/useConfigContext";
-import * as Logger from "@logger/index";
-import { omit, get } from "lodash/fp";
-import React, { useState } from "react";
+import { get, omit } from "lodash/fp";
 import * as Config from "src/config/index";
+
+import React, { useState } from "react";
+
+import * as Types from "@data-types/index";
+
+import useConfigContext from "@frontend/hooks/contexts/useConfigContext";
+
+import * as Logger from "@logger/index";
 
 const log = Logger.makeLogger("frontent/pages/config");
 

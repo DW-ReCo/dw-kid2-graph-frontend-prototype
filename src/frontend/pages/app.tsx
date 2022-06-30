@@ -1,9 +1,11 @@
+import React, { Fragment } from "react";
+
 import * as Types from "@data-types/index";
+
 import Page from "@frontend/containers/app/page";
 import PageList from "@frontend/containers/app/pageList";
 import useAppContext from "@frontend/hooks/contexts/useAppContext";
 import useDatabaseContext, { getActiveDatabase } from "@frontend/hooks/contexts/useDatabaseContext";
-import React, { Fragment } from "react";
 
 const ApplicationContainer = () => {
   const {

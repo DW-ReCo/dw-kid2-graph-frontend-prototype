@@ -1,6 +1,8 @@
-import { syntaxHighlight } from "@utils/index";
 import DOMPurify from "dompurify";
+
 import React from "react";
+
+import { syntaxHighlight } from "@utils/index";
 
 const RenderData = ({ documents, title }: { documents: Array<object>; title: string }) => {
   const cleanMarkup = (document: object): string => {

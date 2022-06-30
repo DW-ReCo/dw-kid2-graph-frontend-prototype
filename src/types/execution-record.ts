@@ -1,6 +1,6 @@
-import * as Document from "./document";
-import * as Data from "./data-node";
 import { Service } from ".";
+import * as Data from "./data-node";
+import * as Document from "./document";
 
 // Excecution... Operation? Completion? Enactment? Realizarion?
 //

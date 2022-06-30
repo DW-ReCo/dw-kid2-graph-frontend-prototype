@@ -1,5 +1,10 @@
-import { default as DevPanel } from "../containers/devPanel/index";
+import { AppProps } from "next/app";
+import * as Config from "src/config/index";
+
+import React, { useEffect, useState } from "react";
+
 import * as Database from "@database/index";
+
 import { Provider as AppContextProvider } from "@frontend/hooks/contexts/useAppContext";
 import { default as appContextInitialState } from "@frontend/hooks/contexts/useAppContext/initialState";
 import { Provider as ConfigContextProvider } from "@frontend/hooks/contexts/useConfigContext";
@@ -7,10 +12,10 @@ import { default as configContextInitialState } from "@frontend/hooks/contexts/u
 import { Provider as DbContextProvider } from "@frontend/hooks/contexts/useDatabaseContext";
 import { default as dbContextInitialState } from "@frontend/hooks/contexts/useDatabaseContext/initialState";
 import "@frontend/styles/globals.css";
+
 import * as Logger from "@logger/index";
-import { AppProps } from "next/app";
-import React, { useState, useEffect } from "react";
-import * as Config from "src/config/index";
+
+import { default as DevPanel } from "../containers/devPanel/index";
 
 const log = Logger.makeLogger("frontend/pages/_app");
 
