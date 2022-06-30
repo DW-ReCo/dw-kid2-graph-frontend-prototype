@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import * as ConfigTypes from "@data-types/index";
 import { omit, get } from "lodash/fp";
 import * as Logger from "@logger/index";
@@ -16,7 +16,7 @@ const ConfigEditor = (props: { config: ConfigTypes.PartialConfig }) => {
   const editableLoaders = ["local_storage_loader"];
   const isEditable = loader && editableLoaders.includes(loader._type);
   const editableConfig = omit(["from_loader"], config);
-  const [editableValue, setValue] = React.useState<string>(JSON.stringify(editableConfig, null, 2));
+  const [editableValue, setValue] = useState<string>(JSON.stringify(editableConfig, null, 2));
 
   const saveConfig = () => {
     const c = editableValue;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { upsertOne } from "@db/index";
 import * as Types from "@data-types/index";
 import * as Queries from "@db/queries";
@@ -6,11 +6,7 @@ import useConfigContext from "@frontend/hooks/contexts/useConfigContext";
 import * as Logger from "@logger/index";
 import DownloadService from "@services/downloadYoutube";
 import { useRxQuery } from "rxdb-hooks";
-import {
-  Observable,
-  of, // concatMap,
-  /// delay
-} from "rxjs";
+import { Observable } from "rxjs";
 
 const log = Logger.makeLogger("frontend/containers/block/youtubeDownload");
 
@@ -46,7 +42,7 @@ const DownloadVideo = (props: { db: Types.LoadedDb; block: Types.BlockYoutubeDow
   const { configState: config } = useConfigContext();
 
   // on mount
-  React.useEffect(() => {
+  useEffect(() => {
     if (!execution && chosen) {
       DownloadService.execute(
         db.instance,

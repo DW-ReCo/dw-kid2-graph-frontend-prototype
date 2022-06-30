@@ -4,7 +4,7 @@ import { AppProps } from "next/app";
 import * as Config from "src/config/index";
 import { Provider as AppContextProvider } from "@frontend/hooks/contexts/useAppContext";
 import { Provider as ConfigContextProvider } from "@frontend/hooks/contexts/useConfigContext";
-import { Provider as DbContextProvider } from "@frontend/hooks/contexts/useDbContext";
+import { Provider as DatabaseContextProvider } from "@frontend/hooks/contexts/useDbContext";
 
 import { default as appContextInitialState } from "@frontend/hooks/contexts/useAppContext/initialState";
 import { default as dbContextInitialState } from "@frontend/hooks/contexts/useDbContext/initialState";
@@ -12,7 +12,7 @@ import { default as configContextInitialState } from "@frontend/hooks/contexts/u
 
 import "@frontend/styles/globals.css";
 
-import DevPanel from "./dev/panel";
+import DevPanel from "../containers/devPanel/panel/panel";
 
 import * as Logger from "@logger/index";
 
@@ -24,7 +24,7 @@ const App = ({ Component, pageProps }: AppProps) => {
       ? JSON.parse(localStorage.getItem("kid2-appState") || "{}")
       : appContextInitialState,
   );
-  const [dbState, setDbState] = useState(dbContextInitialState);
+  const [databaseState, setDatabaseState] = useState(dbContextInitialState);
   const [configState, setConfigState] = useState(configContextInitialState);
 
   useEffect(() => {
@@ -65,12 +65,12 @@ const App = ({ Component, pageProps }: AppProps) => {
     log.debug(`initializing dbs`, loaders);
     const dbs = await Promise.all(
       loaders.map((loader) => {
-        const existingDb = dbState.find((d) => d.name === loader.name);
+        const existingDb = databaseState.find((d) => d.name === loader.name);
         return existingDb ? Promise.resolve(existingDb) : Database.initializeOne(loader);
       }),
     );
     //const dbs = await Database.initializeAll(loaders);
-    setDbState(dbs);
+    setDatabaseState(dbs);
   };
 
   // onLoad - when the application loads, load the config
@@ -92,12 +92,12 @@ const App = ({ Component, pageProps }: AppProps) => {
   return (
     <AppContextProvider value={{ appState, setAppState }}>
       <ConfigContextProvider value={{ configState, setConfigState }}>
-        <DbContextProvider value={{ dbState, setDbState }}>
+        <DatabaseContextProvider value={{ databaseState, setDatabaseState }}>
           <div className="w-full flex">
             <div className="flex-1 flex">{Database && <Component {...pageProps} />}</div>
             {typeof window !== "undefined" && <DevPanel />}
           </div>
-        </DbContextProvider>
+        </DatabaseContextProvider>
       </ConfigContextProvider>
     </AppContextProvider>
   );

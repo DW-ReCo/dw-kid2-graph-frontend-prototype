@@ -1,7 +1,7 @@
 import * as Queries from "@db/queries";
 import * as DatabaseTypes from "@data-types/index";
-import AddBlock from "@frontend/containers/block/addBlock";
-import PageBlocks from "@frontend/containers/pageBlocks";
+import AddBlock from "@frontend/containers/app/page/blocks/addBlock";
+import PageBlocks from "@frontend/containers/app/page/pageBlocks";
 import React from "react";
 import { useRxQuery } from "rxdb-hooks";
 import EditIcon from "@frontend/assets/icons/edit";

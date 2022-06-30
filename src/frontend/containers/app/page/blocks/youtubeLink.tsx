@@ -1,18 +1,13 @@
 import { upsertOne } from "@db/index";
 import * as Queries from "@db/queries";
 import * as DatabaseTypes from "@data-types/index";
-import YoutubeEmbed from "@frontend/components/youtubeEmbed";
+import YoutubeEmbed from "@frontend/components/app/page/blocks/youTube/youtubeEmbed";
 import useConfigContext from "@frontend/hooks/contexts/useConfigContext";
-import { uniqueId } from "@frontend/utils";
 import * as Logger from "@logger/index";
 import userAddService from "@services/userAdd";
-import React from "react";
+import React, { useState } from "react";
 import { useRxQuery } from "rxdb-hooks";
-import {
-  Observable,
-  of, // concatMap,
-  /// delay
-} from "rxjs";
+import { Observable, of } from "rxjs";
 
 const log = Logger.makeLogger("frontend/containers/block/youtubeLink");
 
@@ -23,7 +18,7 @@ export const Add = (props: { db: DatabaseTypes.LoadedDb; block: DatabaseTypes.Bl
   const { configState } = useConfigContext();
   // maybe undefined FIXME
 
-  const [url, setUrl] = React.useState<string>("");
+  const [url, setUrl] = useState<string>("");
 
   const addLink = () => {
     // TODO validate that it _is_ actually a youtube link

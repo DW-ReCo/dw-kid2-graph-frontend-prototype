@@ -22,8 +22,8 @@ export type AppContext = {
 };
 
 export type DbContext = {
-  dbState: LoadedDb[];
-  setDbState?: React.Dispatch<React.SetStateAction<LoadedDb[]>>;
+  databaseState: LoadedDb[];
+  setDatabaseState?: React.Dispatch<React.SetStateAction<LoadedDb[]>>;
 };
 
 export type ConfigContext = {

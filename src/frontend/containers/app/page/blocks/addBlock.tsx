@@ -4,10 +4,7 @@ import * as YoutubeLink from "./youtubeLink";
 import * as DownloadYoutube from "./youtubeDownload";
 
 import * as DatabaseTypes from "@data-types/index";
-import {
-  // promiseAsHook,
-  useObservable,
-} from "@frontend/utils";
+import { useObservable } from "@frontend/utils";
 import React from "react";
 
 const AddBlock = (props: { db: DatabaseTypes.LoadedDb; onAdd?: (block: DatabaseTypes.Block) => void }) => {

@@ -4,7 +4,7 @@ import useConfigContext from "./contexts/useConfigContext";
 
 const useStatus = () => {
   // @ts-ignore could be undefined FIXME
-  const { dbState } = useDbContext();
+  const { databaseState } = useDbContext();
   // @ts-ignore could be undefined FIXME
   const { configState } = useConfigContext();
 
@@ -20,11 +20,11 @@ const useStatus = () => {
   };
 
   const getDbStatus = (): Types.status => {
-    if (dbState?.length < 1) {
+    if (databaseState?.length < 1) {
       return { diagnostic: "ERROR", message: "DB_NO_DB" };
     }
 
-    if (dbState?.length > 1) {
+    if (databaseState?.length > 1) {
       return { diagnostic: "OK", message: "DB_LOADED" };
     }
 

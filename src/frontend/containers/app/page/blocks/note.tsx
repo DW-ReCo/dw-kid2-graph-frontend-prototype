@@ -4,11 +4,7 @@ import * as DatabaseTypes from "@data-types/index";
 import { uniqueId } from "@frontend/utils";
 
 import React from "react";
-import {
-  Observable,
-  of, // concatMap,
-  /// delay
-} from "rxjs";
+import { Observable, of } from "rxjs";
 
 export const Component = (props: { db: DatabaseTypes.LoadedDb; block: DatabaseTypes.BlockNote }) => {
   const { db, block } = props;

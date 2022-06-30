@@ -1,13 +1,13 @@
 // eslint-disable @typescript-eslint/no-unused-vars
 
-import React, { Fragment, useState } from "react";
+import React from "react";
 import * as Database from "@db/index";
 
 import services from "@services/index";
 
 import * as Types from "@data-types/index";
 
-import { addTestingData } from "../../../db/testing_data";
+import { addTestingData } from "../../../../db/testing_data";
 
 import { first } from "lodash/fp";
 import useDbContext from "@frontend/hooks/contexts/useDbContext";
@@ -21,6 +21,7 @@ import useStatus from "@frontend/hooks/useStatus";
 import useConfigContext from "@frontend/hooks/contexts/useConfigContext";
 import { useObservable } from "@frontend/utils";
 import { getStatusIcon } from "@utils/index";
+import TriangleIcon from "@frontend/assets/icons/triangle";
 
 const ServiceStatus = (props: { db: Types.LoadedDb; config: Types.PartialConfig; service: Types.Service }) => {
   const { service, db, config } = props;
@@ -37,7 +38,7 @@ const ServiceStatus = (props: { db: Types.LoadedDb; config: Types.PartialConfig;
 
 const DevPanel = () => {
   // @ts-ignore
-  const { dbState: dbs } = useDbContext();
+  const { databaseState: dbs } = useDbContext();
 
   const {
     // @ts-ignore could be undefined FIXME
@@ -72,10 +73,13 @@ const DevPanel = () => {
     <>
       <div className="flex-end">
         <button
-          className={clsx("button-dev-panel-toggle z-10", !showDevPanel && "rotate-180")}
+          className={clsx(
+            "button-dev-panel-toggle flex justify-center items-center z-10 p-2 text-white",
+            showDevPanel && "rotate-180",
+          )}
           onClick={() => setAppState((prev) => ({ ...prev, app: { ...prev.app, showDevPanel: !showDevPanel } }))}
         >
-          ▶
+          <TriangleIcon />
         </button>
         <div
           className={clsx(
@@ -138,16 +142,17 @@ const DevPanel = () => {
                       ))}
                     </ul>
                   </div>
-                </details>
-                <details open>
-                  {dbs.map((d) => (
-                    <div key={d.name}>
-                      <label className="uppercase text-xs font-bold text-slate-600 my-2">{d.name}</label>
-                      {services.map((s) => (
-                        <ServiceStatus key={s.name} db={d} config={configState} service={s} />
-                      ))}
-                    </div>
-                  ))}
+                  <details open className="ml-0">
+                    <summary>Services</summary>
+                    {dbs.map((d) => (
+                      <div key={d.name}>
+                        <label className="uppercase text-xs font-bold text-slate-600 my-2">{d.name}</label>
+                        {services.map((s) => (
+                          <ServiceStatus key={s.name} db={d} config={configState} service={s} />
+                        ))}
+                      </div>
+                    ))}
+                  </details>
                 </details>
               </>
             )}

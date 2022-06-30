@@ -1,6 +1,6 @@
 import * as Queries from "@db/queries";
 import * as Types from "@data-types/index";
-import Block from "@frontend/containers/block";
+import Block from "@frontend/containers/app/page/block";
 import React, { Fragment } from "react";
 import { useRxQuery } from "rxdb-hooks";
 

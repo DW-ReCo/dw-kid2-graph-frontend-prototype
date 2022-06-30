@@ -1,14 +1,13 @@
-import * as Note from "./note";
-import * as YoutubeInput from "./youtubeLink";
-import * as DownloadYoutube from "./youtubeDownload";
-
-import * as Types from "@data-types/index";
-import React from "react";
 import { moveElementPosition } from "@frontend/utils";
+import { without } from "lodash";
+import * as DownloadYoutube from "@frontend/containers/app/page/blocks/youtubeDownload";
+import * as Note from "@frontend/containers/app/page/blocks/note";
 import * as Queries from "@db/queries";
+import * as Types from "@data-types/index";
+import * as YoutubeInput from "@frontend/containers/app/page/blocks/youtubeLink";
 import ArrowIcon from "@frontend/assets/icons/arrow";
 import DeleteIcon from "@frontend/assets/icons/delete";
-import { without } from "lodash";
+import React from "react";
 
 const NotFoundType = ({ block }: { block: Types.Block }) => <>Block type {block.block__type} not found</>;
 
