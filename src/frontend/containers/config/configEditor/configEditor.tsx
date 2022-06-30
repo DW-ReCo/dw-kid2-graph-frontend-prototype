@@ -2,7 +2,7 @@ import * as Types from "@data-types/index";
 import useConfigContext from "@frontend/hooks/contexts/useConfigContext";
 import * as Logger from "@logger/index";
 import { omit, get } from "lodash/fp";
-import React from "react";
+import React, { useState } from "react";
 import * as Config from "src/config/index";
 
 const log = Logger.makeLogger("frontent/pages/config");
@@ -16,7 +16,7 @@ const ConfigEditor = (props: { config: Types.Config.PartialConfig }) => {
   const editableLoaders = ["local_storage_loader"];
   const isEditable = loader && editableLoaders.includes(loader._type);
   const editableConfig = omit(["from_loader"], config);
-  const [editableValue, setValue] = React.useState<string>(JSON.stringify(editableConfig, null, 2));
+  const [editableValue, setValue] = useState<string>(JSON.stringify(editableConfig, null, 2));
 
   const saveConfig = () => {
     const c = editableValue;

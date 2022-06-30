@@ -4,7 +4,7 @@ import * as Queries from "@database/queries";
 import useConfigContext from "@frontend/hooks/contexts/useConfigContext";
 import * as Logger from "@logger/index";
 import DownloadService from "@services/downloadYoutube";
-import React from "react";
+import React, { useEffect } from "react";
 import { useRxQuery } from "rxdb-hooks";
 import { Observable } from "rxjs";
 
@@ -42,7 +42,7 @@ const DownloadVideo = (props: { db: Types.Database.LoadedDatabase; block: Types.
   const { configState: config } = useConfigContext();
 
   // on mount
-  React.useEffect(() => {
+  useEffect(() => {
     if (!execution && chosen) {
       DownloadService.execute(
         db.instance,

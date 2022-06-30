@@ -5,7 +5,7 @@ import YoutubeEmbed from "@frontend/components/app/blocks/youtube/youtubeEmbed";
 import useConfigContext from "@frontend/hooks/contexts/useConfigContext";
 import * as Logger from "@logger/index";
 import userAddService from "@services/userAdd";
-import React from "react";
+import React, { useState } from "react";
 import { useRxQuery } from "rxdb-hooks";
 import {
   Observable,
@@ -22,7 +22,7 @@ export const Add = (props: { db: Types.Database.LoadedDatabase; block: Types.Blo
   const { configState } = useConfigContext();
   // maybe undefined FIXME
 
-  const [url, setUrl] = React.useState<string>("");
+  const [url, setUrl] = useState<string>("");
 
   const addLink = () => {
     // TODO validate that it _is_ actually a youtube link
