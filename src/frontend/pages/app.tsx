@@ -1,9 +1,9 @@
-import React, { Fragment } from "react";
 import * as Types from "@data-types/index";
-import Page from "@frontend/containers/page";
-import Pages from "@frontend/containers/pages";
+import Page from "@frontend/containers/app/page";
+import PageList from "@frontend/containers/app/pageList";
 import useAppContext from "@frontend/hooks/contexts/useAppContext";
 import useDatabaseContext, { getActiveDatabase } from "@frontend/hooks/contexts/useDatabaseContext";
+import React, { Fragment } from "react";
 
 const ApplicationContainer = () => {
   const {
@@ -32,7 +32,7 @@ const ApplicationContainer = () => {
       <div style={{ width: "20rem", backgroundColor: "#f7f6f3" }} className="p-2 sticky top-0 left-0 max-h-screen">
         {dbs.map((d, index) => (
           <Fragment key={index}>
-            <Pages db={d} open={openPage(d)} />
+            <PageList db={d} open={openPage(d)} />
             {index + 1 < dbs.length && <hr />}
           </Fragment>
         ))}

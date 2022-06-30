@@ -1,10 +1,10 @@
-import React, { Fragment } from "react";
-import { useRxQuery } from "rxdb-hooks";
 import * as Types from "@data-types/index";
 import * as Queries from "@database/queries";
-import PageListItem from "@frontend/components/pageListItem";
-import { uniqueId } from "@frontend/utils";
 import PlusIcon from "@frontend/assets/icons/plus";
+import PageListItem from "@frontend/components/app/pageList/pageListItem";
+import { uniqueId } from "@frontend/utils";
+import React, { Fragment } from "react";
+import { useRxQuery } from "rxdb-hooks";
 
 const Pages = (props: { db: Types.Database.LoadedDatabase; open: (p: Types.Page.Page) => void }) => {
   const { db, open } = props;

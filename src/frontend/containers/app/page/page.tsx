@@ -1,10 +1,10 @@
-import * as Queries from "@database/queries";
 import * as Types from "@data-types/index";
-import AddBlock from "@frontend/containers/block/addBlock";
-import PageBlocks from "@frontend/containers/pageBlocks";
+import * as Queries from "@database/queries";
+import EditIcon from "@frontend/assets/icons/edit";
+import AddBlock from "@frontend/containers/app/page/blocks/addBlock";
+import PageBlocks from "@frontend/containers/app/page/pageBlocks";
 import React from "react";
 import { useRxQuery } from "rxdb-hooks";
-import EditIcon from "@frontend/assets/icons/edit";
 
 const Page = (props: { db: Types.Database.LoadedDatabase; pageID: string }) => {
   const { pageID, db } = props;

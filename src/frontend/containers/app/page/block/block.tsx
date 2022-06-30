@@ -1,14 +1,13 @@
-import * as Note from "./note";
-import * as YoutubeInput from "./youtubeLink";
-import * as DownloadYoutube from "./youtubeDownload";
-
 import * as Types from "@data-types/index";
-import React from "react";
-import { moveElementPosition } from "@frontend/utils";
 import * as Queries from "@database/queries";
 import ArrowIcon from "@frontend/assets/icons/arrow";
 import DeleteIcon from "@frontend/assets/icons/delete";
+import * as Note from "@frontend/containers/app/page/blocks/note";
+import * as DownloadYoutube from "@frontend/containers/app/page/blocks/youtubeDownload";
+import * as YoutubeInput from "@frontend/containers/app/page/blocks/youtubeLink";
+import { moveElementPosition } from "@frontend/utils";
 import { without } from "lodash";
+import React from "react";
 
 const NotFoundType = ({ block }: { block: Types.Block.Block }) => <>Block type {block.block__type} not found</>;
 
@@ -16,7 +15,7 @@ const NotFoundType = ({ block }: { block: Types.Block.Block }) => <>Block type {
 const BlockSwitch = ({ db, block }: { db: Types.Database.LoadedDatabase; block: Types.Block.Block }) =>
   block.block__type === Types.Block.Type.note               ? <Note.Component db={db} block={block} /> :
   block.block__type === Types.Block.Type.youtube_url_input  ? <YoutubeInput.Component db={db} block={block} /> :
-  block.block__type === Types.Block.Type.downloaded_video   ?  <DownloadYoutube.Component db={db} block={block} /> :
+  block.block__type === Types.Block.Type.downloaded_video   ? <DownloadYoutube.Component db={db} block={block} /> :
   <NotFoundType block={block} />;
 
 const Block = (props: { db: Types.Database.LoadedDatabase; block: Types.Block.Block; page: Types.Page.Page }) => {

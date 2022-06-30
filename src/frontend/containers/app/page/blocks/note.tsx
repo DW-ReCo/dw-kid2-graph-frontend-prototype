@@ -1,8 +1,7 @@
+import * as Types from "@data-types/index";
 import { upsertOne } from "@database/index";
 import * as Queries from "@database/queries";
-import * as Types from "@data-types/index";
 import { uniqueId } from "@frontend/utils";
-
 import React from "react";
 import {
   Observable,

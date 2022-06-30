@@ -1,7 +1,7 @@
-import React, { Fragment } from "react";
 import * as Types from "@data-types/index";
+import ConfigEditor from "@frontend/containers/config/configEditor/index";
+import React, { Fragment } from "react";
 import * as Config from "src/config/index";
-import ConfigEditor from "@frontend/containers/configEditor/index";
 
 const ConfigsEditor = () => {
   const [configs, setConfigs] = React.useState<Types.Config.PartialConfig[]>([]);
