@@ -21,15 +21,13 @@
     "isolatedModules": true,
     "baseUrl": ".",
     "paths": {
-      "@db/*": ["src/db/*"],
-      "@logger/*": ["src/logger/*"],
-      "@store/*": ["src/store/*"],
       "@config/*": ["src/config/*"],
-      "@utils/*": ["src/utils/*"],
-      "@services/*": ["src/services/*"],
       "@data-types/*": ["src/types/*"],
+      "@database/*": ["src/database/*"],
       "@frontend/*": ["src/frontend/*"],
-      "@database/*": ["src/database/*"]
+      "@logger/*": ["src/logger/*"],
+      "@services/*": ["src/services/*"],
+      "@utils/*": ["src/utils/*"],
     }
   },
   "include": ["./src/**/*"],
