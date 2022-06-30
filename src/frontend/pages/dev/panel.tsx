@@ -28,8 +28,9 @@ const ServiceStatus = (props: { db: Types.LoadedDb; config: Types.PartialConfig;
   const isAvailable = useObservable(service.isAvailable(db.instance, config));
 
   return (
-    <div>
-      {service.name} - {isAvailable ? getStatusIcon("OK") : getStatusIcon("ERROR")}
+    <div className="flex">
+      <span className="mr-2">{isAvailable ? getStatusIcon("OK") : getStatusIcon("ERROR")}</span>
+      <span>{service.name}</span>
     </div>
   );
 };
@@ -121,19 +122,27 @@ const DevPanel = () => {
                   <h3>Databases</h3>
                   <RenderStatus status={status.db.status} />
 
-                  <p>active Database: {activeDatabase}</p>
-                  <p>active Page: {activePage}</p>
-                  <p>loaded Databases:</p>
-                  <ul>
-                    {dbs.map((d, index) => (
-                      <li key={index}>{d.name}</li>
-                    ))}
-                  </ul>
+                  <div className="flex flex-col my-2">
+                    <label className="uppercase text-xs font-bold text-slate-600">active Database</label>
+                    <span className="pl-2">{activeDatabase}</span>
+                  </div>
+                  <div className="flex flex-col mb-2">
+                    <label className="uppercase text-xs font-bold text-slate-600">active Page</label>
+                    <span className="pl-2">{activePage}</span>
+                  </div>
+                  <div className="flex flex-col mb-2">
+                    <label className="uppercase text-xs font-bold text-slate-600">loaded Databases</label>
+                    <ul className="pl-2">
+                      {dbs.map((d, index) => (
+                        <li key={index}>{d.name}</li>
+                      ))}
+                    </ul>
+                  </div>
                 </details>
                 <details open>
                   {dbs.map((d) => (
                     <div key={d.name}>
-                      <h5>{d.name}</h5>
+                      <label className="uppercase text-xs font-bold text-slate-600 my-2">{d.name}</label>
                       {services.map((s) => (
                         <ServiceStatus key={s.name} db={d} config={configState} service={s} />
                       ))}
