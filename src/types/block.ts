@@ -1,7 +1,7 @@
-import * as Document from "./document";
-import * as Database from "./database";
-import * as Record from "./execution-record";
 import * as Data from "./data-node";
+import * as Database from "./database";
+import * as Document from "./document";
+import * as Record from "./execution-record";
 
 // Blocks
 //

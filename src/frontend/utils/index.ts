@@ -1,10 +1,10 @@
-import React from "react";
-import { Observable } from "rxjs";
-import { v4 as uuidv4 } from "uuid";
-
 // cant figure out how to make a declarations file right now, so
 // @ts-ignore
 import Base58 from "base-58";
+import { Observable } from "rxjs";
+import { v4 as uuidv4 } from "uuid";
+
+import { useEffect, useState } from "react";
 
 // takes a promise, and returns a react hook for it.
 // use like this:
@@ -14,9 +14,9 @@ import Base58 from "base-58";
 // const maybeAddNote = usePromise(isAvailable()) && "it's available!";
 //
 export const usePromise = <T>(p: Promise<T>) => {
-  const [result, setResult] = React.useState<T>();
+  const [result, setResult] = useState<T>();
 
-  React.useEffect(() => {
+  useEffect(() => {
     p.then(setResult);
   }, []);
 
@@ -31,9 +31,9 @@ export const usePromise = <T>(p: Promise<T>) => {
 //
 // const maybeAddNote = useObservable(isAvailable()) && "it's available!";
 export const useObservable = <T>(o: Observable<T>) => {
-  const [result, setResult] = React.useState<T>();
+  const [result, setResult] = useState<T>();
 
-  React.useEffect(() => {
+  useEffect(() => {
     o.subscribe((v) => {
       setResult(v);
     });

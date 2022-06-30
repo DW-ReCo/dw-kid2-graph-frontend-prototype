@@ -1,7 +1,6 @@
+import * as cfgTypes from "../../src/cfg/types";
 import * as db from "../../src/db";
 import * as testing from "../../src/db/testing_data";
-
-import * as cfgTypes from "../../src/cfg/types";
 
 describe("Database Test", async () => {
   it("The Database should start and destroy", async () => {
