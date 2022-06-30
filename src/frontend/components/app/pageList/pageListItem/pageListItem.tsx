@@ -1,10 +1,13 @@
-import * as DatabaseTypes from "@data-types/index";
+import clsx from "clsx";
+
+import React from "react";
+
 import * as Types from "@data-types/index";
+
 import * as Queries from "@database/queries";
+
 import DeleteIcon from "@frontend/assets/icons/delete";
 import useAppContext from "@frontend/hooks/contexts/useAppContext";
-import clsx from "clsx";
-import React from "react";
 
 const PageListItem = (props: { db: Types.Database.LoadedDatabase; page: Types.Page.Page; open: () => void }) => {
   const { page, open, db } = props;
