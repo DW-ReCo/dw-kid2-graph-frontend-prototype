@@ -3,7 +3,7 @@ import * as Types from "@data-types/index";
 import Page from "@frontend/containers/page";
 import Pages from "@frontend/containers/pages";
 import useAppContext from "@frontend/hooks/contexts/useAppContext";
-import useDbContext, { getactiveDatabase } from "@frontend/hooks/contexts/useDbContext";
+import useDatabaseContext, { getActiveDatabase } from "@frontend/hooks/contexts/useDatabaseContext";
 
 const ApplicationContainer = () => {
   const {
@@ -17,15 +17,15 @@ const ApplicationContainer = () => {
   // appContext can be undefined FIXME
 
   // @ts-ignore
-  const { dbState: dbs } = useDbContext();
+  const { dbState: dbs } = useDatabaseContext();
   // dbcontext can be undefined FIXME
 
-  const openPage = (d: Types.LoadedDb) => (p: Types.Page) => {
+  const openPage = (d: Types.Database.LoadedDatabase) => (p: Types.Page.Page) => {
     setAppState((prev) => ({ ...prev, app: { ...prev.app, activePage: p.document__id } }));
     setAppState((prev) => ({ ...prev, app: { ...prev.app, activeDatabase: d.name } }));
   };
 
-  const activeDatabaseInstance = getactiveDatabase(activeDatabase, dbs);
+  const activeDatabaseInstance = getActiveDatabase(activeDatabase, dbs);
 
   return (
     <>

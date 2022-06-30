@@ -1,9 +1,9 @@
 import React from "react";
-import * as types from "./types";
+import * as Types from "./types";
 import { syntaxHighlight } from "@utils/index";
 import DOMPurify from "dompurify";
 
-const RenderData = ({ documents, title }: types.RenderDataPropTypes) => {
+const RenderData = ({ documents, title }: Types.RenderDataPropTypes) => {
   const cleanMarkup = (document: object): string => {
     const documentSyntaxHighlighted = syntaxHighlight(JSON.stringify(document, undefined, 2));
     return DOMPurify.sanitize(documentSyntaxHighlighted);

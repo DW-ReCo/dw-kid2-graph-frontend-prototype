@@ -4,13 +4,13 @@ import { of } from "rxjs";
 import * as Types from "@data-types/index";
 import * as Utils from "@utils/index";
 
-import * as Queries from "@db/queries";
+import * as Queries from "@database/queries";
 import { uniqueId } from "@frontend/utils";
 
 // the user adding service takes one argument,
-type UserAddService = Types.GenericService<[Types.Data], [Types.Data]>;
+type UserAddService = Types.Service.Generic<[Types.Data.Data], [Types.Data.Data]>;
 
-const execute: Types.ExecuteFunction<[Types.Data], [Types.Data]> = (db, cfg) => async (data) => {
+const execute: Types.Service.ExecuteFunction<[Types.Data.Data], [Types.Data.Data]> = (db, config) => async (data) => {
   // TODO validate data
   const validData = data;
 
@@ -20,19 +20,19 @@ const execute: Types.ExecuteFunction<[Types.Data], [Types.Data]> = (db, cfg) => 
 
   const finished_at = Utils.now();
 
-  const newExecution: Types.ExecutionUserAdded = {
+  const newRecord: Types.Record.UserAdded = {
     document__id: uniqueId(),
-    document__type: Types.DocumentType.Execution,
-    execution__type: Types.ExecutionType.user_added,
-    execution__started_at: started_at,
-    execution__finished_at: finished_at,
-    execution__of_data: [],
-    execution__to_data: [validData],
+    document__type: Types.Document.Type.Record,
+    record__type: Types.Record.Type.user_added,
+    record__started_at: started_at,
+    record__finished_at: finished_at,
+    record__of_data: [],
+    record__to_data: [validData],
   };
 
-  await Queries.upsertOne(db, newExecution);
+  await Queries.upsertOne(db, newRecord);
 
-  return newExecution;
+  return newRecord;
 };
 
 const service: UserAddService = {

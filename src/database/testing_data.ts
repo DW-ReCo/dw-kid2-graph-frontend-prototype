@@ -18,19 +18,19 @@ export const generateTestingDocs1 = (sym?: string) => {
     //
     // data
     //
-    <Types.DataYoutubeUrl>{
+    <Types.Data.YoutubeUrl>{
       document__id: id("data1"),
-      document__type: Types.DocumentType.Data,
+      document__type: Types.Document.Type.Data,
       data__type: "youtube_url",
       data__body: "https://www.youtube.com/watch?v=jNQXAC9IVRw",
     },
-    <Types.DataYoutubeUrl>{
+    <Types.Data.YoutubeUrl>{
       document__id: id("data2"),
-      document__type: "data" as Types.DocumentType,
+      document__type: "data" as Types.Document.Type,
       data__type: "youtube_url",
       data__body: "https://www.youtube.com/watch?v=uImk2RgCq_U",
     },
-    <Types.DataVideoFileUrl>{
+    <Types.Data.VideoFileUrl>{
       document__id: id("data3"),
       data__type: "video_file_url",
       document__type: "data" as const,
@@ -39,68 +39,68 @@ export const generateTestingDocs1 = (sym?: string) => {
     // //
     // // executions
     // //
-    <Types.ExecutionUserAdded>{
+    <Types.Record.UserAdded>{
       document__id: id("execution1"),
-      document__type: Types.DocumentType.Execution,
-      execution__type: Types.ExecutionType.user_added,
-      execution__started_at: new Date(Date.now()),
-      execution__finished_at: new Date(Date.now()),
-      execution__of_data: [] as Types.DataLink[],
-      execution__to_data: [{ document__id: id("data1") }],
+      document__type: Types.Document.Type.Record,
+      record__type: Types.Record.Type.user_added,
+      record__started_at: new Date(Date.now()),
+      record__finished_at: new Date(Date.now()),
+      record__of_data: [] as Types.Record.DataLink[],
+      record__to_data: [{ document__id: id("data1") }],
     },
-    <Types.ExecutionUserAdded>{
+    <Types.Record.UserAdded>{
       document__id: id("execution2"),
-      document__type: Types.DocumentType.Execution,
-      execution__type: Types.ExecutionType.user_added,
-      execution__started_at: new Date(Date.now()),
-      execution__finished_at: new Date(Date.now()),
-      execution__of_data: [] as Types.DataLink[],
-      execution__to_data: [{ document__id: id("data1") }],
+      document__type: Types.Document.Type.Record,
+      record__type: Types.Record.Type.user_added,
+      record__started_at: new Date(Date.now()),
+      record__finished_at: new Date(Date.now()),
+      record__of_data: [] as Types.Record.DataLink[],
+      record__to_data: [{ document__id: id("data1") }],
     },
-    <Types.ExecutionYoutubeDL>{
+    <Types.Record.YoutubeDL>{
       document__id: id("execution3"),
-      document__type: Types.DocumentType.Execution,
-      execution__type: Types.ExecutionType.download_youtube_v1,
-      execution__started_at: new Date(Date.now()),
-      execution__finished_at: new Date(Date.now()),
-      execution__of_data: [{ document__id: id("data2") }],
-      execution__to_data: [{ document__id: id("data3") }],
+      document__type: Types.Document.Type.Record,
+      record__type: Types.Record.Type.download_youtube_v1,
+      record__started_at: new Date(Date.now()),
+      record__finished_at: new Date(Date.now()),
+      record__of_data: [{ document__id: id("data2") }],
+      record__to_data: [{ document__id: id("data3") }],
     },
     //
     // blocks
     //
-    <Types.BlockNote>{
+    <Types.Block.Note>{
       document__id: id("block1"),
       document__type: "block" as const,
-      block__type: Types.BlockType.note,
+      block__type: Types.Block.Type.note,
       block__state: "open",
       block__body: "This is a note" + uniqueId(),
     },
-    <Types.BlockYoutubeInput>{
+    <Types.Block.YoutubeInput>{
       document__id: id("block2"),
       document__type: "block" as const,
-      block__type: Types.BlockType.youtube_url_input,
+      block__type: Types.Block.Type.youtube_url_input,
       block__state: "open",
       block__data_id: id("data1"),
     },
-    <Types.BlockNote>{
+    <Types.Block.Note>{
       document__id: id("block3"),
       document__type: "block" as const,
-      block__type: Types.BlockType.note,
+      block__type: Types.Block.Type.note,
       block__state: "open",
       block__body: "This is another note",
     },
-    <Types.BlockYoutubeInput>{
+    <Types.Block.YoutubeInput>{
       document__id: id("block4"),
       document__type: "block" as const,
-      block__type: Types.BlockType.youtube_url_input,
+      block__type: Types.Block.Type.youtube_url_input,
       block__state: "open",
       block__data_id: id("data2"),
     },
     //
     // pages
     //
-    <Types.Page>{
+    <Types.Page.Page>{
       document__id: id("page1"),
       document__type: "page" as const,
       page__title: "Page 1" + uniqueId(),

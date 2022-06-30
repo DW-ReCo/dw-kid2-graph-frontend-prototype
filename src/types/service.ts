@@ -1,5 +1,5 @@
-import { Data, DataYoutubeDownloaded, DataYoutubeUrl } from "./data";
-import { GenericExecution } from "./execution";
+import * as Data from "./data-node";
+import * as Record from "./execution-record";
 import { PartialConfig } from "./config";
 import { RxDatabase } from "rxdb";
 import { Observable } from "rxjs";
@@ -9,24 +9,24 @@ import { Observable } from "rxjs";
 //   it's own arguments for this function.  the ProducedData is returned in a promise.
 /* prettier-ignore */
 export type ExecuteFunction<Args extends any[], Return extends any[]> =
-  (db: RxDatabase, cfg: PartialConfig) =>
+  (db: RxDatabase, config: PartialConfig) =>
     (...args: Args) =>
-      Promise<GenericExecution<GenericService<Args, Return>>>;
+      Promise<Record.Generic<Generic<Args, Return>>>;
 
 // the generic service, which takes the execution arguments.
-export type GenericService<Args extends any[], Return extends any[]> = {
+export type Generic<Args extends any[], Return extends any[]> = {
   name: string;
   description: string;
-  isAvailable: (db: RxDatabase, cfg: PartialConfig) => Observable<boolean>;
+  isAvailable: (db: RxDatabase, config: PartialConfig) => Observable<boolean>;
   execute: ExecuteFunction<Args, Return>;
 };
 // A type function to extract the args from a service:
-export type ExtractArgs<S> = S extends GenericService<infer X, infer Y> ? X : never;
+export type ExtractArgs<S> = S extends Generic<infer X, infer Y> ? X : never;
 // A type function to extract the return value from the service:
-export type ExtractReturn<S> = S extends GenericService<infer X, infer Y> ? Y : never;
+export type ExtractReturn<S> = S extends Generic<infer X, infer Y> ? Y : never;
 
-export type UserAddService = GenericService<[Data], [Data]>;
+export type UserAdd = Generic<[Data.Data], [Data.Data]>;
 
-export type YoutubeDownloadService = GenericService<[DataYoutubeUrl], [DataYoutubeDownloaded]>;
+export type YoutubeDownload = Generic<[Data.YoutubeUrl], [Data.YoutubeDownloaded]>;
 
-export type Service = UserAddService | YoutubeDownloadService;
+export type Service = UserAdd | YoutubeDownload;

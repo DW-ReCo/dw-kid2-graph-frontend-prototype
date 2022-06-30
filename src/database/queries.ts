@@ -8,7 +8,7 @@ export const allBlocks = (db: RxDatabase): RxQuery => db.docs.find().where("docu
 
 export const allPages = (db: RxDatabase): RxQuery => db.docs.find().where("document__type").equals("page");
 
-export const allExecutions = (db: RxDatabase): RxQuery => db.docs.find().where("document__type").equals("execution");
+export const AllRecords = (db: RxDatabase): RxQuery => db.docs.find().where("document__type").equals("execution");
 
 export const allData = (db: RxDatabase): RxQuery => db.docs.find().where("document__type").equals("data");
 
@@ -27,21 +27,21 @@ export const blocks = (db: RxDatabase, ids: string[]): RxQuery =>
     },
   });
 
-export const pageBlocks = (db: RxDatabase, page: Types.Page) => blocks(db, page.page__blocks);
+export const pageBlocks = (db: RxDatabase, page: Types.Page.Page) => blocks(db, page.page__blocks);
 
 // takes a database, an id, and a doc like {dataId: id}, which we will set using { $set: doc }, queries for the doc
 // and makes the changes
 // export const merge = (db: RxDatabase, id: string, doc: Partial<Types.DbDocument>) =>
-export const merge = (db: RxDatabase, doc: Partial<Types.Document> & { document__id: Types.DocumentId }) =>
+export const merge = (db: RxDatabase, doc: Partial<Types.Document.Prototype> & { document__id: Types.Document.Id }) =>
   db.docs.findOne().where("document__id").equals(doc.document__id).update({ $set: doc });
 
-export const mergeBlock = (db: RxDatabase, doc: Partial<Types.Block> & { document__id: Types.DocumentId }) =>
+export const mergeBlock = (db: RxDatabase, doc: Partial<Types.Block.Block> & { document__id: Types.Document.Id }) =>
   merge(db, doc);
 
-export const mergePage = (db: RxDatabase, doc: Partial<Types.Page> & { document__id: Types.DocumentId }) =>
+export const mergePage = (db: RxDatabase, doc: Partial<Types.Page.Page> & { document__id: Types.Document.Id }) =>
   merge(db, doc);
 
-export const remove = (db: RxDatabase, id: Types.DocumentId) =>
+export const remove = (db: RxDatabase, id: Types.Document.Id) =>
   db.docs
     .findOne({
       selector: {
@@ -51,7 +51,7 @@ export const remove = (db: RxDatabase, id: Types.DocumentId) =>
     })
     .remove();
 
-export const upsertDocs = async (db: RxDatabase, docs: Types.Document[]): Promise<RxDatabase> => {
+export const upsertDocs = async (db: RxDatabase, docs: Types.Document.Prototype[]): Promise<RxDatabase> => {
   log.debug(`upserting docs`, docs);
   return await Promise.all(docs.map((d) => db.docs.atomicUpsert(d))).then((ds) => {
     log.info(
@@ -66,4 +66,5 @@ export const upsertDocs = async (db: RxDatabase, docs: Types.Document[]): Promis
   // })
 };
 
-export const upsertOne = async (db: RxDatabase, doc: Types.Document): Promise<RxDatabase> => upsertDocs(db, [doc]);
+export const upsertOne = async (db: RxDatabase, doc: Types.Document.Prototype): Promise<RxDatabase> =>
+  upsertDocs(db, [doc]);

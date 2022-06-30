@@ -19,6 +19,7 @@
     "paths": {
       "@db/*": ["src/db/*"],
       "@logger/*": ["src/logger/*"],
+      "@database/*": ["src/database/*"],
       "@services/*": ["src/services/*"],
       "@store/*": ["src/store/*"],
       "@config/*": ["src/config/*"],

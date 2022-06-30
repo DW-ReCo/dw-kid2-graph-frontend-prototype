@@ -1,11 +1,11 @@
 import * as Types from "@data-types/index";
 import { mergeAll } from "lodash/fp";
-import customConfig from "./custom.cfg.json";
+import customConfig from "./custom.config.json";
 
 /* prettier-ignore */
 const envConfig =
-  process.env.CUSTOM_CFG !== undefined
-  ? JSON.parse(process?.env?.CUSTOM_CFG)
+  process.env.CUSTOM_config !== undefined
+  ? JSON.parse(process?.env?.CUSTOM_config)
   : {};
 
 // this is the config the app is built with, not the config which is loaded
@@ -13,7 +13,7 @@ const envConfig =
 //
 // both configs have the same format, though, the type PartialConfig
 //
-const initialConfig: Types.BuildConfig = {
+const initialConfig: Types.Config.BuildConfig = {
   _type: "kid2_config",
   // these loads values
   runtime_loads: [
@@ -32,4 +32,4 @@ const initialConfig: Types.BuildConfig = {
 
 // TODO: consider if a deep merge should be used here.
 // In the build we might want to overwrite these
-export const config: Types.BuildConfig = mergeAll([initialConfig, customConfig, envConfig]);
+export const config: Types.Config.BuildConfig = mergeAll([initialConfig, customConfig, envConfig]);

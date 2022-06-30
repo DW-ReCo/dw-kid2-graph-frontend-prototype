@@ -1,9 +1,8 @@
-import { upsertOne } from "@db/index";
-import * as Queries from "@db/queries";
-import * as DatabaseTypes from "@data-types/index";
+import { upsertOne } from "@database/index";
+import * as Queries from "@database/queries";
+import * as Types from "@data-types/index";
 import YoutubeEmbed from "@frontend/components/youtubeEmbed";
 import useConfigContext from "@frontend/hooks/contexts/useConfigContext";
-import { uniqueId } from "@frontend/utils";
 import * as Logger from "@logger/index";
 import userAddService from "@services/userAdd";
 import React from "react";
@@ -16,7 +15,7 @@ import {
 
 const log = Logger.makeLogger("frontend/containers/block/youtubeLink");
 
-export const Add = (props: { db: DatabaseTypes.LoadedDb; block: DatabaseTypes.BlockYoutubeInput }) => {
+export const Add = (props: { db: Types.Database.LoadedDatabase; block: Types.Block.YoutubeInput }) => {
   const { db, block } = props;
 
   // @ts-ignore
@@ -29,7 +28,7 @@ export const Add = (props: { db: DatabaseTypes.LoadedDb; block: DatabaseTypes.Bl
     // TODO validate that it _is_ actually a youtube link
     const validatedUrl = url;
 
-    const data: DatabaseTypes.DataYoutubeUrl = DatabaseTypes.newDataYoutubeUrl(validatedUrl);
+    const data: Types.Data.YoutubeUrl = Types.Data.newDataYoutubeUrl(validatedUrl);
 
     userAddService
       .execute(
@@ -50,7 +49,7 @@ export const Add = (props: { db: DatabaseTypes.LoadedDb; block: DatabaseTypes.Bl
   );
 };
 
-export const Component = (props: { db: DatabaseTypes.LoadedDb; block: DatabaseTypes.BlockYoutubeInput }) => {
+export const Component = (props: { db: Types.Database.LoadedDatabase; block: Types.Block.YoutubeInput }) => {
   const { db, block } = props;
 
   // @ts-ignore
@@ -69,9 +68,9 @@ export const Component = (props: { db: DatabaseTypes.LoadedDb; block: DatabaseTy
 };
 
 // the ability to add a youtube link is always available
-export const isAvailable = (db: DatabaseTypes.LoadedDb): Observable<boolean> => of(true);
+export const isAvailable = (db: Types.Database.LoadedDatabase): Observable<boolean> => of(true);
 /* prettier-ignore */
-/* export const isAvailable = (db: dbTypes.LoadedDb): Observable<boolean> =>
+/* export const isAvailable = (db: dbTypes.LoadedDatabase): Observable<boolean> =>
  *   queries.allData(databaseDatabaseTypes.instance).$
  *          .pipe(map(docs => {
  *            return docs
@@ -80,9 +79,9 @@ export const isAvailable = (db: DatabaseTypes.LoadedDb): Observable<boolean> => 
  *          }))
  *  */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const add = async (db: DatabaseTypes.LoadedDb) => {
+export const add = async (db: Types.Database.LoadedDatabase) => {
   log.debug("adding block");
-  const newBlock: DatabaseTypes.BlockYoutubeInput = DatabaseTypes.newBlockYoutubeInput();
+  const newBlock: Types.Block.YoutubeInput = Types.Block.newBlockYoutubeInput();
   await upsertOne(db.instance, newBlock);
   return newBlock;
 

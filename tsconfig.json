@@ -28,7 +28,8 @@
       "@utils/*": ["src/utils/*"],
       "@services/*": ["src/services/*"],
       "@data-types/*": ["src/types/*"],
-      "@frontend/*": ["src/frontend/*"]
+      "@frontend/*": ["src/frontend/*"],
+      "@database/*": ["src/database/*"]
     }
   },
   "include": ["./src/**/*"],

@@ -1,10 +1,10 @@
 import React, { Fragment } from "react";
-import * as ConfigTypes from "@data-types/index";
+import * as Types from "@data-types/index";
 import * as Config from "src/config/index";
 import ConfigEditor from "@frontend/containers/configEditor/index";
 
 const ConfigsEditor = () => {
-  const [configs, setConfigs] = React.useState<ConfigTypes.PartialConfig[]>([]);
+  const [configs, setConfigs] = React.useState<Types.Config.PartialConfig[]>([]);
 
   // onLoad - when the application loads, load the config
   React.useEffect(() => {
@@ -13,8 +13,6 @@ const ConfigsEditor = () => {
       Config.all().then(setConfigs);
     }
   }, []);
-
-  console.log(configs);
 
   return (
     <div>

@@ -1,3 +1,3 @@
-import { PartialConfig } from "@data-types/index";
+import * as Types from "@data-types/index";
 
-export default <PartialConfig>{};
+export default <Types.Config.PartialConfig>{};

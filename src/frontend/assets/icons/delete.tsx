@@ -1,10 +1,6 @@
 import React from "react";
 
-interface Props {
-  width?: number;
-}
-
-const DeleteIcon = ({ width = 18 }: Props) => (
+const DeleteIcon = ({ width = 18 }: { width?: number }) => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 473 473" width={width}>
     <path
       fill="currentColor"

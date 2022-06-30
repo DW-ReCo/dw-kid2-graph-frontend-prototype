@@ -2,7 +2,7 @@ import * as Types from "@data-types/index";
 
 import { createContext, useContext } from "react";
 
-const context = createContext<Types.ConfigContext | undefined>(undefined);
+const context = createContext<Types.Context.Config | undefined>(undefined);
 
 export const { Provider } = context;
 

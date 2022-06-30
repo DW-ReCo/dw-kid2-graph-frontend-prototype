@@ -13,7 +13,7 @@ const blocks = docs.filter(dbTypes.isBlock);
 describe("ComponentName.cy.ts", () => {
   it("playground", async () => {
     const loader: cfgTypes.LocalDbConfig = { name: "local_db", _type: "local_db_config" };
-    const d: dbTypes.LoadedDb = await db.initializeOne(loader).then((x) => ({ ...loader, db: x }));
+    const d: dbTypes.LoadedDatabase = await db.initializeOne(loader).then((x) => ({ ...loader, db: x }));
 
     cy.mount(<Block db={d} block={blocks[0]} />);
   });

@@ -1,16 +1,16 @@
 // eslint-disable @typescript-eslint/no-unused-vars
 
-import React, { Fragment, useState } from "react";
-import * as Database from "@db/index";
+import React from "react";
+import * as Database from "@database/index";
 
 import services from "@services/index";
 
 import * as Types from "@data-types/index";
 
-import { addTestingData } from "../../../db/testing_data";
+import { addTestingData } from "@database/testing_data";
 
 import { first } from "lodash/fp";
-import useDbContext from "@frontend/hooks/contexts/useDbContext";
+import useDatabaseContext from "@frontend/hooks/contexts/useDatabaseContext";
 
 import Link from "next/link";
 import clsx from "clsx";
@@ -22,7 +22,11 @@ import useConfigContext from "@frontend/hooks/contexts/useConfigContext";
 import { useObservable } from "@frontend/utils";
 import { getStatusIcon } from "@utils/index";
 
-const ServiceStatus = (props: { db: Types.LoadedDb; config: Types.PartialConfig; service: Types.Service }) => {
+const ServiceStatus = (props: {
+  db: Types.Database.LoadedDatabase;
+  config: Types.Config.PartialConfig;
+  service: Types.Service.Service;
+}) => {
   const { service, db, config } = props;
 
   const isAvailable = useObservable(service.isAvailable(db.instance, config));
@@ -37,7 +41,7 @@ const ServiceStatus = (props: { db: Types.LoadedDb; config: Types.PartialConfig;
 
 const DevPanel = () => {
   // @ts-ignore
-  const { dbState: dbs } = useDbContext();
+  const { dbState: dbs } = useDatabaseContext();
 
   const {
     // @ts-ignore could be undefined FIXME
@@ -58,9 +62,9 @@ const DevPanel = () => {
 
   if (!firstDb) return <></>;
 
-  const clearDbs = () => dbs.map((d: Types.LoadedDb) => Database.clearDocs(d.instance));
+  const clearDbs = () => dbs.map((d: Types.Database.LoadedDatabase) => Database.clearDocs(d.instance));
 
-  const addTestingDataDbs = () => dbs.map((d: Types.LoadedDb) => addTestingData(d.instance));
+  const addTestingDataDbs = () => dbs.map((d: Types.Database.LoadedDatabase) => addTestingData(d.instance));
 
   const LINKS = [
     { label: "Database view", href: "/db" },

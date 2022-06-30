@@ -1,30 +1,26 @@
 import React from "react";
-import { upsertOne } from "@db/index";
+import { upsertOne } from "@database/index";
 import * as Types from "@data-types/index";
-import * as Queries from "@db/queries";
+import * as Queries from "@database/queries";
 import useConfigContext from "@frontend/hooks/contexts/useConfigContext";
 import * as Logger from "@logger/index";
 import DownloadService from "@services/downloadYoutube";
 import { useRxQuery } from "rxdb-hooks";
-import {
-  Observable,
-  of, // concatMap,
-  /// delay
-} from "rxjs";
+import { Observable } from "rxjs";
 
 const log = Logger.makeLogger("frontend/containers/block/youtubeDownload");
 
-const ChooseVideo = (props: { db: Types.LoadedDb; choose: (link: Types.DataYoutubeUrl) => void }) => {
+const ChooseVideo = (props: { db: Types.Database.LoadedDatabase; choose: (link: Types.Data.YoutubeUrl) => void }) => {
   const { db, choose } = props;
 
   const { result } = useRxQuery(
     db.instance.docs.find({
       selector: {
-        data__type: Types.DataType.youtube_url,
+        data__type: Types.Data.Type.youtube_url,
       },
     }),
   );
-  const links: Types.DataYoutubeUrl[] = result.map((r) => r.get());
+  const links: Types.Data.YoutubeUrl[] = result.map((r) => r.get());
 
   return (
     <>
@@ -38,9 +34,9 @@ const ChooseVideo = (props: { db: Types.LoadedDb; choose: (link: Types.DataYoutu
   );
 };
 
-const DownloadVideo = (props: { db: Types.LoadedDb; block: Types.BlockYoutubeDownload }) => {
+const DownloadVideo = (props: { db: Types.Database.LoadedDatabase; block: Types.Block.YoutubeDownload }) => {
   const { db, block } = props;
-  const { block__chosen_video: chosen, block__youtube_download_execution: execution } = block;
+  const { block__chosen_video: chosen, block__youtube_download_record: execution } = block;
 
   // @ts-ignore FIXME
   const { configState: config } = useConfigContext();
@@ -52,9 +48,9 @@ const DownloadVideo = (props: { db: Types.LoadedDb; block: Types.BlockYoutubeDow
         db.instance,
         config,
       )(chosen)
-        .then((e: Types.ExecutionYoutubeDL) => {
+        .then((e: Types.Record.YoutubeDL) => {
           log.info(`downloaded video, execution:`, e);
-          Queries.merge(db.instance, { document__id: block.document__id, block__youtube_download_execution: e });
+          Queries.mergeBlock(db.instance, { document__id: block.document__id, block__youtube_download_record: e });
         })
         .catch(log.throw);
     }
@@ -68,11 +64,11 @@ const DownloadVideo = (props: { db: Types.LoadedDb; block: Types.BlockYoutubeDow
   return <>downloading...</>;
 };
 
-export const Component = (props: { db: Types.LoadedDb; block: Types.BlockYoutubeDownload }) => {
+export const Component = (props: { db: Types.Database.LoadedDatabase; block: Types.Block.YoutubeDownload }) => {
   const { db, block } = props;
-  const { block__chosen_video: chosen, block__youtube_download_execution: execution } = block;
+  const { block__chosen_video: chosen, block__youtube_download_record: execution } = block;
 
-  const choose = (l: Types.DataYoutubeUrl) => {
+  const choose = (l: Types.Data.YoutubeUrl) => {
     // @ts-ignore
     Queries.mergeBlock(db.instance, { document__id: block.document__id, block__chosen_video: l });
     log.debug(`chose`, l);
@@ -82,7 +78,7 @@ export const Component = (props: { db: Types.LoadedDb; block: Types.BlockYoutube
 
   if (!execution) return <DownloadVideo db={db} block={block} />;
 
-  const vid = execution.execution__to_data[0].data__body;
+  const vid = execution.record__to_data[0].data__body;
 
   return (
     <div>
@@ -95,20 +91,22 @@ export const Component = (props: { db: Types.LoadedDb; block: Types.BlockYoutube
 };
 
 // downloading a youtube link is only availavle when the service is
-export const isAvailable = (db: Types.LoadedDb, cfg: Types.PartialConfig): Observable<boolean> =>
-  DownloadService.isAvailable(db.instance, cfg);
+export const isAvailable = (
+  db: Types.Database.LoadedDatabase,
+  config: Types.Config.PartialConfig,
+): Observable<boolean> => DownloadService.isAvailable(db.instance, config);
 
 // adds a block to the database, initializing with existing data if this
 // has already been chosen
-export const add = async (db: Types.LoadedDb, existingData?: Types.DataYoutubeUrl) => {
+export const add = async (db: Types.Database.LoadedDatabase, existingData?: Types.Data.YoutubeUrl) => {
   log.debug("adding block youtubedownload");
-  const newBlock: Types.BlockYoutubeDownload = {
-    ...Types.createDocument(),
-    document__type: Types.DocumentType.Block,
-    block__type: Types.BlockType.downloaded_video,
+  const newBlock: Types.Block.YoutubeDownload = {
+    ...Types.Document.createDocument(),
+    document__type: Types.Document.Type.Block,
+    block__type: Types.Block.Type.downloaded_video,
     block__state: "open",
     block__chosen_video: existingData || undefined,
-    block__youtube_download_execution: undefined,
+    block__youtube_download_record: undefined,
   };
   await upsertOne(db.instance, newBlock);
   return newBlock;

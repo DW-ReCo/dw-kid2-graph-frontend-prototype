@@ -1,9 +1,6 @@
 import React from "react";
 
-type PropType = {
-  children: React.ReactNode[];
-};
-const RenderDataWrapper = ({ children }: PropType) => (
+const RenderDataWrapper = ({ children }: { children: React.ReactNode[] }) => (
   <div className="flex flex-row gap-2 content-evenly">{children}</div>
 );
 

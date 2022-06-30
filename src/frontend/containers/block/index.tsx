@@ -5,21 +5,21 @@ import * as DownloadYoutube from "./youtubeDownload";
 import * as Types from "@data-types/index";
 import React from "react";
 import { moveElementPosition } from "@frontend/utils";
-import * as Queries from "@db/queries";
+import * as Queries from "@database/queries";
 import ArrowIcon from "@frontend/assets/icons/arrow";
 import DeleteIcon from "@frontend/assets/icons/delete";
 import { without } from "lodash";
 
-const NotFoundType = ({ block }: { block: Types.Block }) => <>Block type {block.block__type} not found</>;
+const NotFoundType = ({ block }: { block: Types.Block.Block }) => <>Block type {block.block__type} not found</>;
 
 /* prettier-ignore */
-const BlockSwitch = ({ db, block }: { db: Types.LoadedDb; block: Types.Block }) =>
-  block.block__type === Types.BlockType.note               ? <Note.Component db={db} block={block} /> :
-  block.block__type === Types.BlockType.youtube_url_input  ? <YoutubeInput.Component db={db} block={block} /> :
-  block.block__type === Types.BlockType.downloaded_video   ?  <DownloadYoutube.Component db={db} block={block} /> :
+const BlockSwitch = ({ db, block }: { db: Types.Database.LoadedDatabase; block: Types.Block.Block }) =>
+  block.block__type === Types.Block.Type.note               ? <Note.Component db={db} block={block} /> :
+  block.block__type === Types.Block.Type.youtube_url_input  ? <YoutubeInput.Component db={db} block={block} /> :
+  block.block__type === Types.Block.Type.downloaded_video   ?  <DownloadYoutube.Component db={db} block={block} /> :
   <NotFoundType block={block} />;
 
-const Block = (props: { db: Types.LoadedDb; block: Types.Block; page: Types.Page }) => {
+const Block = (props: { db: Types.Database.LoadedDatabase; block: Types.Block.Block; page: Types.Page.Page }) => {
   const { block, db, page } = props;
 
   const blockIndex = page.page__blocks.indexOf(block.document__id);

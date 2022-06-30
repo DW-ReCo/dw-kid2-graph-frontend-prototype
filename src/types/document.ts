@@ -1,16 +1,16 @@
 import { uniqueId } from "@frontend/utils";
 // We store all of our different types into the same database
 //   So here are the document types
-export enum DocumentType {
+export enum Type {
   Data = "data",
-  Execution = "execution",
+  Record = "record",
   Block = "block",
   Page = "page",
 }
-export type DocumentId = string;
+export type Id = string;
 
-export type DocumentPrototype = {
-  document__type: DocumentType;
+export type Prototype = {
+  document__type: Type;
   document__id: string;
 };
 

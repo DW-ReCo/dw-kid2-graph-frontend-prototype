@@ -1,5 +1,5 @@
 import React from "react";
-import * as ConfigTypes from "@data-types/index";
+import * as Types from "@data-types/index";
 import { omit, get } from "lodash/fp";
 import * as Logger from "@logger/index";
 import * as Config from "src/config/index";
@@ -7,7 +7,7 @@ import useConfigContext from "@frontend/hooks/contexts/useConfigContext";
 
 const log = Logger.makeLogger("frontent/pages/config");
 
-const ConfigEditor = (props: { config: ConfigTypes.PartialConfig }) => {
+const ConfigEditor = (props: { config: Types.Config.PartialConfig }) => {
   const { config } = props;
   const { from_loader: loader } = config;
   // @ts-ignore FIXME
@@ -25,7 +25,7 @@ const ConfigEditor = (props: { config: ConfigTypes.PartialConfig }) => {
       const cc = JSON.parse(c);
       // TODO verify valid config
       // TODO remove AS
-      Config.toLocalStorage(loader as ConfigTypes.LocalStorageConfigLoader, cc);
+      Config.toLocalStorage(loader as Types.Config.LocalStorageConfigLoader, cc);
       Config.load().then((c) => setConfigState(c));
       console.log(cc);
     } catch (e) {

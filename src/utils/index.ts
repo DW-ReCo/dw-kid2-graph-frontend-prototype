@@ -25,7 +25,7 @@ export const syntaxHighlight = (json: string): string => {
   );
 };
 
-export const getStatusIcon = (statusCode: Types.diagnostic) => {
+export const getStatusIcon = (statusCode: Types.Context.Diagnostic) => {
   const STATUS_CODES = [
     { diagnostic: "INITIAL", icon: "🕑" },
     { diagnostic: "OK", icon: "🟢" },
