@@ -17,14 +17,13 @@
     "jsx": "preserve",
     "baseUrl": "../../",
     "paths": {
+      "@config/*": ["src/config/*"],
+      "@data-types/*": ["src/types/*"],
       "@db/*": ["src/db/*"],
+      "@frontend/*": ["src/frontend/*"],
       "@logger/*": ["src/logger/*"],
       "@services/*": ["src/services/*"],
-      "@store/*": ["src/store/*"],
-      "@config/*": ["src/config/*"],
-      "@utils/*": ["src/utils/*"],
-      "@data-types/*": ["src/types/*"],
-      "@frontend/*": ["src/frontend/*"]
+      "@utils/*": ["src/utils/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
