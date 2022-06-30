@@ -68,80 +68,84 @@ const DevPanel = () => {
   ];
 
   return (
-    <div
-      className={clsx(
-        "flex-end bg-orange-100 min-h-screen p-2 ml-2 sticky max-h-screen top-0 right-0",
-        showDevPanel ? "w-72" : "w-5",
-      )}
-    >
-      <button
-        className={clsx("button-dev-panel-toggle", !showDevPanel && "rotate-180")}
-        onClick={() => setAppState((prev) => ({ ...prev, app: { ...prev.app, showDevPanel: !showDevPanel } }))}
-      >
-        ▶
-      </button>
-      <div>
-        {showDevPanel && (
-          <>
-            <details open>
-              <summary>
-                <h2>🖥 Views</h2>
-              </summary>
-              <ul>
-                {LINKS.map(({ href, label }, index) => (
-                  <li key={index}>
-                    <Link href={href}>
-                      <a>{label}</a>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </details>
-            <details open>
-              <summary>
-                <h2>⚒ Database Actions</h2>
-              </summary>
-              <button className="button--small" onClick={clearDbs}>
-                clear the documents (all dbs)
-              </button>
-              <button className="button--small" onClick={addTestingDataDbs}>
-                add testing data (all dbs)
-              </button>
-            </details>
-            <details open>
-              <summary>
-                <h2>🚦 Status</h2>
-              </summary>
-              <h3>App</h3>
-              <RenderStatus status={status.app.status} />
-              <h3>Config</h3>
-              <RenderStatus status={status.config.status} />
-              <h3>Databases</h3>
-              <RenderStatus status={status.db.status} />
+    <>
+      <div className="flex-end">
+        <button
+          className={clsx("button-dev-panel-toggle z-10", !showDevPanel && "rotate-180")}
+          onClick={() => setAppState((prev) => ({ ...prev, app: { ...prev.app, showDevPanel: !showDevPanel } }))}
+        >
+          ▶
+        </button>
+        <div
+          className={clsx(
+            "bg-orange-100 min-h-screen p-2 ml-2 sticky max-h-screen top-0 right-0 overflow-y-scroll",
+            showDevPanel ? "w-72" : "w-5",
+          )}
+        >
+          <div className="">
+            {showDevPanel && (
+              <>
+                <details open>
+                  <summary>
+                    <h2>🖥 Views</h2>
+                  </summary>
+                  <ul>
+                    {LINKS.map(({ href, label }, index) => (
+                      <li key={index}>
+                        <Link href={href}>
+                          <a>{label}</a>
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </details>
+                <details open>
+                  <summary>
+                    <h2>⚒ Database Actions</h2>
+                  </summary>
+                  <button className="button--small" onClick={clearDbs}>
+                    clear the documents (all dbs)
+                  </button>
+                  <button className="button--small" onClick={addTestingDataDbs}>
+                    add testing data (all dbs)
+                  </button>
+                </details>
+                <details open>
+                  <summary>
+                    <h2>🚦 Status</h2>
+                  </summary>
+                  <h3>App</h3>
+                  <RenderStatus status={status.app.status} />
+                  <h3>Config</h3>
+                  <RenderStatus status={status.config.status} />
+                  <h3>Databases</h3>
+                  <RenderStatus status={status.db.status} />
 
-              <p>active Database: {activeDatabase}</p>
-              <p>active Page: {activePage}</p>
-              <p>loaded Databases:</p>
-              <ul>
-                {dbs.map((d, index) => (
-                  <li key={index}>{d.name}</li>
-                ))}
-              </ul>
-            </details>
-            <details open>
-              {dbs.map((d) => (
-                <div key={d.name}>
-                  <h5>{d.name}</h5>
-                  {services.map((s) => (
-                    <ServiceStatus key={s.name} db={d} config={configState} service={s} />
+                  <p>active Database: {activeDatabase}</p>
+                  <p>active Page: {activePage}</p>
+                  <p>loaded Databases:</p>
+                  <ul>
+                    {dbs.map((d, index) => (
+                      <li key={index}>{d.name}</li>
+                    ))}
+                  </ul>
+                </details>
+                <details open>
+                  {dbs.map((d) => (
+                    <div key={d.name}>
+                      <h5>{d.name}</h5>
+                      {services.map((s) => (
+                        <ServiceStatus key={s.name} db={d} config={configState} service={s} />
+                      ))}
+                    </div>
                   ))}
-                </div>
-              ))}
-            </details>
-          </>
-        )}
+                </details>
+              </>
+            )}
+          </div>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
