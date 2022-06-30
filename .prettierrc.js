@@ -4,4 +4,17 @@ module.exports = {
   singleQuote: false,
   printWidth: 120,
   tabWidth: 2,
+  importOrder: [
+    "^react(.*)$",
+    "^@config/(.*)$",
+    "^@data-types/(.*)$",
+    "^@database/(.*)$",
+    "^@frontend/(.*)$",
+    "^@logger/(.*)$",
+    "^@services/(.*)$",
+    "^@utils/(.*)$",
+    "^[./]",
+  ],
+  importOrderSeparation: true,
+  importOrderSortSpecifiers: true,
 };
