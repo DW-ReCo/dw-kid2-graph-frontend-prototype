@@ -44,7 +44,7 @@ type TestService = Service.Generic<[string], [string]>;
 type TestRecord = Generic<TestService>;
 
 // then we can make an execution test:
-const testExecution: TestRecord = {
+const testRecord: TestRecord = {
   document__id: "testId",
   document__type: Document.Type.Record,
   record__type: Type.user_added,

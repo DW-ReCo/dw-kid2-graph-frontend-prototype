@@ -1,4 +1,4 @@
-import { Config, Database } from "@data-types/index";
+import * as Types from "@data-types/index";
 
 export type Diagnostic = "INITIAL" | "OK" | "ERROR" | "LOADING" | "WARNING" | "UNKNOWN";
 
@@ -21,11 +21,11 @@ export type App = {
 };
 
 export type Database = {
-  dbState: Database.LoadedDatabase[];
-  setDbState?: React.Dispatch<React.SetStateAction<Database.LoadedDatabase[]>>;
+  dbState: Types.Database.LoadedDatabase[];
+  setDbState?: React.Dispatch<React.SetStateAction<Types.Database.LoadedDatabase[]>>;
 };
 
 export type Config = {
-  configState: Config.PartialConfig;
-  setConfigState?: React.Dispatch<React.SetStateAction<Config.PartialConfig>>;
+  configState: Types.Config.PartialConfig;
+  setConfigState?: React.Dispatch<React.SetStateAction<Types.Config.PartialConfig>>;
 };

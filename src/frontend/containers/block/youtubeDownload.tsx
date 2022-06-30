@@ -50,7 +50,7 @@ const DownloadVideo = (props: { db: Types.Database.LoadedDatabase; block: Types.
       )(chosen)
         .then((e: Types.Record.YoutubeDL) => {
           log.info(`downloaded video, execution:`, e);
-          Queries.merge(db.instance, { document__id: block.document__id, block__youtube_download_record: e });
+          Queries.mergeBlock(db.instance, { document__id: block.document__id, block__youtube_download_record: e });
         })
         .catch(log.throw);
     }

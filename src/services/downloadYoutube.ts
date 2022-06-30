@@ -12,7 +12,7 @@ import * as Logger from "@logger/index";
 
 const log = Logger.makeLogger(`services/downloadYoutube`);
 
-const isAvailable = (db: RxDatabase, config: Types.PartialConfig) => {
+const isAvailable = (db: RxDatabase, config: Types.Config.PartialConfig) => {
   //
   log.debug(`checking if youtube service is available`);
 
@@ -36,7 +36,7 @@ const isAvailable = (db: RxDatabase, config: Types.PartialConfig) => {
   const dataAvailable = db.docs
     .find({
       selector: {
-        data__type: Types.DataType.youtube_url,
+        data__type: Types.Data.Type.youtube_url,
       },
     })
     .$.pipe(
@@ -57,7 +57,7 @@ const isAvailable = (db: RxDatabase, config: Types.PartialConfig) => {
 };
 
 /* prettier-ignore */
-const execute: Types.ExecuteFunction<[Types.DataYoutubeUrl], [Types.DataYoutubeDownloaded]> =
+const execute: Types.Service.ExecuteFunction<[Types.Data.YoutubeUrl], [Types.Data.YoutubeDownloaded]> =
   (db, config) =>
     async (data) => {
       // TODO validate data
@@ -79,38 +79,38 @@ const execute: Types.ExecuteFunction<[Types.DataYoutubeUrl], [Types.DataYoutubeD
       const started_at = Utils.now();
 
       // TODO validate the result
-      const apiResult: Types.DataYoutubeDownloaded["data__body"] =
+      const apiResult: Types.Data.YoutubeDownloaded["data__body"] =
         await fetch(`${api_url}/download`, {method: 'POST', headers, body: JSON.stringify({"url": data.data__body})})
         .then(r => r.json())
 
       log.debug(`received`, apiResult)
 
-      const to_data: Types.DataYoutubeDownloaded = {
-        ...Types.createDocument(),
-        document__type: Types.DocumentType.Data,
-        data__type: Types.DataType.youtube_downloaded,
+      const to_data: Types.Data.YoutubeDownloaded = {
+        ...Types.Document.createDocument(),
+        document__type: Types.Document.Type.Data,
+        data__type: Types.Data.Type.youtube_downloaded,
         data__body:apiResult
       }
 
 
       const finished_at = Utils.now();
 
-      const newExecution: Types.ExecutionYoutubeDL = {
+      const newRecord: Types.Record.YoutubeDL = {
         document__id: uniqueId(),
-        document__type: Types.DocumentType.Execution,
-        record__type: Types.ExecutionType.download_youtube_v1,
+        document__type: Types.Document.Type.Record,
+        record__type: Types.Record.Type.download_youtube_v1,
         record__started_at: started_at,
         record__finished_at: finished_at,
         record__of_data: [validData],
         record__to_data: [to_data],
       };
 
-      await Queries.upsertOne(db, newExecution);
+      await Queries.upsertOne(db, newRecord);
 
-      return newExecution;
+      return newRecord;
     };
 
-const service: Types.YoutubeDownloadService = {
+const service: Types.Service.YoutubeDownload = {
   // the user adding service is always available
   name: "youtube downloading service",
   description: "downloads a youtube video to our servers",
