@@ -34,7 +34,7 @@ const Pages = (props: { db: Types.LoadedDb; open: (p: Types.Page) => void }) => 
     ));
 
   return (
-    <div className="ml-2 mt-2 mb-6 ">
+    <div className="ml-2 mt-2 mb-6 overflow-y-scroll">
       <div className="flex flex-row items-center">
         <span className="uppercase font-bold text-sm text-slate-600 flex-1">📓 {db.description}</span>
 
