@@ -16,10 +16,9 @@ import useConfigContext from "@frontend/hooks/contexts/useConfigContext";
 import useDatabaseContext from "@frontend/hooks/contexts/useDatabaseContext";
 import useStatus from "@frontend/hooks/useStatus";
 import { useObservable } from "@frontend/utils";
+import { getStatusIcon } from "@frontend/utils/index";
 
 import services from "@services/index";
-
-import { getStatusIcon } from "@utils/index";
 
 const ServiceStatus = (props: {
   db: Types.Database.LoadedDatabase;
