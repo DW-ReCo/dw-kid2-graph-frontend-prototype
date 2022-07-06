@@ -76,3 +76,7 @@ summary {
 details {
   @apply ml-8 mb-5;
 }
+
+.status-icon {
+  @apply inline-block h-[12px] w-[12px] rounded-full;
+}
