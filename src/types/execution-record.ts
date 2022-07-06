@@ -12,9 +12,6 @@ export enum Type {
   user_added,
 }
 
-// TODO for now data link just has the ID in it
-export type DataLink = { document__id: Document.Id };
-
 export type Generic<GenericService> = Document.Prototype & {
   document__type: Document.Type.Record;
   record__type: Type;
