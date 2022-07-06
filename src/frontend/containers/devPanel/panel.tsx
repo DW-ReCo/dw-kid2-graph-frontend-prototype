@@ -2,7 +2,6 @@
 import clsx from "clsx";
 import { first } from "lodash/fp";
 import Link from "next/link";
-import { map, mergeMap } from "rxjs";
 
 import React from "react";
 
@@ -18,10 +17,11 @@ import useConfigContext from "@frontend/hooks/contexts/useConfigContext";
 import useDatabaseContext from "@frontend/hooks/contexts/useDatabaseContext";
 import useStatus from "@frontend/hooks/useStatus";
 import { useObservable } from "@frontend/utils";
+import { getStatusIcon } from "@frontend/utils/status";
 
 import services from "@services/index";
 
-import { getStatusIcon } from "@utils/index";
+import { map, mergeMap } from "rxjs";
 
 const ServiceStatus = (props: {
   db: Types.Database.LoadedDatabase;
