@@ -10,37 +10,31 @@ import { uniqueId } from "@frontend/utils";
 
 import * as Utils from "@utils/index";
 
-// the user adding service takes one argument,
-type UserAddService = Types.Service.Generic<[Types.Data.Data], [Types.Data.Data]>;
-
-const execute: Types.Service.ExecuteFunction<[Types.Data.Data], [Types.Data.Data]> = (db, config) => async (data) => {
+const execute = (config: Types.Config.PartialConfig) => async (data: Types.Data.Data) => {
   // TODO validate data
   const validData = data;
 
   const started_at = Utils.now();
-
-  await Queries.upsertOne(db, validData);
 
   const finished_at = Utils.now();
 
   const newRecord: Types.Record.UserAdded = {
     document__id: uniqueId(),
     document__type: Types.Document.Type.Record,
-    record__type: Types.Record.Type.user_added,
+    record__type: Types.Service.Type.user_added,
     record__started_at: started_at,
     record__finished_at: finished_at,
     record__of_data: [],
     record__to_data: [validData],
   };
 
-  await Queries.upsertOne(db, newRecord);
-
   return newRecord;
 };
 
-const service: UserAddService = {
+const service: Types.Service.UserAdd = {
   // the user adding service is always available
   name: "User Added Service",
+  type: Types.Service.Type.user_added,
   description: "the user may directly add data to the database",
   isAvailable: (..._) => of(true),
   execute,

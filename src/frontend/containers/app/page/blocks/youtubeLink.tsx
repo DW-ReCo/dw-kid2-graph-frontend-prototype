@@ -37,11 +37,10 @@ export const Add = (props: { db: Types.Database.LoadedDatabase; block: Types.Blo
     const data: Types.Data.YoutubeUrl = Types.Data.newDataYoutubeUrl(validatedUrl);
 
     userAddService
-      .execute(
-        db.instance,
-        configState,
-      )(data)
-      .then((_) => {
+      .execute(configState)(data)
+      .then((e: Types.Record.UserAdded) => {
+        Queries.upsertOne(db.instance, e);
+        Queries.upsertDocs(db.instance, e.record__to_data);
         Queries.mergeBlock(db.instance, { document__id: block.document__id, block__data_id: data.document__id });
       });
   };
