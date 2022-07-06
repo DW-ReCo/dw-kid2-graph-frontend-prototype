@@ -1,5 +1,5 @@
 import { useRxQuery } from "rxdb-hooks";
-import { Observable } from "rxjs";
+import { Observable, map, mergeMap } from "rxjs";
 
 import React, { useEffect } from "react";
 
@@ -50,12 +50,11 @@ const DownloadVideo = (props: { db: Types.Database.LoadedDatabase; block: Types.
   // on mount
   useEffect(() => {
     if (!execution && chosen) {
-      DownloadService.execute(
-        db.instance,
-        config,
-      )(chosen)
+      DownloadService.execute(config)(chosen)
         .then((e: Types.Record.YoutubeDL) => {
           log.info(`downloaded video, execution:`, e);
+          Queries.upsertOne(db.instance, e);
+          Queries.upsertDocs(db.instance, e.record__to_data);
           Queries.mergeBlock(db.instance, { document__id: block.document__id, block__youtube_download_record: e });
         })
         .catch(log.throw);
@@ -100,7 +99,17 @@ export const Component = (props: { db: Types.Database.LoadedDatabase; block: Typ
 export const isAvailable = (
   db: Types.Database.LoadedDatabase,
   config: Types.Config.PartialConfig,
-): Observable<boolean> => DownloadService.isAvailable(db.instance, config);
+): Observable<boolean> => {
+  const dataAvailable = db.instance.docs
+     .find({
+       selector: {
+         data__type: Types.Data.Type.youtube_url,
+       },
+     }).$.pipe(map(datas => datas.map(data => data.get())))
+  .pipe(mergeMap(datas => DownloadService.isAvailable(datas, config)))
+
+  return dataAvailable;
+  }
 
 // adds a block to the database, initializing with existing data if this
 // has already been chosen

@@ -7,6 +7,8 @@ import React from "react";
 
 import * as Types from "@data-types/index";
 
+import * as Queries from "@database/queries";
+
 import * as Database from "@database/index";
 import { addTestingData } from "@database/testing_data";
 
@@ -20,6 +22,7 @@ import { useObservable } from "@frontend/utils";
 import services from "@services/index";
 
 import { getStatusIcon } from "@utils/index";
+import { map, mergeMap } from "rxjs";
 
 const ServiceStatus = (props: {
   db: Types.Database.LoadedDatabase;
@@ -28,7 +31,8 @@ const ServiceStatus = (props: {
 }) => {
   const { service, db, config } = props;
 
-  const isAvailable = useObservable(service.isAvailable(db.instance, config));
+  const isAvailable = useObservable(Queries.allData(db.instance).$.pipe(map(datas => datas.map(d => d.get())))
+                                           .pipe(mergeMap(datas => service.isAvailable(datas, config))));
 
   return (
     <div className="flex">

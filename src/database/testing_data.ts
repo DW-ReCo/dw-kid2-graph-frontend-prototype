@@ -18,18 +18,21 @@ export const generateTestingDocs1 = (sym?: string) => {
     //
     // data
     //
+    /* prettier-ignore */
     <Types.Data.YoutubeUrl>{
       document__id: id("data1"),
       document__type: Types.Document.Type.Data,
       data__type: "youtube_url",
       data__body: "https://www.youtube.com/watch?v=jNQXAC9IVRw",
     },
+    /* prettier-ignore */
     <Types.Data.YoutubeUrl>{
       document__id: id("data2"),
       document__type: "data" as Types.Document.Type,
       data__type: "youtube_url",
       data__body: "https://www.youtube.com/watch?v=uImk2RgCq_U",
     },
+    /* prettier-ignore */
     <Types.Data.VideoFileUrl>{
       document__id: id("data3"),
       data__type: "video_file_url",
@@ -39,28 +42,31 @@ export const generateTestingDocs1 = (sym?: string) => {
     // //
     // // executions
     // //
+    /* prettier-ignore */
     <Types.Record.UserAdded>{
       document__id: id("execution1"),
       document__type: Types.Document.Type.Record,
-      record__type: Types.Record.Type.user_added,
+      record__type: Types.Service.Type.user_added,
       record__started_at: new Date(Date.now()),
       record__finished_at: new Date(Date.now()),
       record__of_data: [] as Types.Data.Data[],
       record__to_data: [{ document__id: id("data1") }],
     },
+    /* prettier-ignore */
     <Types.Record.UserAdded>{
       document__id: id("execution2"),
       document__type: Types.Document.Type.Record,
-      record__type: Types.Record.Type.user_added,
+      record__type: Types.Service.Type.user_added,
       record__started_at: new Date(Date.now()),
       record__finished_at: new Date(Date.now()),
       record__of_data: [] as Types.Data.Data[],
       record__to_data: [{ document__id: id("data1") }],
     },
+    /* prettier-ignore */
     <Types.Record.YoutubeDL>{
       document__id: id("execution3"),
       document__type: Types.Document.Type.Record,
-      record__type: Types.Record.Type.download_youtube_v1,
+      record__type: Types.Service.Type.youtuve_download_v1,
       record__started_at: new Date(Date.now()),
       record__finished_at: new Date(Date.now()),
       record__of_data: [{ document__id: id("data2") }],
@@ -69,6 +75,7 @@ export const generateTestingDocs1 = (sym?: string) => {
     //
     // blocks
     //
+    /* prettier-ignore */
     <Types.Block.Note>{
       document__id: id("block1"),
       document__type: "block" as const,
@@ -76,6 +83,7 @@ export const generateTestingDocs1 = (sym?: string) => {
       block__state: "open",
       block__body: "This is a note" + uniqueId(),
     },
+    /* prettier-ignore */
     <Types.Block.YoutubeInput>{
       document__id: id("block2"),
       document__type: "block" as const,
@@ -83,6 +91,7 @@ export const generateTestingDocs1 = (sym?: string) => {
       block__state: "open",
       block__data_id: id("data1"),
     },
+    /* prettier-ignore */
     <Types.Block.Note>{
       document__id: id("block3"),
       document__type: "block" as const,
@@ -90,6 +99,7 @@ export const generateTestingDocs1 = (sym?: string) => {
       block__state: "open",
       block__body: "This is another note",
     },
+    /* prettier-ignore */
     <Types.Block.YoutubeInput>{
       document__id: id("block4"),
       document__type: "block" as const,
@@ -100,6 +110,7 @@ export const generateTestingDocs1 = (sym?: string) => {
     //
     // pages
     //
+    /* prettier-ignore */
     <Types.Page.Page>{
       document__id: id("page1"),
       document__type: "page" as const,
