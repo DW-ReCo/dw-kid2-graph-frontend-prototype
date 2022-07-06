@@ -6,10 +6,6 @@ import { v4 as uuidv4 } from "uuid";
 
 import { useEffect, useState } from "react";
 
-import * as Types from "@data-types/index";
-
-import { STATUS_MESSAGES } from "./statusMessages";
-
 // takes a promise, and returns a react hook for it.
 // use like this:
 //
@@ -82,21 +78,4 @@ export const syntaxHighlight = (json: string): string => {
       return '<span class="' + cls + '">' + match + "</span>";
     },
   );
-};
-
-export const getStatusIcon = (statusCode: Types.Context.Diagnostic) => {
-  const STATUS_CODES = [
-    { diagnostic: "INITIAL", icon: "🕑" },
-    { diagnostic: "OK", icon: "🟢" },
-    { diagnostic: "LOADING", icon: "🟡" },
-    { diagnostic: "ERROR", icon: "🔴" },
-  ];
-
-  const icon = STATUS_CODES.filter(({ diagnostic }) => diagnostic === statusCode)[0]?.icon;
-  return icon ? icon : statusCode;
-};
-
-export const getStatusMessage = (messageCode: string): string => {
-  const message = STATUS_MESSAGES.filter(({ messageCode: code }) => code === messageCode)[0]?.message;
-  return message ? message : `"${messageCode}" NOT FOUND`;
 };
