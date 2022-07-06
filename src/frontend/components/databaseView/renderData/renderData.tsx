@@ -2,7 +2,7 @@ import DOMPurify from "dompurify";
 
 import React from "react";
 
-import { syntaxHighlight } from "@utils/index";
+import { syntaxHighlight } from "@frontend/utils/index";
 
 const RenderData = ({ documents, title }: { documents: Array<object>; title: string }) => {
   const cleanMarkup = (document: object): string => {
