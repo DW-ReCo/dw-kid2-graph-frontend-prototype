@@ -45,7 +45,7 @@ export const generateTestingDocs1 = (sym?: string) => {
       record__type: Types.Record.Type.user_added,
       record__started_at: new Date(Date.now()),
       record__finished_at: new Date(Date.now()),
-      record__of_data: [] as Types.Record.DataLink[],
+      record__of_data: [] as Types.Data.Data[],
       record__to_data: [{ document__id: id("data1") }],
     },
     <Types.Record.UserAdded>{
@@ -54,7 +54,7 @@ export const generateTestingDocs1 = (sym?: string) => {
       record__type: Types.Record.Type.user_added,
       record__started_at: new Date(Date.now()),
       record__finished_at: new Date(Date.now()),
-      record__of_data: [] as Types.Record.DataLink[],
+      record__of_data: [] as Types.Data.Data[],
       record__to_data: [{ document__id: id("data1") }],
     },
     <Types.Record.YoutubeDL>{
