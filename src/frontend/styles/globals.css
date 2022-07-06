@@ -15,7 +15,7 @@ button:hover {
 }
 
 button.button-dev-panel-toggle {
-  @apply absolute top-[50%] bottom-[50%] -ml-1 rounded-full leading-none w-7 h-7 bg-orange-500 p-0 text-white;
+  @apply absolute top-[50%] bottom-[50%] -ml-3 z-10 rounded-full leading-none w-7 h-7 bg-orange-500 p-0 text-white;
 }
 
 .button-dev-panel-toggle:hover {
