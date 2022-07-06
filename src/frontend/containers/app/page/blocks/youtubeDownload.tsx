@@ -101,15 +101,16 @@ export const isAvailable = (
   config: Types.Config.PartialConfig,
 ): Observable<boolean> => {
   const dataAvailable = db.instance.docs
-     .find({
-       selector: {
-         data__type: Types.Data.Type.youtube_url,
-       },
-     }).$.pipe(map(datas => datas.map(data => data.get())))
-  .pipe(mergeMap(datas => DownloadService.isAvailable(datas, config)))
+    .find({
+      selector: {
+        data__type: Types.Data.Type.youtube_url,
+      },
+    })
+    .$.pipe(map((datas) => datas.map((data) => data.get())))
+    .pipe(mergeMap((datas) => DownloadService.isAvailable(datas, config)));
 
   return dataAvailable;
-  }
+};
 
 // adds a block to the database, initializing with existing data if this
 // has already been chosen

@@ -10,8 +10,7 @@ import { uniqueId } from "@frontend/utils";
 
 import * as Utils from "@utils/index";
 
-const execute = (config: Types.Config.PartialConfig) =>
-  async (data: Types.Data.Data) => {
+const execute = (config: Types.Config.PartialConfig) => async (data: Types.Data.Data) => {
   // TODO validate data
   const validData = data;
 

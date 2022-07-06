@@ -35,11 +35,11 @@ const isAvailable = (dataNodes: Types.Data.Data[], config: Types.Config.PartialC
     })
     .then((x) => x?.message == "ok lets go");
 
-  const dataAvailable = of(dataNodes).pipe(
-      map((x) => {
-        return x.length > 0;
-      }),
-    );
+  const dataAvailable = of(dataNodes.filter((d) => d.data__type === Types.Data.Type.youtube_url)).pipe(
+    map((x) => {
+      return x.length > 0;
+    }),
+  );
 
   const combined = combineLatest(from(checkApi), dataAvailable, (a, b) => {
     log.debug("api available:", a);
@@ -52,54 +52,56 @@ const isAvailable = (dataNodes: Types.Data.Data[], config: Types.Config.PartialC
   // return from(checkApi);
 };
 
-const execute = (config: Types.Config.PartialConfig) =>
-  async (data: Types.Data.YoutubeUrl) => {
-    // TODO validate data
-    const validData = data;
-    const url = data.data__body;
+const execute = (config: Types.Config.PartialConfig) => async (data: Types.Data.YoutubeUrl) => {
+  // TODO validate data
+  const validData = data;
+  const url = data.data__body;
 
-    if (!config.youtube_downloader) { throw Error(`wrong`) }
+  if (!config.youtube_downloader) {
+    throw Error(`wrong`);
+  }
 
-    const { api_url, user, password } = config.youtube_downloader;
+  const { api_url, user, password } = config.youtube_downloader;
 
-    log.debug(`attempting to fetch ${url} from ${api_url}`)
+  log.debug(`attempting to fetch ${url} from ${api_url}`);
 
+  const headers = new Headers();
+  headers.set("Authorization", "Basic " + btoa(user + ":" + password));
 
-    const headers = new Headers();
-    headers.set('Authorization', 'Basic ' + btoa(user + ":" + password));
+  headers.set("Content-Type", "application/json");
 
-    headers.set('Content-Type', 'application/json');
+  const started_at = Utils.now();
 
-    const started_at = Utils.now();
+  // TODO validate the result
+  const apiResult: Types.Data.YoutubeDownloaded["data__body"] = await fetch(`${api_url}/download`, {
+    method: "POST",
+    headers,
+    body: JSON.stringify({ url: data.data__body }),
+  }).then((r) => r.json());
 
-    // TODO validate the result
-    const apiResult: Types.Data.YoutubeDownloaded["data__body"] =
-      await fetch(`${api_url}/download`, { method: 'POST', headers, body: JSON.stringify({ "url": data.data__body }) })
-        .then(r => r.json())
+  log.debug(`received`, apiResult);
 
-    log.debug(`received`, apiResult)
-
-    const to_data: Types.Data.YoutubeDownloaded = {
-      ...Types.Document.createDocument(),
-      document__type: Types.Document.Type.Data,
-      data__type: Types.Data.Type.youtube_downloaded,
-      data__body: apiResult
-    }
-
-    const finished_at = Utils.now();
-
-    const newRecord: Types.Record.YoutubeDL = {
-      document__id: uniqueId(),
-      document__type: Types.Document.Type.Record,
-      record__type: Types.Service.Type.youtuve_download_v1,
-      record__started_at: started_at,
-      record__finished_at: finished_at,
-      record__of_data: [validData],
-      record__to_data: [to_data],
-    };
-
-    return newRecord;
+  const to_data: Types.Data.YoutubeDownloaded = {
+    ...Types.Document.createDocument(),
+    document__type: Types.Document.Type.Data,
+    data__type: Types.Data.Type.youtube_downloaded,
+    data__body: apiResult,
   };
+
+  const finished_at = Utils.now();
+
+  const newRecord: Types.Record.YoutubeDL = {
+    document__id: uniqueId(),
+    document__type: Types.Document.Type.Record,
+    record__type: Types.Service.Type.youtuve_download_v1,
+    record__started_at: started_at,
+    record__finished_at: finished_at,
+    record__of_data: [validData],
+    record__to_data: [to_data],
+  };
+
+  return newRecord;
+};
 
 const service: Types.Service.YoutubeDownload = {
   // the user adding service is always available

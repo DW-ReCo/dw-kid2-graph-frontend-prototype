@@ -10,7 +10,6 @@ export enum Type {
   user_added,
 }
 
-
 // The execution function is a closure which takes the pair of db, config,
 //   and then has a function which mutates the db.  Each service determines
 //   it's own arguments for this function.  the ProducedData is returned in a promise.
