@@ -65,6 +65,8 @@ const DevPanel = () => {
 
   const addTestingDataDbs = () => dbs.map((d: Types.Database.LoadedDatabase) => addTestingData(d.instance));
 
+  const clearLocalStorage = () => typeof window !== "undefined" && window.localStorage.clear();
+
   const LINKS = [
     { label: "Database view", href: "/db" },
     { label: "Application prototype", href: "/app" },
@@ -112,6 +114,9 @@ const DevPanel = () => {
                   </button>
                   <button className="button--small" onClick={addTestingDataDbs}>
                     add testing data (all dbs)
+                  </button>
+                  <button className="button--small" onClick={clearLocalStorage}>
+                    clear local storage
                   </button>
                 </details>
                 <details open>
