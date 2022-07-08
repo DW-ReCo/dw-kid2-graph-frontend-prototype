@@ -2,6 +2,8 @@
 import clsx from "clsx";
 import { first } from "lodash/fp";
 import Link from "next/link";
+import { useRxQuery } from "rxdb-hooks";
+import { map, mergeMap } from "rxjs";
 
 import React from "react";
 
@@ -21,25 +23,37 @@ import { getStatusIcon } from "@frontend/utils/status";
 
 import services from "@services/index";
 
-import { map, mergeMap } from "rxjs";
-
 const ServiceStatus = (props: {
   db: Types.Database.LoadedDatabase;
   config: Types.Config.PartialConfig;
   service: Types.Service.Service;
 }) => {
   const { service, db, config } = props;
+  const [count, setCount] = React.useState(0);
 
-  const isAvailable = useObservable(
-    Queries.allData(db.instance)
-      .$.pipe(map((datas) => datas.map((d) => d.get())))
-      .pipe(mergeMap((datas) => service.isAvailable(datas, config))),
-  );
+  const { result } = useRxQuery(Queries.allData(db.instance));
+  const allData = result?.map((r) => r.get());
+
+  const isAvailable = useObservable(service.isAvailable(allData, config));
+  const status = useObservable(service.status(allData, config));
+
+  console.log("aaaaaaaaaaaaaaa");
+  console.log("aaaaaaaaaaaaaaa");
+  console.log("aaaaaaaaaaaaaaa");
+  console.log("aaaaaaaaaaaaaaa");
+  console.log("aaaaaaaaaaaaaaa");
+  console.log(allData);
+  console.log(service);
+  console.log(status);
 
   return (
     <div className="flex">
       <span className="mr-2">{isAvailable ? getStatusIcon("OK") : getStatusIcon("ERROR")}</span>
+      {count}
       <span>{service.name}</span>
+      <button onClick={(_) => setCount(count + 1)}>+</button>
+
+      <span>{status && status.message && status.message}</span>
     </div>
   );
 };

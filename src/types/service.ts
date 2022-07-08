@@ -24,7 +24,7 @@ export type Generic<T extends Type, Args extends any[], Return extends any[]> = 
   name: string;
   type: T;
   description: string;
-  status: (dataNodes: Data.Data[], config: PartialConfig) => Observable<object>;
+  status: (dataNodes: Data.Data[], config: PartialConfig) => Observable<{ status: number; message: string }>;
   isAvailable: (dataNodes: Data.Data[], config: PartialConfig) => Observable<boolean>;
   execute: ExecuteFunction<T, Args, Return>;
 };
