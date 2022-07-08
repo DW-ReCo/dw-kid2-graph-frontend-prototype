@@ -24,9 +24,11 @@ export type Generic<T extends Type, Args extends any[], Return extends any[]> = 
   name: string;
   type: T;
   description: string;
+  status: (dataNodes: Data.Data[], config: PartialConfig) => Observable<object>;
   isAvailable: (dataNodes: Data.Data[], config: PartialConfig) => Observable<boolean>;
   execute: ExecuteFunction<T, Args, Return>;
 };
+
 // A type function to extract the args from a service:
 export type ExtractArgs<S> = S extends Generic<infer T, infer X, infer Y> ? X : never;
 // A type function to extract the return value from the service:

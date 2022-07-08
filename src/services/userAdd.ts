@@ -36,6 +36,7 @@ const service: Types.Service.UserAdd = {
   name: "User Added Service",
   type: Types.Service.Type.user_added,
   description: "the user may directly add data to the database",
+  status: (..._) => of({ status: 200, message: "ok lets go" }),
   isAvailable: (..._) => of(true),
   execute,
 };

@@ -1,6 +1,6 @@
 // A service for a user, using the frontent, to directly add
 //  data to the database.
-import { combineLatest, from, map, of } from "rxjs";
+import { Observable, combineLatest, from, map, of } from "rxjs";
 
 import * as Types from "@data-types/index";
 
@@ -14,11 +14,24 @@ import * as Utils from "@utils/index";
 
 const log = Logger.makeLogger(`services/downloadYoutube`);
 
-const isAvailable = (dataNodes: Types.Data.Data[], config: Types.Config.PartialConfig) => {
-  //
-  log.debug(`checking if youtube service is available`);
+const serviceStatus = {
+  // service ready
+  ok: { status: 200, message: "ok lets go" },
+  //  no data to operate on
+  nodata: { status: 418, message: "no data to operate on" },
+  // missing cfg
+  noconfig: { status: 401, message: "missig config" },
+  // server offline
+  noserver: { status: 500, message: "cannot reach server" },
+} as const;
 
-  if (!config.youtube_downloader?.api_url) return of(false);
+type StatusType = keyof typeof serviceStatus;
+type ServiceStatus = typeof serviceStatus[StatusType];
+
+const status = (dataNodes: Types.Data.Data[], config: Types.Config.PartialConfig): Observable<ServiceStatus> => {
+  log.debug(`creating status observable`);
+
+  if (!config.youtube_downloader?.api_url) return of(serviceStatus.noconfig);
 
   const { api_url, user, password } = config.youtube_downloader;
 
@@ -27,29 +40,35 @@ const isAvailable = (dataNodes: Types.Data.Data[], config: Types.Config.PartialC
   const headers = new Headers();
   headers.set("Authorization", "Basic " + btoa(user + ":" + password));
 
-  const checkApi = fetch(`${api_url}/ping`, { method: "GET", headers })
-    .then((r) => r.json())
-    .catch((e) => {
-      log.error(e);
-      return false;
-    })
-    .then((x) => x?.message == "ok lets go");
-
-  const dataAvailable = of(dataNodes.filter((d) => d.data__type === Types.Data.Type.youtube_url)).pipe(
-    map((x) => {
-      return x.length > 0;
-    }),
+  const isApiOnline = from(
+    fetch(`${api_url}/ping`, { method: "GET", headers })
+      .then((r) => r.json())
+      .catch((e) => {
+        log.error(e);
+        return serviceStatus.noserver;
+      })
+      .then((x) => x?.message == "ok lets go"),
   );
 
-  const combined = combineLatest(from(checkApi), dataAvailable, (a, b) => {
-    log.debug("api available:", a);
-    log.debug("data available:", b);
-    return a && b;
+  const possibleDataNodes = dataNodes.filter((d) => d.data__type === Types.Data.Type.youtube_url);
+
+  const isDataAvailable = of(possibleDataNodes).pipe(map((x) => x.length > 0));
+
+  const combined = combineLatest(isApiOnline, isDataAvailable, (apiStatus: boolean, dataStatus: boolean) => {
+    log.debug("api available:", apiStatus);
+    log.debug("data available:", dataStatus);
+    if (!apiStatus) return serviceStatus.noserver;
+    if (!dataStatus) return serviceStatus.nodata;
+    return serviceStatus.ok;
   });
 
   return combined;
+};
 
-  // return from(checkApi);
+const isAvailable = (dataNodes: Types.Data.Data[], config: Types.Config.PartialConfig) => {
+  //
+  log.debug(`checking if youtube service is available`);
+  return status(dataNodes, config).pipe(map((status) => serviceStatus.ok == status));
 };
 
 const execute = (config: Types.Config.PartialConfig) => async (data: Types.Data.YoutubeUrl) => {
@@ -108,7 +127,8 @@ const service: Types.Service.YoutubeDownload = {
   name: "youtube downloading service",
   type: Types.Service.Type.youtuve_download_v1,
   description: "downloads a youtube video to our servers",
-  isAvailable: isAvailable,
+  status: status, // -> Observable<ServiceStatus>
+  isAvailable, // -> Observable<boolean>
   execute,
 };
 
